@@ -8,6 +8,7 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "PointOfView.h"
+#include "../levels/level1.h"
 
 class Ball {
 
@@ -15,7 +16,8 @@ private:
     PointOfView pointOfView;
     sf::CircleShape circleShape;
     sf::RenderWindow &window;
-    float &posX, &posY, &oX, &oY, radius;
+    level1 &level;
+    float &x, &y, radius_;
 
 public:
 
@@ -26,12 +28,12 @@ public:
                   float radius,
                   float pointOfViewGrad,
                   float visibleDistance,
+                  level1 &level,
                   sf::RenderWindow &window) :
-            posX(x),
-            posY(y),
-            oY(oY),
-            oX(oX),
-            radius(radius),
+            x(x),
+            y(y),
+            radius_(radius),
+            level(level),
             pointOfView(oX, oY, pointOfViewGrad, visibleDistance, window),
             window(window) {
         circleShape = sf::CircleShape{radius};
@@ -41,19 +43,27 @@ public:
         circleShape.setPosition(x, y);
     }
 
-    float MOVEMENT_SPEED = 10.0;
+    float MOVEMENT_SPEED = 0.2;
 
-    void rotateRight();
+    void rotateRight(float d);
 
-    void rotateLeft();
+    void rotateLeft(float d);
 
-    void moveForward();
+    void moveForward(float d);
 
-    void moveBackward();
+    void moveBackward(float d);
 
-    void updatePosXY(sf::Vector2<float> xy);
+    void updatePosXY(sf::Vector2<float> & xy);
 
     void basicRotate(float movementDirection);
 
     void basicMovement(float movementDirection);
+
+    void processEvent(sf::Event event, float d);
+
+    void drawMe();
+
+    void mouseRotate(float timeElapsed);
+
+    static double distance(sf::Vector2f a, sf::Vector2f b);
 };

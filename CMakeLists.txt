@@ -34,7 +34,15 @@ add_executable(platformer
         src/platformer.cpp
         src/core/engine/game_engine.cpp
         src/core/engine/game_engine.h
-        src/core/models/Player.cpp src/core/models/PlayerModel.cpp src/core/models/PlayerModel.h src/core/models/Ball.cpp src/core/models/Ball.h src/core/models/BallKeyBoard.cpp src/core/models/BallKeyBoard.h src/core/models/PointOfView.cpp src/core/models/PointOfView.h src/core/models/Vector.cpp src/core/models/Vector.h)
+        src/core/models/Player.cpp
+        src/core/models/PlayerModel.cpp
+        src/core/models/PlayerModel.h
+        src/core/models/Ball.cpp
+        src/core/models/Ball.h
+        src/core/models/PointOfView.cpp
+        src/core/models/PointOfView.h
+        src/core/models/Vector.cpp
+        src/core/models/Vector.h src/core/levels/level1.cpp src/core/levels/level1.h)
 
 set(SFML_LIBRARIES sfml-graphics sfml-window sfml-system)
 
