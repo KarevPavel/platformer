@@ -2,10 +2,9 @@
 // Created by yacopsae on 12/10/2020.
 //
 
-#ifndef PLATFORMER_MENU_ENGINE_H
-#define PLATFORMER_MENU_ENGINE_H
+#pragma once
 
-#include "keyboard.cpp"
+#include "keyboard.h"
 #include "menu.h"
 #include "game_engine.h"
 
@@ -14,7 +13,9 @@ namespace core::engine {
     class MenuEngine : public core::keyboard::KeyboardEngine<Menu> {
 
     public:
-        MenuEngine(Menu &menu, GameEngine &gameEngine,  sf::RenderWindow &window) : KeyboardEngine(menu), gameEngine(gameEngine), window(window){}
+        MenuEngine(Menu &menu, GameEngine &gameEngine, sf::RenderWindow &window) : KeyboardEngine(menu),
+                                                                                   gameEngine(gameEngine),
+                                                                                   window(window) {}
 
         void S_click() override;
 
@@ -33,6 +34,4 @@ namespace core::engine {
         GameEngine &gameEngine;
         sf::RenderWindow &window;
     };
-
 }
-#endif //PLATFORMER_MENU_ENGINE_H

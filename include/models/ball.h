@@ -7,13 +7,13 @@
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
-#include "PointOfView.h"
-#include "../levels/level1.h"
+#include "point_of_view.h"
+#include "../../src/core/levels/level1.h"
 
-class Ball {
+class ball {
 
 private:
-    PointOfView pointOfView;
+    point_of_view pointOfView;
     sf::CircleShape circleShape;
     sf::RenderWindow &window;
     level1 &level;
@@ -21,7 +21,7 @@ private:
 
 public:
 
-    explicit Ball(float &x,
+    explicit ball(float &x,
                   float &y,
                   float &oX,
                   float &oY,

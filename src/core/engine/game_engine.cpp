@@ -2,10 +2,8 @@
 // Created by yacopsae on 12/10/2020.
 //
 
-#include "constants.h"
-#include "game_engine.h"
-#include "../models/Player.cpp"
-#include <SFML/Graphics.hpp>
+
+#include <game_engine.h>
 
 namespace core::engine {
 

@@ -8,10 +8,10 @@
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Text.hpp>
-#include "Vector.h"
+#include "vector.h"
 #include <iostream>
 
-class PointOfView {
+class point_of_view {
 private:
     sf::RectangleShape leftRect;
     sf::RectangleShape rightRect;
@@ -20,9 +20,9 @@ private:
     sf::RenderWindow &window;
 
 public:
-    PointOfView(float &x, float &y, float pointOfViewRad,
-                float distance,
-                sf::RenderWindow &window) :
+    point_of_view(float &x, float &y, float pointOfViewRad,
+                  float distance,
+                  sf::RenderWindow &window) :
             x_(x),
             y_(y),
             window(window) { //pointOfViewRad(pointOfViewRad),

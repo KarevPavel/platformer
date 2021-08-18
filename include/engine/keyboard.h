@@ -1,7 +1,13 @@
+//
+// Created by yacopsae on 18/08/2021.
+//
+
 #pragma once
 
 #include <SFML/Window/Event.hpp>
 #include <SFML/Window/Keyboard.hpp>
+#include "SFML/Graphics.hpp"
+#include "keyboard.h"
 
 namespace core::keyboard {
 

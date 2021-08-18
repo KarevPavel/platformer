@@ -3,14 +3,14 @@
 //
 
 #include <cmath>
-#include "Ball.h"
+#include <ball.h>
 
-void Ball::rotateRight(float timeElapsed) {
+void ball::rotateRight(float timeElapsed) {
     basicRotate(MOVEMENT_SPEED * timeElapsed);
 }
 
 sf::Vector2i pixelPos_;
-void Ball::mouseRotate(float timeElapsed) {
+void ball::mouseRotate(float timeElapsed) {
     // get the current mouse position in the window
     sf::Vector2i pixelPos = sf::Mouse::getPosition(window);
     if (pixelPos_ != pixelPos) {
@@ -28,39 +28,35 @@ void Ball::mouseRotate(float timeElapsed) {
     }
 }
 
-double Ball::distance(sf::Vector2f a, sf::Vector2f b) {
+double ball::distance(sf::Vector2f a, sf::Vector2f b) {
     return std::sqrt(std::pow(a.x - b.x, 2) + std::pow(a.y - b.y, 2));
 }
 
-void Ball::rotateLeft(float timeElapsed) {
+void ball::rotateLeft(float timeElapsed) {
     basicRotate(-MOVEMENT_SPEED * timeElapsed);
 }
 
-void Ball::moveForward(float timeElapsed) {
+void ball::moveForward(float timeElapsed) {
     basicMovement(MOVEMENT_SPEED * timeElapsed);
 }
 
-void Ball::moveBackward(float timeElapsed) {
+void ball::moveBackward(float timeElapsed) {
     basicMovement(-MOVEMENT_SPEED * timeElapsed);
 }
 
-void Ball::basicRotate(const float rotateAngle) {
+void ball::basicRotate(const float rotateAngle) {
     pointOfView.rotate(rotateAngle);
     window.clear();
     drawMe();
 }
 
-void Ball::drawMe() {
+void ball::drawMe() {
     window.draw(circleShape);
     pointOfView.drawMe();
 }
 
-void Ball::basicMovement(const float movementDirection) {
+void ball::basicMovement(const float movementDirection) {
     sf::Vector2<float> xy = pointOfView.getPointsOnVector(x, y, movementDirection);
-
-    //std::cout << "Circle shape has collision: " << (level.hasCollision(circleShape.getGlobalBounds())) << std::endl;
-    //std::cout << "MoveVector has collision: " << (level.hasCollision(pointOfView.getMoveVector().getGlobalBounds())) << std::endl;
-
 
     if (!level.hasCollision(circleShape.getGlobalBounds()) ||
     !level.hasCollision(pointOfView.getMoveVector().getGlobalBounds())) {
@@ -76,14 +72,14 @@ void Ball::basicMovement(const float movementDirection) {
     }
 }
 
-void Ball::updatePosXY(sf::Vector2<float> & xy) {
+void ball::updatePosXY(sf::Vector2<float> & xy) {
     y = xy.y;
     x = xy.x;
     circleShape.setPosition(xy.x, xy.y);
 }
 
 
-void Ball::processEvent(sf::Event event, float timeElapsed) {
+void ball::processEvent(sf::Event event, float timeElapsed) {
 
     mouseRotate(timeElapsed);
 

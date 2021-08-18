@@ -21,10 +21,10 @@ private:
     bool mainDirection;
 };
 
-class Vector {
+class vector {
 
 public:
-    Vector(const DirectionalPoint &startPoint = DirectionalPoint(0, 0, false),
+    vector(const DirectionalPoint &startPoint = DirectionalPoint(0, 0, false),
            const DirectionalPoint &endPoint = DirectionalPoint(0, 0, false)) : startPoint(startPoint),
                                                                                endPoint(endPoint) {}
 

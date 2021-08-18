@@ -1,28 +1,26 @@
 //
 // Created by yacopsae on 14/10/2020.
 //
-
-#ifndef PLATFORMER_PLAYERMODEL_H
-#define PLATFORMER_PLAYERMODEL_H
+#pragma once
 
 #include <vector>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 
-class PlayerModel {
+class player_model {
 
 public:
 
-    explicit PlayerModel(sf::RenderWindow &window) : window(window) {}
+    explicit player_model(sf::RenderWindow &window) : window(window) {}
     void idle();
     void walk(float elapsed);
     void draw();
     void clear();
-    static void moveLeftLegFront(PlayerModel *model);
-    static void moveLeftLegBack(PlayerModel *model);
-    static void moveRightLegFront(PlayerModel *model);
-    static void moveRightLegBack(PlayerModel *model);
+    static void moveLeftLegFront(player_model *model);
+    static void moveLeftLegBack(player_model *model);
+    static void moveRightLegFront(player_model *model);
+    static void moveRightLegBack(player_model *model);
 
 private:
     sf::RenderWindow &window;
@@ -37,7 +35,7 @@ private:
 
 
 
-typedef void (*GEngineFn)(PlayerModel *model);
+typedef void (*GEngineFn)(player_model *model);
 
 struct Frame {
     GEngineFn move;
@@ -48,10 +46,10 @@ class Animation {
     std::vector<Frame> frames;
     double totalLength;
     double totalProgress;
-    PlayerModel *target;
+    player_model *target;
 
 public:
-    Animation(PlayerModel &target) {
+    Animation(player_model &target) {
         this->target = &target;
         totalProgress = 0.0;
     }
@@ -76,5 +74,3 @@ public:
         }
     }
 };
-
-#endif //PLATFORMER_PLAYERMODEL_H

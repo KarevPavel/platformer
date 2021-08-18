@@ -2,8 +2,7 @@
 // Created by yacopsae on 12/10/2020.
 //
 
-#include "menu_item.h"
-#include "game_engine.h"
+#include <menu_item.h>
 
 namespace core::engine {
 

@@ -2,16 +2,17 @@
 // Created by yacopsae on 04/10/2020.
 //
 
-#ifndef PLATFORMER_MENU_H
-#define PLATFORMER_MENU_H
+#pragma once
+
 #include "SFML/Graphics.hpp"
 #include <iostream>
 #include <list>
 #include <queue>
 #include <utility>
 #include <deque>
-#include "constants.h"
-#include "keyboard.cpp"
+#include <constants.h>
+#include <keyboard.h>
+#include <menu_item.h>
 
 namespace core::engine {
 
@@ -67,4 +68,3 @@ namespace core::engine {
         unsigned int calcYPos(sf::Vector2u &vector2U, int delta);
     };
 }
-#endif //PLATFORMER_MENU_H

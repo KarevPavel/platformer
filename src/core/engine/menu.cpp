@@ -1,7 +1,5 @@
-#include "keyboard.cpp"
-#include "SFML/Graphics.hpp"
-#include "menu.h"
-#include "menu_item.h"
+
+#include <menu.h>
 
 namespace core::engine {
 
@@ -49,6 +47,7 @@ namespace core::engine {
                 return it;
             }
         }
+        return std::_List_iterator<MenuItem>();
     }
 
     void Menu::addItem(const MenuItem &menuItem) {

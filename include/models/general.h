@@ -2,8 +2,7 @@
 // Created by yacopsae on 06/10/2020.
 //
 
-#ifndef PLATFORMER_GENERAL_H
-#define PLATFORMER_GENERAL_H
+#pragma once
 
 namespace core::model {
 
@@ -38,4 +37,3 @@ namespace core::model {
         Health(double d);
     };
 }
-#endif //PLATFORMER_GENERAL_H

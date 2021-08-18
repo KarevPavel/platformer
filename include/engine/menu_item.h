@@ -2,8 +2,8 @@
 // Created by yacopsae on 12/10/2020.
 //
 
-#ifndef PLATFORMER_MENU_ITEM_H
-#define PLATFORMER_MENU_ITEM_H
+#pragma once
+
 #include "SFML/Graphics.hpp"
 #include <iostream>
 #include <list>
@@ -11,11 +11,13 @@
 #include <utility>
 #include <deque>
 #include "constants.h"
-#include "keyboard.cpp"
-#include "menu.h"
-#include "game_engine.h"
+#include <keyboard.h>
+#include <menu.h>
+#include <game_engine.h>
 
 namespace core::engine {
+
+    class Menu;
 
     class MenuItem {
 
@@ -29,7 +31,10 @@ namespace core::engine {
                                                                                                            core::engine::menu::DEFAULT_FONT_NAME,
                                                                                                            isSelected) {}
 
-        MenuItem(const std::string &txt, int pos, sf::Color fontColor, const std::string &fontName,
+        MenuItem(const std::string &txt,
+                 int pos,
+                 sf::Color fontColor,
+                 const std::string &fontName,
                  bool isSelected = false);
 
         sf::Text getText() const {
@@ -64,7 +69,6 @@ namespace core::engine {
 
         GEngineFn getAction();
 
-
     private:
         sf::Text text;
         bool selected;
@@ -73,4 +77,3 @@ namespace core::engine {
         GEngineFn action;
     };
 }
-#endif //PLATFORMER_MENU_ITEM_H

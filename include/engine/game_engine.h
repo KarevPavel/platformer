@@ -2,9 +2,10 @@
 // Created by yacopsae on 12/10/2020.
 //
 
-#ifndef PLATFORMER_GAME_ENGINE_H
-#define PLATFORMER_GAME_ENGINE_H
+#pragma once
 
+#include <constants.h>
+#include <SFML/Graphics.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "iostream"
 
@@ -26,5 +27,3 @@ namespace core::engine {
 
     typedef void (GameEngine::*GEngineFn)(sf::RenderWindow &window);
 }
-
-#endif //PLATFORMER_GAME_ENGINE_H

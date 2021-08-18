@@ -1,14 +1,14 @@
 
-#include "PointOfView.h"
+#include <point_of_view.h>
 #include <cmath>
 
-void PointOfView::drawMe(){
+void point_of_view::drawMe(){
     window.draw(rightRect);
     window.draw(leftRect);
     window.draw(moveVector);
 }
 
-void PointOfView::rotate(float newAngle){
+void point_of_view::rotate(float newAngle){
     //        leftRect.setFillColor(sf::Color::Green);
     //        rightRect.setFillColor(sf::Color::Blue);
     rightRect.setRotation(newAngle - 45);
@@ -16,7 +16,7 @@ void PointOfView::rotate(float newAngle){
     moveVector.setRotation(newAngle - 90);
 }
 
-void PointOfView::updatePosXY(sf::Vector2<float> & coordinates) {
+void point_of_view::updatePosXY(sf::Vector2<float> & coordinates) {
     rightRect.setPosition(coordinates);
     leftRect.setPosition(coordinates);
     moveVector.setPosition(coordinates);
@@ -24,7 +24,7 @@ void PointOfView::updatePosXY(sf::Vector2<float> & coordinates) {
     y_ = coordinates.y;
 }
 
-sf::Vector2<float> PointOfView::getPointsOnVector(const float x, const float y, float lenght) const {
+sf::Vector2<float> point_of_view::getPointsOnVector(const float x, const float y, float lenght) const {
     //Remark: Т.к. у  SFML система координат по Y перевёрнута
     std::cout << "lenght " << lenght << std::endl;
     std::cout << "moveVector.getRotation() " << moveVector.getRotation() << std::endl;
@@ -36,15 +36,15 @@ sf::Vector2<float> PointOfView::getPointsOnVector(const float x, const float y, 
     return result;
 }
 
-float PointOfView::getRadians() const {
+float point_of_view::getRadians() const {
     const float halfC = M_PI / 180;
     return (moveVector.getRotation() + 90) * halfC;
 }
 
-float PointOfView::getDegrees() const {
+float point_of_view::getDegrees() const {
     return moveVector.getRotation();
 }
 
-sf::Vector2<float> PointOfView::getCenter() const {
+sf::Vector2<float> point_of_view::getCenter() const {
     return {x_, y_};
 }

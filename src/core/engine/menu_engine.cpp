@@ -1,9 +1,7 @@
 //
 // Created by yacopsae on 12/10/2020.
 //
-
-#include "menu_engine.h"
-#include "menu_item.h"
+#include <menu_engine.h>
 
 namespace core::engine {
 
@@ -29,13 +27,14 @@ namespace core::engine {
 
     void MenuEngine::Enter_click() {
         auto selected = control.findSelected();
-        if(selected->hasSubmenu()){
+
+        if (selected->hasSubmenu()) {
             prevMenu = &control;
             selected->showNextMenu();
         }
 
         auto func = selected->getAction();
-        if(func != nullptr){
+        if (func != nullptr) {
             std::invoke(func, gameEngine, window);
         }
     }
