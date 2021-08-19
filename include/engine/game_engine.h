@@ -14,7 +14,9 @@ namespace core::engine {
     class GameEngine {
 
     public:
-       void StartNewGame(sf::RenderWindow &window);
+        void startNewGame(sf::RenderWindow &window);
+
+        void exitGame(sf::RenderWindow &window);
 
     private:
         void LoadLevel(int number);
@@ -22,6 +24,8 @@ namespace core::engine {
         void LoadResources();
 
         void GenerateLevel();
+
+        void LoadPlayer();
     };
 
 

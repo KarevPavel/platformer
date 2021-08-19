@@ -2,7 +2,7 @@
 
 namespace core::engine {
 
-        PlayerEngine::PlayerEngine(player_model & player) : KeyboardEngine(player), elapsed(0.f){}
+        PlayerEngine::PlayerEngine(PlayerModel & player) : KeyboardEngine(player), elapsed(0.f){}
 
         void PlayerEngine::D_click() {
             //control.moveRight();

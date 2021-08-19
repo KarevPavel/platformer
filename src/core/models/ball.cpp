@@ -58,7 +58,7 @@ void ball::drawMe() {
 void ball::basicMovement(const float movementDirection) {
     sf::Vector2<float> xy = pointOfView.getPointsOnVector(x, y, movementDirection);
 
-    if (!level.hasCollision(circleShape.getGlobalBounds()) ||
+   /* if (!level.hasCollision(circleShape.getGlobalBounds()) ||
     !level.hasCollision(pointOfView.getMoveVector().getGlobalBounds())) {
         updatePosXY(xy);
 
@@ -69,7 +69,7 @@ void ball::basicMovement(const float movementDirection) {
         xy.y += radius_;
         pointOfView.updatePosXY(xy);
         pointOfView.drawMe();
-    }
+    }*/
 }
 
 void ball::updatePosXY(sf::Vector2<float> & xy) {

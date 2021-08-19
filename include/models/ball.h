@@ -8,7 +8,6 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "point_of_view.h"
-#include "../../src/core/levels/level1.h"
 
 class ball {
 
@@ -16,7 +15,6 @@ private:
     point_of_view pointOfView;
     sf::CircleShape circleShape;
     sf::RenderWindow &window;
-    level1 &level;
     float &x, &y, radius_;
 
 public:
@@ -28,12 +26,10 @@ public:
                   float radius,
                   float pointOfViewGrad,
                   float visibleDistance,
-                  level1 &level,
                   sf::RenderWindow &window) :
             x(x),
             y(y),
             radius_(radius),
-            level(level),
             pointOfView(oX, oY, pointOfViewGrad, visibleDistance, window),
             window(window) {
         circleShape = sf::CircleShape{radius};

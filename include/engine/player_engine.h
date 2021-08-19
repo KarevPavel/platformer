@@ -4,20 +4,20 @@
 
 #pragma once
 
+#include "player_model.h"
 #include "SFML/Graphics.hpp"
-#include <player_model.h>
-#include <general.h>
+
 #include "keyboard.h"
 
 namespace core::engine {
 
-    class PlayerEngine : public core::keyboard::KeyboardEngine<player_model> {
+    class PlayerEngine : public core::keyboard::KeyboardEngine<PlayerModel> {
 
     private:
         float elapsed;
 
     public:
-        explicit PlayerEngine(player_model &model);
+        explicit PlayerEngine(PlayerModel &model);
 
         void processEvent(sf::Event::KeyEvent keyevent, float elapsedSec);
 

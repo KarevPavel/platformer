@@ -10,7 +10,7 @@
 
 class Player : public core::model::Position, public core::model::Health {
 public:
-    explicit Player(player_model& model);
+    explicit Player(PlayerModel& model);
     const int MOVEMENT_SPEED = 5;
     Player(double totalHp, float x, float y);
     void moveRight();

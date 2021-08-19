@@ -1,0 +1,1 @@
+/usr/bin/c++  -std=c++17 CMakeFiles/models.dir/general.cpp.o CMakeFiles/models.dir/player_model.cpp.o CMakeFiles/models.dir/player.cpp.o CMakeFiles/models.dir/ball.cpp.o CMakeFiles/models.dir/point_of_view.cpp.o CMakeFiles/models.dir/vector.cpp.o -o models 

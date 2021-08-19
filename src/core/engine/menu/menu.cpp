@@ -13,7 +13,7 @@ namespace core::engine {
         sf::Font font;
         font.loadFromFile(core::engine::menu::DEFAULT_FONT_NAME);
         if(!itemsIsSorted) {
-            items.sort(MenuItem::MenuItemComparator());
+            items.sort();
         }
         int delta(0);
         for (auto & it : items) {

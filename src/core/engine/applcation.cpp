@@ -2,11 +2,9 @@
 // Created by yacopsae on 18/08/2021.
 //
 
-
 #include <applcation.h>
-#include <player_model.h>
-#include <player.h>
-#include <player_engine.h>
+
+
 
 enum STATE {
     MENU,
@@ -17,24 +15,23 @@ static STATE currentState = MENU;
 
 void Application::configureWindow(sf::RenderWindow &window) {
     window.setVerticalSyncEnabled(true);
+    window.setFramerateLimit(60);
 }
 
 int Application::start() {
 
     sf::ContextSettings settings;
     settings.antialiasingLevel = 8;
-    sf::RenderWindow window({1800, 1000}, "TestMe", sf::Style::Default, settings);
+    sf::RenderWindow window({1280, 800}, "TestMe", sf::Style::Fullscreen, settings);
     configureWindow(window);
-    window.setFramerateLimit(60);
+
     core::models::MainMenu menu(window);
     core::engine::GameEngine gameEngine{};
     core::engine::MenuEngine menuEngine(menu, gameEngine, window);
 
-    player_model playerModel{window};
+    PlayerModel playerModel{window};
     core::engine::PlayerEngine player{playerModel};
     sf::Clock clock;
-
-    level1 lvl{window};
 
     float x, y, oX, oY, r;
     x = 60;
@@ -50,7 +47,6 @@ int Application::start() {
             r,
             120,
             300,
-            lvl,
             window
     };
 
@@ -66,10 +62,15 @@ int Application::start() {
         }
 
         if (currentState == STATE::MENU) {
-
+            menuEngine.processEvent(event.key);
+            playerModel.draw();
+            menu.draw();
+        }
+        if (currentState == STATE::GAME) {
+            gameEngine.startNewGame(window);
         }
 
-        ball.processEvent(event, time);
+        //ball.processEvent(event, time);
         window.display();
     }
 

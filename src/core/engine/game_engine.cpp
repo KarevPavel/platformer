@@ -2,33 +2,34 @@
 // Created by yacopsae on 12/10/2020.
 //
 
-
 #include <game_engine.h>
 
 namespace core::engine {
 
-    void GameEngine::StartNewGame(sf::RenderWindow &window) {
+    void GameEngine::startNewGame(sf::RenderWindow &window) {
         LoadLevel(core::engine::game::FIRST_LEVEL);
-        /*sf::RectangleShape rshape;
-        rshape.setSize(sf::Vector2f(20, 20));
-        rshape.setPosition(200, 200);
-        rshape.setFillColor(sf::Color::Red);
-        window.draw(rshape);*/
-
 
         std::cout << " DRAW! " << std::endl;
+    }
+
+    void GameEngine::exitGame(sf::RenderWindow &window) {
+        //TODO: Здесь сохранить все необходимые ресурсы
+        window.close();
+    }
+
+    void GameEngine::LoadLevel(int number) {
+       // tmx::MapLoader ml("path/to/maps");
+    }
+
+    void LoadPlayer() {
 
     }
 
-    void GameEngine::LoadLevel(int number){
+    void GameEngine::LoadResources() {
 
     }
 
-    void GameEngine::LoadResources(){
-        
-    }
-
-    void GameEngine::GenerateLevel(){
+    void GameEngine::GenerateLevel() {
 
     }
 }

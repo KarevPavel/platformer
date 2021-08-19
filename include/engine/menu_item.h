@@ -10,7 +10,6 @@
 #include <queue>
 #include <utility>
 #include <deque>
-#include "constants.h"
 #include <keyboard.h>
 #include <menu.h>
 #include <game_engine.h>
@@ -37,27 +36,19 @@ namespace core::engine {
                  const std::string &fontName,
                  bool isSelected = false);
 
-        sf::Text getText() const {
-            return text;
+        bool operator()(const MenuItem &menuItem1, const MenuItem &menuItem2) {
+            return menuItem1.getPosition() < menuItem2.getPosition();
         }
 
-        bool isSelected() const {
-            return selected;
+        friend bool operator<(const MenuItem& l, const MenuItem& r) {
+            return l.getPosition() < r.getPosition();
         }
 
-        void isSelected(bool isSelected) {
-            selected = isSelected;
-        }
+        sf::Text getText() const;
 
-        int getPosition() const {
-            return position;
-        }
+        bool isSelected() const;
 
-        struct MenuItemComparator {
-            bool operator()(const MenuItem &menuItem1, const MenuItem &menuItem2) {
-                return menuItem1.position < menuItem2.position;
-            }
-        };
+        int getPosition() const;
 
         void setNextMenu(Menu &menu);
 
@@ -68,6 +59,9 @@ namespace core::engine {
         void setAction(GEngineFn function);
 
         GEngineFn getAction();
+
+        void isSelected(bool isSelected);
+
 
     private:
         sf::Text text;

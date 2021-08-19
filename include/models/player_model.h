@@ -8,19 +8,19 @@
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 
-class player_model {
+class PlayerModel {
 
 public:
 
-    explicit player_model(sf::RenderWindow &window) : window(window) {}
+    explicit PlayerModel(sf::RenderWindow &window) : window(window) {}
     void idle();
     void walk(float elapsed);
     void draw();
     void clear();
-    static void moveLeftLegFront(player_model *model);
-    static void moveLeftLegBack(player_model *model);
-    static void moveRightLegFront(player_model *model);
-    static void moveRightLegBack(player_model *model);
+    static void moveLeftLegFront(PlayerModel *model);
+    static void moveLeftLegBack(PlayerModel *model);
+    static void moveRightLegFront(PlayerModel *model);
+    static void moveRightLegBack(PlayerModel *model);
 
 private:
     sf::RenderWindow &window;
@@ -35,7 +35,7 @@ private:
 
 
 
-typedef void (*GEngineFn)(player_model *model);
+typedef void (*GEngineFn)(PlayerModel *model);
 
 struct Frame {
     GEngineFn move;
@@ -46,10 +46,10 @@ class Animation {
     std::vector<Frame> frames;
     double totalLength;
     double totalProgress;
-    player_model *target;
+    PlayerModel *target;
 
 public:
-    Animation(player_model &target) {
+    Animation(PlayerModel &target) {
         this->target = &target;
         totalProgress = 0.0;
     }

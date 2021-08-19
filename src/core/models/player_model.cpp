@@ -1,7 +1,7 @@
 #include <player_model.h>
 #include <SFML/Graphics.hpp>
 
-void player_model::idle() {
+void PlayerModel::idle() {
     head.setPosition(currentPosition.x, currentPosition.y);
     body.setPosition(currentPosition.x, currentPosition.y + (head.getRadius() * 2));
     lhand.setPosition(currentPosition.x - lhand.getSize().x, currentPosition.y + head.getRadius() * 2);
@@ -17,7 +17,7 @@ void player_model::idle() {
     window.draw(lleg);
 }
 
-void player_model::draw(){
+void PlayerModel::draw(){
     head.setPosition(currentPosition.x, currentPosition.y);
     body.setPosition(currentPosition.x, currentPosition.y + (head.getRadius() * 2));
     lhand.setPosition(currentPosition.x - lhand.getSize().x, currentPosition.y + head.getRadius() * 2);
@@ -33,27 +33,27 @@ void player_model::draw(){
     window.draw(lleg);
 }
 
-void player_model::clear(){
+void PlayerModel::clear(){
     this->window.clear();
 }
 
-void player_model::moveLeftLegFront(player_model *model) {
+void PlayerModel::moveLeftLegFront(PlayerModel *model) {
     model->rleg.rotate(5);
 }
 
-void player_model::moveLeftLegBack(player_model *model) {
+void PlayerModel::moveLeftLegBack(PlayerModel *model) {
     model->rleg.rotate(-5);
 }
 
-void player_model::moveRightLegFront(player_model *model){
+void PlayerModel::moveRightLegFront(PlayerModel *model){
     model->rleg.rotate(5);
 }
 
-void player_model::moveRightLegBack(player_model *model){
+void PlayerModel::moveRightLegBack(PlayerModel *model){
     model->rleg.rotate(-5);
 }
 
-void player_model::walk(float elapsed) {
+void PlayerModel::walk(float elapsed) {
 
     Animation animation = Animation{*this};
     animation.addFrame({ moveLeftLegFront, 0.4 });

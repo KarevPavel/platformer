@@ -20,7 +20,6 @@ namespace core::engine {
         this->selected = isSelected;
     }
 
-
     void MenuItem::setNextMenu(Menu &menu) {
         this->nextMenu = &menu;
     }
@@ -43,4 +42,19 @@ namespace core::engine {
         return action;
     }
 
+    sf::Text MenuItem::getText() const {
+        return text;
+    }
+
+    bool MenuItem::isSelected() const {
+        return selected;
+    }
+
+    void MenuItem::isSelected(bool isSelected) {
+        selected = isSelected;
+    }
+
+    int MenuItem::getPosition() const {
+        return position;
+    }
 }

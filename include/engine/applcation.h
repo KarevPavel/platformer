@@ -3,6 +3,7 @@
 //
 #pragma once
 
+#include <player_engine.h>
 #include <SFML/Graphics.hpp>
 #include <main_menu.h>
 #include <menu_engine.h>
