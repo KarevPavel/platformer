@@ -1,1 +1,0 @@
-/usr/bin/c++  -std=c++17 CMakeFiles/menu.dir/main_menu.cpp.o CMakeFiles/menu.dir/menu.cpp.o CMakeFiles/menu.dir/menu_item.cpp.o CMakeFiles/menu.dir/menu_engine.cpp.o -o menu 
