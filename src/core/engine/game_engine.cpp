@@ -18,7 +18,7 @@ namespace core::engine {
     }
 
     void GameEngine::LoadLevel(int number) {
-       // tmx::MapLoader ml("path/to/maps");
+       MapLoader ml("path/to/maps");
     }
 
     void LoadPlayer() {
