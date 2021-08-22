@@ -1,8 +1,5 @@
-//
-// Created by yacopsae on 12/10/2020.
-//
-
 #include <game_engine.h>
+#include <tmxlite/Map.hpp>
 
 namespace core::engine {
 
@@ -18,7 +15,13 @@ namespace core::engine {
     }
 
     void GameEngine::LoadLevel(int number) {
-       MapLoader ml("path/to/maps");
+       //tmx::MapLoader ml("path/to/maps");
+        tmx::Map map;
+        map.load("assets/demo.tmx");
+/*
+        MapLayer layerZero(map, 0);
+        MapLayer layerOne(map, 1);
+        MapLayer layerTwo(map, 2);*/
     }
 
     void LoadPlayer() {
