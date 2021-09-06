@@ -20,7 +20,7 @@ add_subdirectory(src/core)
 
 add_executable(${PROJECT_NAME}
         src/platformer.cpp
-        include/engine/keyboard.h)
+        include/engine/keyboard.h include/engine/SFMLOrthogonalLayer.h)
 
 message(TMXLITE_LIBRARIES ${TMXLITE_LIBRARIES})
 message(SFML_LIBRARIES ${SFML_LIBRARIES})

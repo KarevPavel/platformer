@@ -2,6 +2,6 @@
 #include <applcation.h>
 
 int main() {
-    return Application{}.start();
+    auto app = new Application();
+    return app->start();
 }
-

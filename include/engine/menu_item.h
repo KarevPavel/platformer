@@ -22,18 +22,18 @@ namespace core::engine {
 
     public:
         explicit MenuItem(const std::string &txt, int pos, bool isSelected = false) : MenuItem(txt, pos,
-                                                                                               core::engine::menu::DEFAULT_FONT_COLOR,
+                                                                                               sf::Color::White,
                                                                                                isSelected) {}
 
         MenuItem(const std::string &txt, int pos, sf::Color fontColor, bool isSelected = false) : MenuItem(txt, pos,
                                                                                                            fontColor,
-                                                                                                           core::engine::menu::DEFAULT_FONT_NAME,
+                                                                                                           "/home/yacopsae/CLionProjects/platformer/resources/fonts/LiberationMono-Bold.ttf",
                                                                                                            isSelected) {}
 
         MenuItem(const std::string &txt,
                  int pos,
                  sf::Color fontColor,
-                 const std::string &fontName,
+                 const std::string & fontName,
                  bool isSelected = false);
 
         bool operator()(const MenuItem &menuItem1, const MenuItem &menuItem2) {
@@ -44,13 +44,13 @@ namespace core::engine {
             return l.getPosition() < r.getPosition();
         }
 
-        sf::Text getText() const;
+        sf::Text getText();
 
         bool isSelected() const;
 
         int getPosition() const;
 
-        void setNextMenu(Menu &menu);
+        void setNextMenu(Menu & menu);
 
         bool hasSubmenu();
 
@@ -60,14 +60,26 @@ namespace core::engine {
 
         GEngineFn getAction();
 
+        void setStateChanger(GEngineStateChange stateChanger);
+
+        GEngineStateChange getStateChanger();
+
         void isSelected(bool isSelected);
 
+        sf::Font getFont();
+
+        GameEngine::STATE & getChangedState();
+
+        void setChangedState(GameEngine::STATE state);
 
     private:
         sf::Text text;
         bool selected;
         int position;
-        Menu *nextMenu{};
+        Menu * nextMenu;
+        sf::Font font;
         GEngineFn action;
+        GEngineStateChange stateChanger;
+        GameEngine::STATE changedState;
     };
 }

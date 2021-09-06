@@ -2,16 +2,10 @@
 // Created by yacopsae on 18/08/2021.
 //
 
+
 #include <applcation.h>
 
-
-
-enum STATE {
-    MENU,
-    GAME
-};
-
-static STATE currentState = MENU;
+static core::engine::GameEngine::STATE currentState = core::engine::GameEngine::STATE::MENU;
 
 void Application::configureWindow(sf::RenderWindow &window) {
     window.setVerticalSyncEnabled(true);
@@ -22,21 +16,22 @@ int Application::start() {
 
     sf::ContextSettings settings;
     settings.antialiasingLevel = 8;
-    sf::RenderWindow window({1280, 800}, "TestMe", sf::Style::Fullscreen, settings);
+    sf::RenderWindow window({1280, 1024}, "TestMe", sf::Style::Default);
+
     configureWindow(window);
 
     core::models::MainMenu menu(window);
-    core::engine::GameEngine gameEngine{};
+    core::engine::GameEngine gameEngine{currentState, window, core::engine::game::FIRST_LEVEL};
     core::engine::MenuEngine menuEngine(menu, gameEngine, window);
 
-    PlayerModel playerModel{window};
+    PlayerModel playerModel { window };
     core::engine::PlayerEngine player{playerModel};
     sf::Clock clock;
 
     float x, y, oX, oY, r;
-    x = 60;
-    y = 60;
-    r = 40;
+    x = 400;
+    y = 400;
+    r = 10;
     oX = x + r;
     oY = y + r;
     ball ball{
@@ -46,14 +41,18 @@ int Application::start() {
             oY,
             r,
             120,
-            300,
+            30,
             window
     };
 
     while (window.isOpen()) {
-        float time = clock.getElapsedTime().asMicroseconds(); //дать прошедшее время в микросекундах
+
+        auto elapsed = clock.getElapsedTime();
+        float time = elapsed.asMicroseconds(); //дать прошедшее время в микросекундах
         clock.restart(); //перезагружает время
         time = time / 800; //скорость игры
+        sf::Time t;
+        t.asMicroseconds();
 
         sf::Event event;
         while (window.pollEvent(event)) {
@@ -61,16 +60,18 @@ int Application::start() {
                 window.close();
         }
 
-        if (currentState == STATE::MENU) {
-            menuEngine.processEvent(event.key);
-            playerModel.draw();
-            menu.draw();
-        }
-        if (currentState == STATE::GAME) {
-            gameEngine.startNewGame(window);
+        window.clear();
+        if (currentState == core::engine::GameEngine::STATE::MENU) {
+            menuEngine.update(event.key);
         }
 
-        //ball.processEvent(event, time);
+        if (currentState == core::engine::GameEngine::STATE::GAME) {
+            //gameEngine.startNewGame(window);
+            gameEngine.update(elapsed);
+            ball.update(elapsed);
+        }
+
+        //ball.update(event, time);
         window.display();
     }
 

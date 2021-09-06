@@ -15,7 +15,12 @@ namespace core::engine {
     public:
         MenuEngine(Menu &menu, GameEngine &gameEngine, sf::RenderWindow &window) : KeyboardEngine(menu),
                                                                                    gameEngine(gameEngine),
-                                                                                   window(window) {}
+                                                                                   window(window) {
+            sf::View view{};
+            view.setSize(250, 250);
+            view.setCenter(window.getSize().x / 2, window.getSize().y / 2);
+            window.setView(view);
+        }
 
         void S_click() override;
 
@@ -28,6 +33,8 @@ namespace core::engine {
         void Enter_click() override;
 
         void Escape_click() override;
+
+        void update(sf::Event::KeyEvent keyevent) override;
 
     private:
         Menu *prevMenu;

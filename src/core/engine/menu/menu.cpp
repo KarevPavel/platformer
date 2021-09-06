@@ -3,28 +3,29 @@
 
 namespace core::engine {
 
-    Menu::Menu(sf::RenderWindow &window, HorizontalAlign hAlign, VerticalAlign vAlign) : window(window), vAlign(vAlign),
-                                                                                         hAlign(hAlign),
-                                                                                         itemsIsSorted(false) {
-        this->items = std::list<MenuItem>();
+    Menu::Menu(sf::RenderWindow &window,
+               HorizontalAlign hAlign,
+               VerticalAlign vAlign) : window(window),
+                                       vAlign(vAlign),
+                                       hAlign(hAlign),
+                                       itemsIsSorted(false),
+                                       items(){
     }
 
     void Menu::draw() {
         sf::Font font;
-        font.loadFromFile(core::engine::menu::DEFAULT_FONT_NAME);
-        if(!itemsIsSorted) {
+        font.loadFromFile("/home/yacopsae/CLionProjects/platformer/resources/fonts/LiberationMono-Bold.ttf");
+        if (!itemsIsSorted) {
             items.sort();
         }
         int delta(0);
-        for (auto & it : items) {
+        for (auto &it : items) {
             auto text = it.getText();
             auto vector2 = window.getSize();
             if (it.isSelected()) {
                 text.setFillColor(sf::Color::Red);
             }
             text.setFont(font);
-
-            text.setString(text.getString());
             auto cSize = text.getCharacterSize();
             unsigned int lenghtPx = cSize * text.getString().getSize();
             text.setPosition(calcXPos(vector2, lenghtPx), calcYPos(vector2, delta));
@@ -69,7 +70,7 @@ namespace core::engine {
         }
     }
 
-    void Menu::setPrevMenu(Menu &menu){
+    void Menu::setPrevMenu(Menu &menu) {
         this->prevMenu = &menu;
     }
 
@@ -88,13 +89,13 @@ namespace core::engine {
 
     unsigned int Menu::calcXPos(sf::Vector2u &vector2U, int xDelta) {
         if (hAlign == HorizontalAlign::LEFT)
-            return 0 + xDelta/2;
+            return 0 + xDelta / 2;
 
         if (hAlign == HorizontalAlign::CENTER)
-            return (vector2U.x - xDelta)/2;
+            return (vector2U.x - xDelta) / 2;
 
         if (hAlign == HorizontalAlign::RIGHT)
-            return vector2U.x - xDelta/2;
+            return vector2U.x - xDelta / 2;
 
         return 0;
     }

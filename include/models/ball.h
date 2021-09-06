@@ -55,7 +55,7 @@ public:
 
     void basicMovement(float movementDirection);
 
-    void processEvent(sf::Event event, float d);
+    void update(sf::Time timeElapsed);
 
     void drawMe();
 

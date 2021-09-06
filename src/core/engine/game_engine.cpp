@@ -3,34 +3,76 @@
 
 namespace core::engine {
 
-    void GameEngine::startNewGame(sf::RenderWindow &window) {
-        LoadLevel(core::engine::game::FIRST_LEVEL);
+    GameEngine::GameEngine(STATE &currentState,
+                           sf::RenderWindow &window,
+                           int lvl) :
+            _currentState(currentState),
+            _window(window),
+            _mapLayer(LoadLevel(lvl)) {
+        this->_view = sf::View{
+                {400, 400},
+                {200, 200}
+        };
+    }
 
-        std::cout << " DRAW! " << std::endl;
+    void GameEngine::startNewGame(sf::RenderWindow &window) {
+        //window.setView(_view);
+//        LoadResources();
+    }
+
+    void GameEngine::update(sf::Time time) {
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+            _view.setCenter(_view.getCenter().x, _view.getCenter().y + 10);
+        }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+            _view.setCenter(_view.getCenter().x, _view.getCenter().y - 10);
+        }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+            _view.setCenter(_view.getCenter().x - 10, _view.getCenter().y);
+        }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+            _view.setCenter(_view.getCenter().x + 10, _view.getCenter().y);
+        }
+
+        _window.setView(_view);
+        for (auto &layer : _mapLayer) {
+            layer.update(time);
+            _window.draw(layer);
+        }
+    }
+
+    void GameEngine::changeState(STATE &currentState) {
+        this->_currentState = currentState;
     }
 
     void GameEngine::exitGame(sf::RenderWindow &window) {
         //TODO: Здесь сохранить все необходимые ресурсы
+
         window.close();
     }
 
-    void GameEngine::LoadLevel(int number) {
-       //tmx::MapLoader ml("path/to/maps");
+    std::list<MapLayer> GameEngine::LoadLevel(int number) {
         tmx::Map map;
-        map.load("assets/demo.tmx");
-/*
-        MapLayer layerZero(map, 0);
-        MapLayer layerOne(map, 1);
-        MapLayer layerTwo(map, 2);*/
+        map.load("/home/yacopsae/CLionProjects/platformer/resources/levels/level" + std::to_string(number) + ".tmx");
+
+        auto list = std::list<MapLayer>();
+        for (int i = 0; i < map.getLayers().size(); i++) {
+            list.emplace_back(map, i);
+        }
+        return list;
     }
 
-    void LoadPlayer() {
+    void GameEngine::LoadPlayer() {
 
     }
 
-    void GameEngine::LoadResources() {
-
-    }
+/*    MapLayer GameEngine::LoadResources() {
+        //return LoadLevel(core::engine::game::FIRST_LEVEL);
+    }*/
 
     void GameEngine::GenerateLevel() {
 

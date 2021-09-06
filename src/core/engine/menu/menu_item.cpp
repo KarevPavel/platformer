@@ -11,16 +11,22 @@ namespace core::engine {
                        const sf::Color fontColor,
                        const std::string &fontName,
                        const bool isSelected) {
-        this->text.setString(txt);
-        this->text.setFillColor(fontColor);
-        this->position = pos;
         sf::Font font;
         font.loadFromFile(fontName);
-        this->text.setFont(font);
+        this->font = font;
+        this->text = sf::Text{
+                sf::String{txt},
+                font,
+                10
+        };
+        this->text.setFillColor(fontColor);
+        this->position = pos;
         this->selected = isSelected;
+        this->nextMenu = nullptr;
+        this->action = nullptr;
     }
 
-    void MenuItem::setNextMenu(Menu &menu) {
+    void MenuItem::setNextMenu(Menu & menu) {
         this->nextMenu = &menu;
     }
 
@@ -34,15 +40,31 @@ namespace core::engine {
         nextMenu->draw();
     }
 
-    void MenuItem::setAction(GEngineFn function){
+    void MenuItem::setAction(GEngineFn function) {
         this->action = function;
     }
 
-    GEngineFn MenuItem::getAction(){
+    void MenuItem::setStateChanger(GEngineStateChange stateChanger) {
+        this->stateChanger = stateChanger;
+    }
+
+    GEngineFn MenuItem::getAction() {
         return action;
     }
 
-    sf::Text MenuItem::getText() const {
+    GEngineStateChange MenuItem::getStateChanger() {
+        return stateChanger;
+    }
+
+    GameEngine::STATE & MenuItem::getChangedState() {
+        return changedState;
+    }
+
+    void MenuItem::setChangedState(GameEngine::STATE state) {
+        changedState = state;
+    }
+
+    sf::Text MenuItem::getText() {
         return text;
     }
 
@@ -57,4 +79,10 @@ namespace core::engine {
     int MenuItem::getPosition() const {
         return position;
     }
+
+    sf::Font MenuItem::getFont() {
+        return font;
+    }
+
+
 }

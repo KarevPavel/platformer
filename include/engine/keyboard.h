@@ -222,7 +222,7 @@ namespace core::keyboard {
 
         virtual void Pause_click() {}
 
-        virtual void processEvent(sf::Event::KeyEvent keyevent) {
+        virtual void update(sf::Event::KeyEvent keyevent) {
             switch (keyevent.code) {
                 case sf::Keyboard::A:
                     A_click();

@@ -11,7 +11,7 @@ void ball::rotateRight(float timeElapsed) {
 
 sf::Vector2i pixelPos_;
 void ball::mouseRotate(float timeElapsed) {
-    // get the current mouse position in the window
+    // get the current mouse position in the _window
     sf::Vector2i pixelPos = sf::Mouse::getPosition(window);
     if (pixelPos_ != pixelPos) {
         pixelPos_ = pixelPos;
@@ -23,7 +23,7 @@ void ball::mouseRotate(float timeElapsed) {
         float dY = mPos.y - oPos.y;//он же, координата y
         float rotation = (std::atan2(dY, dX)) * 180 / M_PI ;//получаем угол в радианах и переводим его в градусы
         pointOfView.rotate(rotation);//поворачиваем спрайт на эти градусы
-        window.clear();
+        //window.clear();
         drawMe();
     }
 }
@@ -62,8 +62,8 @@ void ball::basicMovement(const float movementDirection) {
     !level.hasCollision(pointOfView.getMoveVector().getGlobalBounds())) {
         updatePosXY(xy);
 
-        window.clear();
-        window.draw(circleShape);
+        _window.clear();
+        _window.draw(circleShape);
 
         xy.x += radius_;
         xy.y += radius_;
@@ -79,23 +79,24 @@ void ball::updatePosXY(sf::Vector2<float> & xy) {
 }
 
 
-void ball::processEvent(sf::Event event, float timeElapsed) {
+void ball::update(sf::Time timeElapsed) {
 
-    mouseRotate(timeElapsed);
+    mouseRotate(timeElapsed.asMilliseconds());
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-        rotateLeft(timeElapsed);
+        rotateLeft(timeElapsed.asMilliseconds());
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-        moveForward(timeElapsed);
+        moveForward(timeElapsed.asMilliseconds());
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-        moveBackward(timeElapsed);
+        moveBackward(timeElapsed.asMilliseconds());
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-        rotateRight(timeElapsed);
+        rotateRight(timeElapsed.asMilliseconds());
     }
+    drawMe();
 }

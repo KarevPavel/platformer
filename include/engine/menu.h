@@ -60,7 +60,7 @@ namespace core::engine {
         HorizontalAlign hAlign;
         VerticalAlign vAlign;
         std::list<MenuItem> items;
-        sf::RenderWindow &window;
+        sf::RenderWindow & window;
         Menu *prevMenu;
 
         unsigned int calcXPos(sf::Vector2u &vector2U, int xDelta);
