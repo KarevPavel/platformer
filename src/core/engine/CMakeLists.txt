@@ -8,7 +8,7 @@ add_library(
         constants.cpp
         game_engine.cpp
         player_engine.cpp
-)
+        core/gravity.cpp core/power.cpp ../../../include/engine/power.h core/jump.cpp ../../../include/engine/jump.h)
 
 target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/../../../include/engine)
 target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/../../../include/models)

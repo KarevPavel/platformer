@@ -7,6 +7,7 @@
 #include <constants.h>
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <ball.h>
 #include "iostream"
 #include "SFMLOrthogonalLayer.h"
 
@@ -24,6 +25,7 @@ namespace core::engine {
         GameEngine(GameEngine& ) = delete;
         explicit GameEngine(STATE & currentState,
                             sf::RenderWindow &window,
+                            Ball ball,
                             int lvl);
 
         void changeState(STATE & currentState);
@@ -39,6 +41,7 @@ namespace core::engine {
         sf::RenderWindow & _window;
         std::list<MapLayer> _mapLayer;
         sf::View _view;
+        Ball _ball;
 
         std::list<MapLayer> LoadLevel(int number);
 

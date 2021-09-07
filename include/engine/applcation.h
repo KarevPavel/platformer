@@ -16,8 +16,6 @@ class Application {
 private:
     void configureWindow(sf::RenderWindow &window);
 
-
-
 public:
     int start();
 

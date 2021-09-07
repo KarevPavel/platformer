@@ -4,12 +4,17 @@
 
 #pragma once
 
+#include <SFMLOrthogonalLayer.h>
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <list>
+#include <SFMLOrthogonalLayer.h>
+#include "jump.h"
 #include "point_of_view.h"
+#include "gravity.h"
 
-class ball {
+class Ball {
 
 private:
     point_of_view pointOfView;
@@ -19,35 +24,30 @@ private:
 
 public:
 
-    explicit ball(float &x,
+    explicit Ball(float &x,
                   float &y,
                   float &oX,
                   float &oY,
                   float radius,
                   float pointOfViewGrad,
                   float visibleDistance,
-                  sf::RenderWindow &window) :
-            x(x),
-            y(y),
-            radius_(radius),
-            pointOfView(oX, oY, pointOfViewGrad, visibleDistance, window),
-            window(window) {
-        circleShape = sf::CircleShape{radius};
-        circleShape.setOutlineColor(sf::Color::Red);
-        circleShape.setOutlineThickness(2);
-        circleShape.setFillColor(sf::Color::Black);
-        circleShape.setPosition(x, y);
-    }
+                  sf::RenderWindow &window);
 
     float MOVEMENT_SPEED = 0.2;
 
-    void rotateRight(float d);
+    void rotateRight(float timeElapsed);
 
-    void rotateLeft(float d);
+    void rotateLeft(float timeElapsed);
 
-    void moveForward(float d);
+    void moveLeft(float timeElapsed);
 
-    void moveBackward(float d);
+    void moveRight(float timeElapsed);
+
+    void dummyMovement(const float movementDirection);
+
+    void moveForward(float timeElapsed);
+
+    void moveBackward(float timeElapsed);
 
     void updatePosXY(sf::Vector2<float> & xy);
 
@@ -55,9 +55,11 @@ public:
 
     void basicMovement(float movementDirection);
 
-    void update(sf::Time timeElapsed);
+    void update(sf::Time timeElapsed, std::list<MapLayer> & list);
 
     void drawMe();
+
+    sf::Vector2f getCord() const;
 
     void mouseRotate(float timeElapsed);
 

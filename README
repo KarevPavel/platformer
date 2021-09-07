@@ -1,0 +1,4 @@
+install vcpkg first
+
+````
+vcpkg search %LIBR% --triplet x64-linux
