@@ -43,7 +43,7 @@ void Ball::mouseRotate(float timeElapsed) {
 	float dY = mPos.y - oPos.y;//он же, координата y
 	float rotation = (std::atan2(dY, dX)) * 180 / M_PI;//получаем угол в радианах и переводим его в градусы
 	pointOfView.rotate(rotation);//поворачиваем спрайт на эти градусы
-	//window.clear();
+	//_window.clear();
 	drawMe();
   }
 }

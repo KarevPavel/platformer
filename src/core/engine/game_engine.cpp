@@ -5,7 +5,7 @@ namespace core::engine {
 
 GameEngine::GameEngine(STATE &currentState,
 					   sf::RenderWindow &window,
-					   Ball ball,
+					   Ball &ball,
 					   int lvl) :
 	_currentState(currentState),
 	_window(window),
@@ -18,7 +18,7 @@ GameEngine::GameEngine(STATE &currentState,
 }
 
 void GameEngine::startNewGame(sf::RenderWindow &window) {
-  //window.setView(_view);
+  //_window.setView(_view);
 //        LoadResources();
 }
 

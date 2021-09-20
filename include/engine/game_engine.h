@@ -25,7 +25,7 @@ namespace core::engine {
         GameEngine(GameEngine& ) = delete;
         explicit GameEngine(STATE & currentState,
                             sf::RenderWindow &window,
-                            Ball ball,
+                            Ball& ball,
                             int lvl);
 
         void changeState(STATE & currentState);

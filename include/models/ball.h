@@ -10,9 +10,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <list>
 #include <SFMLOrthogonalLayer.h>
-#include "jump.h"
 #include "point_of_view.h"
-#include "gravity.h"
 
 class Ball {
 
