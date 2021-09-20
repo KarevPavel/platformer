@@ -10,5 +10,9 @@ add_library(
 		menu_engine.cpp
 )
 
-target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/../../../../include/engine)
-target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/../../../../include/models)
+target_include_directories(${PROJECT_NAME}
+						   PUBLIC ${ENGINE_INCLUDE_DIR}
+						   PUBLIC ${MODELS_INCLUDE_DIR}
+						   PUBLIC ${SOUND_INCLUDE_DIR}
+						   PUBLIC ${STATE_INCLUDE_DIR}
+						   PUBLIC ${BOX2D_EXT_INCLUDE_DIR})

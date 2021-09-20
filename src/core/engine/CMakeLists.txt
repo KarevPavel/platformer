@@ -16,12 +16,9 @@ add_subdirectory(states)
 add_subdirectory(sound)
 add_subdirectory(manager)
 
-target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/../../../include/engine)
-target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/../../../include/models)
-target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/../../../include/engine)
-target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/../../../include/models)
-target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/../../../include/engine/menu)
-target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/../../../include/engine/sound)
-target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/../../../include/engine/state)
-target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/../../../include/engine/box2d)
-
+target_include_directories(${PROJECT_NAME}
+						   PUBLIC ${ENGINE_INCLUDE_DIR}
+						   PUBLIC ${MODELS_INCLUDE_DIR}
+						   PUBLIC ${SOUND_INCLUDE_DIR}
+						   PUBLIC ${STATE_INCLUDE_DIR}
+						   PUBLIC ${BOX2D_EXT_INCLUDE_DIR})

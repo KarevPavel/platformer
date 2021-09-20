@@ -2,7 +2,7 @@
 // Created by yacopsae on 14/10/2020.
 //
 
-#include <player.h>
+#include "../../../include/models/player.h"
 
 Player::Player(double totalHp, float x, float y) : Health(totalHp), Position(x, y) {
   texture.loadFromFile("./resources/3dsoldier.png", sf::IntRect(10, 10, 32, 60));
