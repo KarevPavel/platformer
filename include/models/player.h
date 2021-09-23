@@ -9,16 +9,16 @@
 #include "general.h"
 
 class Player : public core::model::Position, public core::model::Health {
-public:
-    explicit Player(PlayerModel& model);
-    const int MOVEMENT_SPEED = 5;
-    Player(double totalHp, float x, float y);
-    void moveRight();
-    void moveLeft();
-    void moveUp();
-    void crouch();
-    void jump();
-private:
-    sf::Sprite sprite;
-    sf::Texture texture;
+ public:
+  explicit Player(PlayerModel &model);
+  const int MOVEMENT_SPEED = 5;
+  Player(double totalHp, float x, float y);
+  void moveRight();
+  void moveLeft();
+  void moveUp();
+  void crouch();
+  void jump();
+ private:
+  sf::Sprite sprite;
+  sf::Texture texture;
 };

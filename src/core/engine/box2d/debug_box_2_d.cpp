@@ -1,13 +1,11 @@
-//
-// Created by yacopsae on 16/09/2021.
-//
-
 #include <SFML/Graphics/ConvexShape.hpp>
 #include <SFML/Graphics/CircleShape.hpp>
 #include "box2d/debug_box_2_d.hpp"
 
 DebugBox2D::DebugBox2D(sf::RenderWindow &window) : window(&window) {
 }
+
+DebugBox2D::~DebugBox2D() = default;
 
 sf::Color DebugBox2D::b2ColorConvert(const b2Color &color, sf::Uint8 alpha) {
   return sf::Color(static_cast<sf::Uint8>(color.r * 255),

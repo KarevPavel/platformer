@@ -16,55 +16,53 @@
 
 namespace core::engine {
 
-    class MenuItem;
+class MenuItem;
 
-    enum VerticalAlign {
-        TOP,
-        MID,
-        BOTTOM
-    };
+enum VerticalAlign {
+  TOP,
+  MID,
+  BOTTOM
+};
 
-    enum HorizontalAlign {
-        LEFT,
-        CENTER,
-        RIGHT,
-    };
+enum HorizontalAlign {
+  LEFT,
+  CENTER,
+  RIGHT,
+};
 
-    const VerticalAlign DEFAULT_V_ALIGN = VerticalAlign::MID;
-    const HorizontalAlign DEFAULT_H_ALIGN = HorizontalAlign::CENTER;
+const VerticalAlign DEFAULT_V_ALIGN = VerticalAlign::MID;
+const HorizontalAlign DEFAULT_H_ALIGN = HorizontalAlign::CENTER;
 
+class Menu {
 
-    class Menu {
+ public:
 
-    public:
+  explicit Menu(sf::RenderWindow &window) : Menu(window, DEFAULT_H_ALIGN, DEFAULT_V_ALIGN) {}
 
-        explicit Menu(sf::RenderWindow &window) : Menu(window, DEFAULT_H_ALIGN, DEFAULT_V_ALIGN) {}
+  Menu(sf::RenderWindow &window, HorizontalAlign hAlign, VerticalAlign vAlign);
 
-        Menu(sf::RenderWindow &window, HorizontalAlign hAlign, VerticalAlign vAlign);
+  void draw();
 
-        void draw();
+  void addItem(const MenuItem &menuItem);
 
-        void addItem(const MenuItem &menuItem);
+  void selectNext();
 
-        void selectNext();
+  std::_List_iterator<MenuItem> findSelected();
 
-        std::_List_iterator<MenuItem> findSelected();
+  void selectPrev();
 
-        void selectPrev();
+  void setPrevMenu(Menu &menu);
 
-        void setPrevMenu(Menu &menu);
+ private:
+  bool itemsIsSorted;
+  HorizontalAlign hAlign;
+  VerticalAlign vAlign;
+  std::list<MenuItem> items;
+  sf::RenderWindow &window;
+  Menu *prevMenu;
 
+  unsigned int calcXPos(sf::Vector2u &vector2U, int xDelta);
 
-    private:
-        bool itemsIsSorted;
-        HorizontalAlign hAlign;
-        VerticalAlign vAlign;
-        std::list<MenuItem> items;
-        sf::RenderWindow & window;
-        Menu *prevMenu;
-
-        unsigned int calcXPos(sf::Vector2u &vector2U, int xDelta);
-
-        unsigned int calcYPos(sf::Vector2u &vector2U, int delta);
-    };
+  unsigned int calcYPos(sf::Vector2u &vector2U, int delta);
+};
 }

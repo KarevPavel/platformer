@@ -1,7 +1,3 @@
-//
-// Created by yacopsae on 14/11/2020.
-//
-
 #include "ball.h"
 
 Ball::Ball(float &x,

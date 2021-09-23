@@ -3,18 +3,12 @@
 //
 #pragma once
 
-#include <SFML/Graphics.hpp>
-#include <state/state_list.hpp>
-
-#include "player_engine.h"
-#include "main_menu.h"
-#include "menu_engine.h"
-#include "game_engine.h"
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/System/Time.hpp>
+#include <manager/font_manager.hpp>
+#include <manager/music_manager.hpp>
+#include "state_list.hpp"
 #include "settings_manager.hpp"
-#include "ball.h"
-#include "menu_state.hpp"
-#include "game_state.hpp"
-#include "pause_state.hpp"
 
 class Application {
 
@@ -28,6 +22,9 @@ class Application {
   void processEvents();
   void update(sf::Time deltaTime);
   void render();
+
+  FontManager _fonts;
+  MusicPlayer _music;
   sf::RenderWindow _window;
   SettingsManager settingsManager;
   StateList _stateList;

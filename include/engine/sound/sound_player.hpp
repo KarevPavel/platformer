@@ -10,7 +10,6 @@
 
 #include <list>
 
-
 class SoundPlayer {
 
  public:
@@ -33,7 +32,8 @@ class SoundPlayer {
 
   const float listenerZ = 300.f; //!< The distance of the listener (virtual ear) from the two-dimensional game plane.
   const float attenuation = 8.f; //!< The ratio of how fast a sound fades away as a function of distance
-  const float minDistance = 300.f; //!< The minimum distance from the virtual ear at which sound begins to fade (to become more silent).
+  const float minDistance =
+	  300.f; //!< The minimum distance from the virtual ear at which sound begins to fade (to become more silent).
 
 };
 

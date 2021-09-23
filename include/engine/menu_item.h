@@ -16,70 +16,71 @@
 
 namespace core::engine {
 
-    class Menu;
+class Menu;
 
-    class MenuItem {
+class MenuItem {
 
-    public:
-        explicit MenuItem(const std::string &txt, int pos, bool isSelected = false) : MenuItem(txt, pos,
-                                                                                               sf::Color::White,
-                                                                                               isSelected) {}
+ public:
+  explicit MenuItem(const std::string &txt, int pos, bool isSelected = false) : MenuItem(txt, pos,
+																						 sf::Color::White,
+																						 isSelected) {}
 
-        MenuItem(const std::string &txt, int pos, sf::Color fontColor, bool isSelected = false) : MenuItem(txt, pos,
-                                                                                                           fontColor,
-                                                                                                           "/home/yacopsae/CLionProjects/platformer/resources/fonts/LiberationMono-Bold.ttf",
-                                                                                                           isSelected) {}
+  MenuItem(const std::string &txt, int pos, sf::Color fontColor, bool isSelected = false) : MenuItem(txt,
+																									 pos,
+																									 fontColor,
+																									 "/home/yacopsae/CLionProjects/platformer/resources/fonts/LiberationMono-Bold.ttf",
+																									 isSelected) {}
 
-        MenuItem(const std::string &txt,
-                 int pos,
-                 sf::Color fontColor,
-                 const std::string & fontName,
-                 bool isSelected = false);
+  MenuItem(const std::string &txt,
+		   int pos,
+		   sf::Color fontColor,
+		   const std::string &fontName,
+		   bool isSelected = false);
 
-        bool operator()(const MenuItem &menuItem1, const MenuItem &menuItem2) {
-            return menuItem1.getPosition() < menuItem2.getPosition();
-        }
+  bool operator()(const MenuItem &menuItem1, const MenuItem &menuItem2) {
+	return menuItem1.getPosition() < menuItem2.getPosition();
+  }
 
-        friend bool operator<(const MenuItem& l, const MenuItem& r) {
-            return l.getPosition() < r.getPosition();
-        }
+  friend bool operator<(const MenuItem &l, const MenuItem &r) {
+	return l.getPosition() < r.getPosition();
+  }
 
-        sf::Text getText();
+  sf::Text getText();
 
-        bool isSelected() const;
+  bool isSelected() const;
 
-        int getPosition() const;
+  int getPosition() const;
 
-        void setNextMenu(Menu & menu);
+  void setNextMenu(Menu &menu);
 
-        bool hasSubmenu();
+  bool hasSubmenu();
 
-        void showNextMenu();
+  void showNextMenu();
 
-        void setAction(GEngineFn function);
+  void setAction(GEngineFn function);
 
-        GEngineFn getAction();
+  GEngineFn getAction();
 
-        void setStateChanger(GEngineStateChange stateChanger);
+  void setStateChanger(GEngineStateChange stateChanger);
 
-        GEngineStateChange getStateChanger();
+  GEngineStateChange getStateChanger();
 
-        void isSelected(bool isSelected);
+  void isSelected(bool isSelected);
 
-        sf::Font getFont();
+  sf::Font getFont();
 
-        GameEngine::STATE & getChangedState();
+  GameEngine::STATE &getChangedState();
 
-        void setChangedState(GameEngine::STATE state);
+  void setChangedState(GameEngine::STATE state);
 
-    private:
-        sf::Text text;
-        bool selected;
-        int position;
-        Menu * nextMenu;
-        sf::Font font;
-        GEngineFn action;
-        GEngineStateChange stateChanger;
-        GameEngine::STATE changedState;
-    };
+ private:
+  sf::Text text;
+  bool selected;
+  int position;
+  Menu *nextMenu;
+  sf::Font font;
+  GEngineFn action;
+  GEngineStateChange stateChanger;
+  GameEngine::STATE changedState;
+};
 }

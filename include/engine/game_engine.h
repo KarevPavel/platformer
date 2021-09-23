@@ -13,44 +13,44 @@
 
 namespace core::engine {
 
-    class GameEngine {
+class GameEngine {
 
-    public:
-        enum STATE {
-            MENU,
-            GAME
-        };
+ public:
+  enum STATE {
+	MENU,
+	GAME
+  };
 
-        GameEngine() = delete;
-        GameEngine(GameEngine& ) = delete;
-        explicit GameEngine(STATE & currentState,
-                            sf::RenderWindow &window,
-                            Ball& ball,
-                            int lvl);
+  GameEngine() = delete;
+  GameEngine(GameEngine &) = delete;
+  explicit GameEngine(STATE &currentState,
+					  sf::RenderWindow &window,
+					  Ball &ball,
+					  int lvl);
 
-        void changeState(STATE & currentState);
+  void changeState(STATE &currentState);
 
-        void startNewGame(sf::RenderWindow &window);
+  void startNewGame(sf::RenderWindow &window);
 
-        void update(sf::Time time);
+  void update(sf::Time time);
 
-        void exitGame(sf::RenderWindow &window);
+  void exitGame(sf::RenderWindow &window);
 
-    private:
-        STATE & _currentState;
-        sf::RenderWindow & _window;
-        std::list<MapLayer> _mapLayer;
-        sf::View _view;
-        Ball _ball;
+ private:
+  STATE &_currentState;
+  sf::RenderWindow &_window;
+  std::list<MapLayer> _mapLayer;
+  sf::View _view;
+  Ball _ball;
 
-        std::list<MapLayer> LoadLevel(int number);
+  std::list<MapLayer> LoadLevel(int number);
 
-        void GenerateLevel();
+  void GenerateLevel();
 
-        void LoadPlayer();
+  void LoadPlayer();
 
-    };
+};
 
-    typedef void (GameEngine::*GEngineFn)(sf::RenderWindow & window);
-    typedef void (GameEngine::*GEngineStateChange)(GameEngine::STATE & currentState);
+typedef void (GameEngine::*GEngineFn)(sf::RenderWindow &window);
+typedef void (GameEngine::*GEngineStateChange)(GameEngine::STATE &currentState);
 }

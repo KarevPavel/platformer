@@ -1,14 +1,19 @@
-//
-// Created by yacopsae on 18/08/2021.
-//
-
-#include "applcation.h"
+#include "player_engine.h"
+#include "application.h"
+#include "player_model.h"
+#include "menu_state.hpp"
+#include "game_state.hpp"
+#include "pause_state.hpp"
+#include "main_menu.h"
+#include "menu_engine.h"
+#include "game_engine.h"
+#include "state.hpp"
 
 static core::engine::GameEngine::STATE currentState = core::engine::GameEngine::STATE::MENU;
 
-Application::Application() : _window() {
+Application::Application() : _window(), _fonts(), _music() {
   configureWindow(_window);
-  _stateList.add<MenuState>(_window);
+  _stateList.add<MenuState>(_window, _fonts, _music);
   _stateList.add<GameState>(_window);
   _stateList.add<PauseState>(_window);
 }
@@ -17,11 +22,11 @@ void Application::configureWindow(sf::RenderWindow &window) {
   window.setVerticalSyncEnabled(settingsManager.verticalSync());
   window.setFramerateLimit(settingsManager.frameLimit());
 
-  sf::ContextSettings settings{
+  sf::ContextSettings settings(
 	  0,
 	  0,
 	  settingsManager.antialiasingLevel()
-  };;
+  );
   window.create(settingsManager.videoMode(), "Test title", sf::Style::Titlebar | sf::Style::Close, settings);
 }
 

@@ -12,7 +12,7 @@ set(MODELS_INCLUDE_DIR ${MAIN_PROJECT_SOURCE}/include/models)
 set(SOUND_INCLUDE_DIR ${MAIN_PROJECT_SOURCE}/include/engine/sound)
 set(STATE_INCLUDE_DIR ${MAIN_PROJECT_SOURCE}/include/engine/state)
 set(BOX2D_EXT_INCLUDE_DIR ${MAIN_PROJECT_SOURCE}/include/engine/box2d)
-
+set(MANAGER_INCLUDE_DIR ${MAIN_PROJECT_SOURCE}/include/engine/manager)
 
 file(COPY resources DESTINATION ${PROJECT_BINARY_DIR}/resources)
 
@@ -28,26 +28,31 @@ include_directories(
 
 add_subdirectory(src/core)
 
+include("GenerateConsts.cmake")
+
+add_generated_stuff(constants resources)
+
 add_executable(${PROJECT_NAME}
 			   src/platformer.cpp
-			   include/engine/keyboard.h
-			   include/engine/SFMLOrthogonalLayer.h
-			   include/engine/directions.h
 			   include/engine/state/state.hpp
-			   include/engine/state/state_list.hpp
-			   )
+			   include/engine/keyboard.h
+			   include/engine/SFMLOrthogonalLayer.h)
 
 message(TMXLITE_LIBRARIES ${TMXLITE_LIBRARIES})
 message(SFML_LIBRARIES ${SFML_LIBRARIES})
 message(BOX2D_LIBRARIES ${BOX2D_LIBRARIES})
 
+#[[
+mb later
+		gtest
+		gtest_main
+]]
 target_link_libraries(
 		${PROJECT_NAME}
 		${TMXLITE_LIBRARIES}
 		${SFML_LIBRARIES}
 		${BOX2D_LIBRARIES}
-		gtest
-		gtest_main
+		constants
 		states
 		engine
 		menu

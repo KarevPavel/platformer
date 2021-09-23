@@ -4,6 +4,7 @@ project(models)
 
 add_library(
 		${PROJECT_NAME}
+		SHARED
 		general.cpp
 		player_model.cpp
 		player.cpp

@@ -10,10 +10,10 @@
 
 namespace core::models {
 
-    class MainMenu : public core::engine::Menu {
+class MainMenu : public core::engine::Menu {
 
-    public:
-        explicit MainMenu(sf::RenderWindow &window);
+ public:
+  explicit MainMenu(sf::RenderWindow &window);
 
-    };
+};
 }

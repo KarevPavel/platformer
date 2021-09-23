@@ -17,9 +17,8 @@ class World : sf::NonCopyable {
   World(sf::RenderWindow &window);
 
  private:
-  sf::RenderWindow & _window;
+  sf::RenderWindow &_window;
   sf::View _worldView;
-
 
   // === Scene-related objects === //
   b2World b2_World; //!< Physical simulation of the game world

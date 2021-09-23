@@ -14,28 +14,40 @@
 class StateList {
 
  public:
-  StateList() = default;
+  StateList();
 
-  template<class State, typename... Args>
-  inline void add(Args &&... args) {
-	factory["TEST"] = [&args..., this]() {
-	  return std::make_unique<State>(*this, std::forward<Args>(args)...);
-	};
-  }
+  void test(State *state);
 
-  inline void draw(sf::RenderTarget &target, sf::RenderStates currState) {
-	for (const auto &state : vector_) {
-	  state->draw(target, currState);
-	}
-  }
+  template<typename StateChild, typename... Args>
+  void add(Args &&... args);
 
-  inline void update(sf::Time deltaTime) {
-	for (auto &state : vector_) {
-	  state->update(deltaTime);
-	}
-  }
+  void draw(sf::RenderTarget &target, sf::RenderStates currState);
+
+  void update(sf::Time deltaTime);
 
  private:
-  std::map<std::string, std::function<State::Ptr()>> factory;
-  std::vector<State::Ptr> vector_;
+  std::vector<State *> vector_;
 };
+
+template<typename StateChild, typename... Args>
+inline void StateList::add(Args &&... args) {
+  vector_.push_back(new StateChild(*this, std::forward<Args>(args)...));
+}
+
+inline void StateList::test(State *s) {
+  vector_.push_back(s);
+}
+
+inline void StateList::draw(sf::RenderTarget &target, sf::RenderStates currState) {
+  for (const auto &state : vector_) {
+	state->draw(target, currState);
+  }
+}
+
+inline void StateList::update(sf::Time deltaTime) {
+  for (auto &state : vector_) {
+	state->update(deltaTime);
+  }
+}
+
+inline StateList::StateList() = default;

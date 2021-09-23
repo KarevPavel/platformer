@@ -4,6 +4,7 @@ project(menu)
 
 add_library(
 		${PROJECT_NAME}
+		SHARED
 		main_menu.cpp
 		menu.cpp
 		menu_item.cpp

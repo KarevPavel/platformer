@@ -4,6 +4,7 @@ project(sound)
 
 add_library(
 		${PROJECT_NAME}
+		SHARED
 		sound_player.cpp)
 
 target_include_directories(${PROJECT_NAME}

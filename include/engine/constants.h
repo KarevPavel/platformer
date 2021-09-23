@@ -9,5 +9,5 @@
 #include "constants.h"
 
 namespace core::engine::game {
-    inline const int FIRST_LEVEL(1);
+inline const int FIRST_LEVEL(1);
 }

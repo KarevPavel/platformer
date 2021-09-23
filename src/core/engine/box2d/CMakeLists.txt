@@ -4,6 +4,7 @@ project(box2d)
 
 add_library(
 		${PROJECT_NAME}
+		SHARED
 		debug_box_2_d.cpp
 		world_listener.cpp)
 

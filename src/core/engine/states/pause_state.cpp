@@ -25,3 +25,6 @@ void PauseState::draw(sf::RenderTarget &target, sf::RenderStates state) const {
 void PauseState::handleEvent(const sf::Event &event) {
 
 }
+
+void MenuState::loadResources()
+{

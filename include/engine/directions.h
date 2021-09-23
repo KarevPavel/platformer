@@ -5,8 +5,8 @@
 #pragma once
 
 enum DIRECTIONS {
-    UP = 90,
-    DOWN = 270,
-    LEFT = 0,
-    RIGHT = 180
+  UP = 90,
+  DOWN = 270,
+  LEFT = 0,
+  RIGHT = 180
 };

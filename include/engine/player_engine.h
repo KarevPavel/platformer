@@ -11,24 +11,24 @@
 
 namespace core::engine {
 
-    class PlayerEngine : public core::keyboard::KeyboardEngine<PlayerModel> {
+class PlayerEngine : public core::keyboard::KeyboardEngine<PlayerModel> {
 
-    private:
-        float elapsed;
+ private:
+  float elapsed;
 
-    public:
-        explicit PlayerEngine(PlayerModel &model);
+ public:
+  explicit PlayerEngine(PlayerModel &model);
 
-        void processEvent(sf::Event::KeyEvent keyevent, float elapsedSec);
+  void processEvent(sf::Event::KeyEvent keyevent, float elapsedSec);
 
-        void D_click();
+  void D_click();
 
-        void A_click();
+  void A_click();
 
-        void W_click();
+  void W_click();
 
-        void S_click();
+  void S_click();
 
-        void Space_click();
-    };
+  void Space_click();
+};
 }
