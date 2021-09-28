@@ -1,5 +1,6 @@
-#include "player_engine.h"
 #include "application.h"
+
+#include "player_engine.h"
 #include "player_model.h"
 #include "menu_state.hpp"
 #include "game_state.hpp"
@@ -7,15 +8,15 @@
 #include "main_menu.h"
 #include "menu_engine.h"
 #include "game_engine.h"
-#include "state.hpp"
+#include "state_stack.hpp"
 
 static core::engine::GameEngine::STATE currentState = core::engine::GameEngine::STATE::MENU;
 
-Application::Application() : _window(), _fonts(), _music() {
+Application::Application() : _window(), _fonts(), _music(), _textures() {
   configureWindow(_window);
-  _stateList.add<MenuState>(_window, _fonts, _music);
-  _stateList.add<GameState>(_window);
-  _stateList.add<PauseState>(_window);
+  _stateList.saveState<MenuState>(State_ID::MenuState, _window, _fonts, _music, _textures);
+  _stateList.saveState<GameState>(State_ID::GameState, _window);
+  _stateList.saveState<PauseState>(State_ID::PauseState, _window);
 }
 
 void Application::configureWindow(sf::RenderWindow &window) {

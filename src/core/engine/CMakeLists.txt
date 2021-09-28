@@ -6,7 +6,6 @@ add_library(
 		${PROJECT_NAME}
 		SHARED
 		application.cpp
-		constants.cpp
 		game_engine.cpp
 		player_engine.cpp
 		settings_manager.cpp
@@ -19,6 +18,7 @@ add_subdirectory(sound)
 add_subdirectory(manager)
 
 target_include_directories(${PROJECT_NAME}
+						   PUBLIC ${MANAGER_INCLUDE_DIR}
 						   PUBLIC ${ENGINE_INCLUDE_DIR}
 						   PUBLIC ${MODELS_INCLUDE_DIR}
 						   PUBLIC ${SOUND_INCLUDE_DIR}

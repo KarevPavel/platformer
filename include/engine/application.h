@@ -5,9 +5,9 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Time.hpp>
-#include <manager/font_manager.hpp>
-#include <manager/music_manager.hpp>
-#include "state_list.hpp"
+#include "music_player.hpp"
+#include "resource_manager.hpp"
+#include "state_stack.hpp"
 #include "settings_manager.hpp"
 
 class Application {
@@ -25,7 +25,8 @@ class Application {
 
   FontManager _fonts;
   MusicPlayer _music;
+  TextureManager _textures;
   sf::RenderWindow _window;
   SettingsManager settingsManager;
-  StateList _stateList;
+  StateStack _stateList;
 };

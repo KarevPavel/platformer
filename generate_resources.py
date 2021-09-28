@@ -2,6 +2,7 @@
 import argparse
 import os
 import sys
+import pathlib
 
 def write_lines(filename, lines):
     with open(filename, 'w') as f:
@@ -16,7 +17,7 @@ def read_interface_names(path):
             if headerName != "":
                 filepath = subdir + os.sep + file
                 if os.path.isfile(filepath):
-                    file = file[0:file.rindex('.')].replace('.','_').replace('-','_')
+
                     if dictionary.__contains__(headerName):
                         dictionary[headerName].append(file)
                     else:
@@ -30,16 +31,23 @@ def generate_implementation(name):
 def generate_header(fileName, constants: []):
     fields = []
     for constant in constants:
-        constant = str(constant)
-        fields.append('\tstatic const std::string ' + constant.upper() + '="' + constant + '";')
+        dirtyFileName = str(constant)
+        pureConstantName = maskFileName(dirtyFileName)
+        fields.append('\tstatic const std::string ' + pureConstantName.upper() + '="' + pureConstantName + '";')
+        fields.append('\tstatic const std::string ' + pureConstantName.upper() + '_PATH = "' +
+                      str(pathlib.Path().resolve().absolute()) + "/resources/" + dirtyFileName + '";')
 
     code = ['#pragma once\n',
             '#include <string>\n'
-            'namespace constants {',
+            'namespace constants {\n',
             '\n'.join(fields),
             '}']
 
     write_lines(fileName + '.hpp', code)
+
+def maskFileName(dirtyFileName):
+    return dirtyFileName[0:dirtyFileName.rindex('.')].replace('.','_').replace('-','_')
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Generate some cpp/hpp files.')

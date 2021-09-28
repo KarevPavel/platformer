@@ -2,10 +2,5 @@
 // Created by yacopsae on 23/09/2021.
 //
 
-#pragma once
-
-class TextureManager {
-
-};
-
+#include "music_player.hpp"
 

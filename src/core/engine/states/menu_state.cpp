@@ -1,39 +1,51 @@
 #include "menu_state.hpp"
+#include <button.hpp>
 
-MenuState::MenuState(StateList &state_list,
+MenuState::MenuState(StateStack &state_list,
 					 sf::RenderWindow &window,
 					 FontManager &fonts,
-					 MusicPlayer &music) :
+					 MusicPlayer &music,
+					 TextureManager &textures) :
 	State(state_list),
 	_window(window),
 	_fonts(fonts),
+	_textures(textures),
 	_music(music) {
   _window.setView(_window.getDefaultView());
-
 
   //_backgroundTexture.setTexture(textures.getResourceReference(Textures_ID::WorldBackground));
   _backgroundTexture.setTextureRect(sf::IntRect(0, 0, window.getSize().x, window.getSize().y));
 
-  createButtons(_window);
+  createButtons(_window, {window.getSize().x / 4.f, window.getSize().y / 6.f});
 }
 
 std::string MenuState::getId() {
   return "MenuState";
 }
 
-void MenuState::update(sf::Time deltaTime) {
-
+bool MenuState::update(sf::Time deltaTime) {
+  return false;
 }
 
-void MenuState::draw(sf::RenderTarget &target, sf::RenderStates state) const {
-
+bool MenuState::draw(sf::RenderTarget &target, sf::RenderStates state) const {
+  return false;
 }
 
-void MenuState::handleEvent(const sf::Event &event) {
+bool MenuState::handleEvent(const sf::Event &event) {
 
+  return false;
 }
 
-void MenuState::createButtons(sf::RenderWindow &window) {
+void MenuState::createButtons(sf::RenderWindow &window, sf::Vector2f position) {
+  // Play Button
+  auto play_button = new Button(_textures, _fonts);
+  play_button->setText("Play the game!");
+  play_button->matchSizeToText(20.f);
+  play_button->setPosition(position.x, position.y + play_button->getLocalBounds().height);
 
+  play_button->setActiveFunction([this](Button &self) {
+	requestPop();
+	requestPush(State_ID::GameState);
+  });
 }
 

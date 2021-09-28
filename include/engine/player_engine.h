@@ -4,9 +4,9 @@
 
 #pragma once
 
-#include "player_model.h"
-#include "SFML/Graphics.hpp"
+#include <SFML/Graphics.hpp>
 
+#include "player_model.h"
 #include "keyboard.h"
 
 namespace core::engine {

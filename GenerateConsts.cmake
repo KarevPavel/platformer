@@ -5,11 +5,11 @@ if(NOT PYTHON_EXECUTABLE)
 endif()
 set(GENERATOR generate_resources.py)
 
-function(add_generated_stuff TARGET INFILE)
+function(add_generated_stuff MAIN_DIR TARGET INFILE)
 	set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS ${INFILE})
 
-	set(GENERATOR_PATH ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/${GENERATOR})
-	set(INPATH ${CMAKE_CURRENT_SOURCE_DIR}/${INFILE})
+	set(GENERATOR_PATH ${PYTHON_EXECUTABLE} ${MAIN_DIR}/${GENERATOR})
+	set(INPATH ${MAIN_DIR}/${INFILE})
 	execute_process(
 			COMMAND ${GENERATOR_PATH} --print-dependencies ${INPATH}
 			OUTPUT_VARIABLE DEPENDENCIES
@@ -26,7 +26,7 @@ function(add_generated_stuff TARGET INFILE)
 			DEPENDS ${GENERATOR} ${INFILE}
 			COMMENT "Generating ${DEPENDENCIES} from ${INFILE}"
 	)
-	# add_custom_target(moep DEPENDS ${deps})
+
 	add_library(${TARGET} SHARED ${DEPENDENCIES})
 	target_include_directories(${TARGET} PUBLIC ${CMAKE_CURRENT_BINARY_DIR})
 endfunction()

@@ -4,7 +4,7 @@
 
 #include "pause_state.hpp"
 
-PauseState::PauseState(StateList &state_list, sf::RenderWindow &window) :
+PauseState::PauseState(StateStack &state_list, sf::RenderWindow &window) :
 	State(state_list),
 	_window(window) {
   _window.setView(_window.getDefaultView());
@@ -14,17 +14,14 @@ std::string PauseState::getId() {
   return "PauseState";
 }
 
-void PauseState::update(sf::Time deltaTime) {
-
+bool PauseState::update(sf::Time deltaTime) {
+  return false;
 }
 
-void PauseState::draw(sf::RenderTarget &target, sf::RenderStates state) const {
-
+bool PauseState::draw(sf::RenderTarget &target, sf::RenderStates state) const {
+  return false;
 }
 
-void PauseState::handleEvent(const sf::Event &event) {
-
+bool PauseState::handleEvent(const sf::Event &event) {
+  return false;
 }
-
-void MenuState::loadResources()
-{
