@@ -11,7 +11,8 @@ MenuState::MenuState(StateStack &state_list,
 	_window(window),
 	_fonts(fonts),
 	_textures(textures),
-	_music(music) {
+	_music(music),
+	_buttons(window){
   _window.setView(_window.getDefaultView());
 
   _backgroundTexture.setTexture(textures.getResourceReference(constants::BLACK_PATH));
@@ -24,15 +25,22 @@ std::string MenuState::getId() {
   return "MenuState";
 }
 
-void MenuState::draw(sf::RenderTarget &target, sf::RenderStates state) const {
-  target.draw(_backgroundTexture, state);
+void MenuState::draw(sf::RenderTarget &target, sf::RenderStates states) const {
+  target.draw(_backgroundTexture, states);
+
+  _buttons.draw(target, states);
 }
 
 bool MenuState::update(sf::Time deltaTime) {
+
+  _buttons.update();
+
   return false;
 }
 
 bool MenuState::handleEvent(const sf::Event &event) {
+  _buttons.handleEvents(event);
+
   return false;
 }
 
@@ -47,5 +55,7 @@ void MenuState::createButtons(sf::RenderWindow &window, sf::Vector2f position) {
 	requestPop();
 	requestPush(State_ID::GameState);
   });
+
+  _buttons.store(std::move(play_button));
 }
 

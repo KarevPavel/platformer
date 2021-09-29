@@ -7,6 +7,7 @@ include(ProjectVariables.cmake)
 file(COPY resources DESTINATION ${PROJECT_BINARY_DIR}/)
 
 include(GenerateConsts.cmake)
+
 add_generated_stuff(${MAIN_PROJECT_SOURCE} constants resources)
 
 find_package(Box2D REQUIRED)
@@ -16,7 +17,9 @@ find_package(SFML 2.5 REQUIRED audio network graphics window system)
 include_directories(
 		${TMXLITE_INCLUDE_DIR}
 		${SFML_INCLUDE_DIR}
-		${BOX2D_INCLUDE_DIR})
+		${BOX2D_INCLUDE_DIR}
+		${GUI_INCLUDE_DIR})
+
 add_subdirectory(src/core)
 add_executable(${PROJECT_NAME}
 			   src/platformer.cpp
@@ -38,6 +41,7 @@ target_link_libraries(
 		${SFML_LIBRARIES}
 		${BOX2D_LIBRARIES}
 		constants
+		gui
 		states
 		engine
 		menu
@@ -45,5 +49,4 @@ target_link_libraries(
 		box2d
 		sound
 		models
-		gui
 )

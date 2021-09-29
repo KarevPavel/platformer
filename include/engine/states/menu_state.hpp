@@ -2,7 +2,9 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Sprite.hpp>
-#include <resource_manager.hpp>
+
+#include "resource_manager.hpp"
+#include "fixed_container.hpp"
 #include "music_player.hpp"
 #include "state_stack.hpp"
 
@@ -21,6 +23,8 @@ class MenuState : public State {
 
  private:
   void createButtons(sf::RenderWindow &window, sf::Vector2f position);
+
+  FixedContainer _buttons;
 
   sf::Sprite _backgroundTexture;
   sf::RenderWindow &_window;

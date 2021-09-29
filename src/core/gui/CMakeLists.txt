@@ -7,7 +7,8 @@ add_library(
 		SHARED
 		component.cpp
 		button.cpp
-)
+		container.cpp
+		fixed_container.cpp)
 
 target_link_libraries(
 		${PROJECT_NAME}

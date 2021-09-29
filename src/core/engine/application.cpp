@@ -40,7 +40,7 @@ int Application::run() {
   auto timePerFrame = sf::seconds(1.f / settingsManager.timePerFrame());
   while (_window.isOpen()) {
 
-    frameTimeElapsed += clock.restart();
+	frameTimeElapsed += clock.restart();
 
 	while (frameTimeElapsed > timePerFrame) {
 	  // Update world no more than 60 frames per seconds
@@ -59,7 +59,7 @@ void Application::processEvents() {
   while (_window.pollEvent(event)) {
 	if (event.type == sf::Event::Closed)
 	  _window.close();
-	//_stateList.handleEvent(event);
+	_stateList.handleEvent(event);
   }
 }
 

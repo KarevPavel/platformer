@@ -30,13 +30,12 @@ void Button::onEnter() {
   // Changes the texture to a different one (set) when hovering
   sprite.setTexture(selectedTexture);
 
-  /*// Increases the button size accordingly when hovered over
-  centerOrigin(sprite);
+
+  //centerOrigin(sprite);
   sprite.setScale(1.2, 1.2);
 
-  centerOrigin(text);
+  //centerOrigin(text);
   text.setScale(1.2, 1.2);
-   */
 }
 
 void Button::onLeave() {
@@ -44,6 +43,8 @@ void Button::onLeave() {
 
   sprite.setTexture(normalTexture);
 
+  sprite.setScale(1, 1);
+  text.setScale(1, 1);
   // Decreases the button size (to the default scale) after leaving
   /*centerOrigin(sprite);
   sprite.setScale(1, 1);
