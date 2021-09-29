@@ -4,21 +4,21 @@
 
 #include "state_stack.hpp"
 
-State * StateStack::createState(State_ID stateID) {
+State::Ptr StateStack::createState(State_ID stateID) {
   auto found = factory.find(stateID);
-  return nullptr;
+  return found->second();
 }
 
 void StateStack::applyChanges() {
   for (auto &change : changesQueue) {
 	switch (change.operation) {
-	  case Perform::Push:stack.push_back(createState(change.stateID));
+	  case Perform::Push: stack.push_back(createState(change.stateID));
 		break;
 
-	  case Perform::Pop:stack.pop_back();
+	  case Perform::Pop: stack.pop_back();
 		break;
 
-	  case Perform::Clear:stack.clear();
+	  case Perform::Clear: stack.clear();
 		break;
 	}
   }

@@ -9,6 +9,21 @@
 #include "button.hpp"
 #include "fonts.hpp"
 
+
+Button::Button(TextureManager &textures, FontManager &fonts) :
+	Component(),
+	normalTexture(textures.getResourceReference(constants::BLACK_PATH)),
+	selectedTexture(textures.getResourceReference(constants::BLACK_PATH)),
+	text("", fonts.getResourceReference(constants::LIBERATIONMONO_BOLD_PATH),
+		 20) {
+  text.setFillColor(sf::Color::White);
+  text.setOutlineColor(sf::Color(47, 60, 76, 255));
+  text.setOutlineThickness(1.5f);
+
+  sprite.setTexture(normalTexture);
+  //centerOrigin(sprite);
+}
+
 void Button::onEnter() {
   Component::onEnter();
 
@@ -53,21 +68,6 @@ void Button::deactivate() {
 
 void Button::setSize(int width, int height) {
   sprite.setTextureRect(sf::IntRect(0, 0, width, height));
-  //centerOrigin(sprite);
-}
-
-Button::Button(TextureManager &textures, FontManager &fonts) :
-	Component(),
-	normalTexture(textures.getResourceRef(constants::BLACK_PATH)),
-	selectedTexture(textures.getResourceRef(constants::BLACK_PATH)),
-	text("", fonts.getResourceRef(constants::LIBERATIONMONO_BOLD_PATH),
-		 20) {
-
-  text.setFillColor(sf::Color::White);
-  text.setOutlineColor(sf::Color(47, 60, 76, 255));
-  text.setOutlineThickness(1.5f);
-
-  sprite.setTexture(normalTexture);
   //centerOrigin(sprite);
 }
 

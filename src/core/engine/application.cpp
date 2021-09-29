@@ -17,6 +17,8 @@ Application::Application() : _window(), _fonts(), _music(), _textures() {
   _stateList.saveState<MenuState>(State_ID::MenuState, _window, _fonts, _music, _textures);
   _stateList.saveState<GameState>(State_ID::GameState, _window);
   _stateList.saveState<PauseState>(State_ID::PauseState, _window);
+
+  _stateList.push(State_ID::MenuState);
 }
 
 void Application::configureWindow(sf::RenderWindow &window) {
@@ -36,15 +38,17 @@ int Application::run() {
   auto frameTimeElapsed = sf::Time::Zero;
 
   auto timePerFrame = sf::seconds(1.f / settingsManager.timePerFrame());
-
   while (_window.isOpen()) {
-	frameTimeElapsed += clock.restart();
+
+    frameTimeElapsed += clock.restart();
+
 	while (frameTimeElapsed > timePerFrame) {
 	  // Update world no more than 60 frames per seconds
 	  frameTimeElapsed -= timePerFrame;
 	  processEvents();
 	  update(timePerFrame);
 	}
+
 	render();
   }
   return 0;

@@ -16,8 +16,8 @@ class State {
 
   explicit State(StateStack &state): stack(&state) { }
   virtual std::string getId() = 0;
+  virtual void draw(sf::RenderTarget &target, sf::RenderStates state) const = 0;
   virtual bool update(sf::Time deltaTime) = 0;
-  virtual bool draw(sf::RenderTarget &target, sf::RenderStates state) const = 0;
   virtual bool handleEvent(const sf::Event &event) = 0;
  protected:
   void requestPush(State_ID stateID) const;

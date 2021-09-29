@@ -46,11 +46,11 @@ class StateStack {
 	State_ID stateID; //!< Identifier of the state that should be pushed on the stack
   };
 
-  State *createState(State_ID stateID);
+  State::Ptr createState(State_ID stateID);
 
   void applyChanges();
 
-  std::vector<State * > stack;
+  std::vector<State::Ptr> stack;
 
   std::vector<Change> changesQueue;
 

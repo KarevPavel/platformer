@@ -14,11 +14,11 @@ std::string PauseState::getId() {
   return "PauseState";
 }
 
-bool PauseState::update(sf::Time deltaTime) {
-  return false;
+void PauseState::draw(sf::RenderTarget &target, sf::RenderStates state) const {
+
 }
 
-bool PauseState::draw(sf::RenderTarget &target, sf::RenderStates state) const {
+bool PauseState::update(sf::Time deltaTime) {
   return false;
 }
 

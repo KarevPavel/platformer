@@ -12,7 +12,7 @@ class GameState : public State {
  public:
   GameState(StateStack &state_list, sf::RenderWindow &window);
   std::string getId() override;
-  bool draw(sf::RenderTarget &target, sf::RenderStates states) const override;
+  void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
   bool update(sf::Time deltaTime) override;
   bool handleEvent(const sf::Event &event) override;
 

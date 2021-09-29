@@ -4,7 +4,7 @@ set(PROJECT_NAME platformer)
 
 include(ProjectVariables.cmake)
 
-file(COPY resources DESTINATION ${PROJECT_BINARY_DIR}/resources)
+file(COPY resources DESTINATION ${PROJECT_BINARY_DIR}/)
 
 include(GenerateConsts.cmake)
 add_generated_stuff(${MAIN_PROJECT_SOURCE} constants resources)

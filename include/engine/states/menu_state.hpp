@@ -15,8 +15,8 @@ class MenuState : public State {
 			MusicPlayer &music,
 			TextureManager &textures);
   std::string getId() override;
+  void draw(sf::RenderTarget &target, sf::RenderStates state) const override;
   bool update(sf::Time deltaTime) override;
-  bool draw(sf::RenderTarget &target, sf::RenderStates state) const override;
   bool handleEvent(const sf::Event &event) override;
 
  private:
