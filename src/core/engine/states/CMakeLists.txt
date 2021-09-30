@@ -16,6 +16,7 @@ target_include_directories(${PROJECT_NAME}
 						   PUBLIC ${STATE_INCLUDE_DIR}
 						   PUBLIC ${MANAGER_INCLUDE_DIR}
 						   PUBLIC ${SOUND_INCLUDE_DIR}
-						   PUBLIC ${GUI_INCLUDE_DIR})
+						   PUBLIC ${GUI_INCLUDE_DIR}
+						   PUBLIC ${ENGINE_INCLUDE_DIR})
 
 target_link_libraries(${PROJECT_NAME} constants)

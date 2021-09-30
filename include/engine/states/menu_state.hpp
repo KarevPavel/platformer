@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/Text.hpp>
 
 #include "resource_manager.hpp"
 #include "fixed_container.hpp"
@@ -24,6 +25,7 @@ class MenuState : public State {
  private:
   void createButtons(sf::RenderWindow &window, sf::Vector2f position);
 
+  sf::Text _gameName;
   FixedContainer _buttons;
 
   sf::Sprite _backgroundTexture;

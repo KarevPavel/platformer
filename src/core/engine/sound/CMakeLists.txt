@@ -8,6 +8,9 @@ add_library(
 		music_player.cpp
 		sound_player.cpp)
 
-target_include_directories(${PROJECT_NAME} PUBLIC ${SOUND_INCLUDE_DIR})
+target_include_directories(${PROJECT_NAME}
+						   PUBLIC ${SOUND_INCLUDE_DIR}
+						   PUBLIC ${MANAGER_INCLUDE_DIR}
+						   )
 
 target_link_libraries(${PROJECT_NAME} constants)

@@ -12,29 +12,25 @@
 
 Button::Button(TextureManager &textures, FontManager &fonts) :
 	Component(),
-	normalTexture(textures.getResourceReference(constants::BLACK_PATH)),
-	selectedTexture(textures.getResourceReference(constants::BLACK_PATH)),
+	normalTexture(textures.getResourceReference(constants::PAPER_TEXTURE_PATH)),
+	selectedTexture(textures.getResourceReference(constants::PAPER_TEXTURE_PATH)),
 	text("", fonts.getResourceReference(constants::LIBERATIONMONO_BOLD_PATH),
 		 20) {
   text.setFillColor(sf::Color::White);
   text.setOutlineColor(sf::Color(47, 60, 76, 255));
   text.setOutlineThickness(1.5f);
 
+  normalTexture.setRepeated(true);
   sprite.setTexture(normalTexture);
-  //centerOrigin(sprite);
+  Utils::centerOrigin(sprite);
 }
 
 void Button::onEnter() {
   Component::onEnter();
-
-  // Changes the texture to a different one (set) when hovering
   sprite.setTexture(selectedTexture);
-
-
-  //centerOrigin(sprite);
+  Utils::centerOrigin(sprite);
   sprite.setScale(1.2, 1.2);
-
-  //centerOrigin(text);
+  Utils::centerOrigin(text);
   text.setScale(1.2, 1.2);
 }
 
@@ -42,15 +38,13 @@ void Button::onLeave() {
   Component::onLeave();
 
   sprite.setTexture(normalTexture);
-
   sprite.setScale(1, 1);
   text.setScale(1, 1);
-  // Decreases the button size (to the default scale) after leaving
-  /*centerOrigin(sprite);
+  Utils::centerOrigin(sprite);
   sprite.setScale(1, 1);
 
-  centerOrigin(text);
-  text.setScale(1, 1);*/
+  Utils::centerOrigin(text);
+  text.setScale(1, 1);
 }
 
 void Button::activate() {
@@ -69,7 +63,7 @@ void Button::deactivate() {
 
 void Button::setSize(int width, int height) {
   sprite.setTextureRect(sf::IntRect(0, 0, width, height));
-  //centerOrigin(sprite);
+  Utils::centerOrigin(sprite);
 }
 
 void Button::setActiveFunction(std::function<void(Button &)> onActivate) {
@@ -82,7 +76,7 @@ void Button::setDeactiveFunction(std::function<void(Button &)> onDeactivate) {
 
 void Button::setText(const std::string &_text) {
   text.setString(_text);
-  //centerOrigin(text);
+  Utils::centerOrigin(text);
 }
 
 sf::FloatRect Button::getGlobalBounds() const {
@@ -101,11 +95,11 @@ void Button::matchSizeToText(float padding) {
   sprite.setTextureRect(sf::IntRect(0, 0,
 									text.getLocalBounds().width * text.getScale().x + padding,
 									text.getLocalBounds().height * text.getScale().y + padding));
-  //centerOrigin(sprite);
+  Utils::centerOrigin(sprite);
 }
 
 void Button::handleEvents(const sf::Event &event) {
-  if (event.type == sf::Event::MouseButtonPressed && isSelected()) {
+  if (event.type == sf::Event::MouseButtonReleased && isSelected()) {
 	if (event.mouseButton.button == sf::Mouse::Left)
 	  activate();
 	if (event.mouseButton.button == sf::Mouse::Right)

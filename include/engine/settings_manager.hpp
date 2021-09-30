@@ -49,7 +49,7 @@ class SettingsManager {
   }
 
   sf::VideoMode videoMode() {
-	return sf::VideoMode(getParam(Window::SECTION, Window::WIDTH, 800), getParam(Window::SECTION, Window::HEIGHT, 600));
+	return sf::VideoMode(getParam(Window::SECTION, Window::WIDTH, 1280), getParam(Window::SECTION, Window::HEIGHT, 720));
   }
 
  private:

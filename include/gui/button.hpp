@@ -7,6 +7,7 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include "component.hpp"
+#include "utils.hpp"
 
 class Button : public Component {
 
@@ -45,7 +46,7 @@ class Button : public Component {
   void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
  private:
 
-  const sf::Texture &normalTexture;
+  sf::Texture &normalTexture;
   const sf::Texture &selectedTexture;
   sf::Sprite sprite;
   sf::Text text;

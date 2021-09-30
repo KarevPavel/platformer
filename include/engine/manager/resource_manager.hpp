@@ -14,7 +14,7 @@ template<typename Resource, typename Identifier>
 class ResourceManager {
 
  public:
-  inline Resource &getResourceReference(Identifier resourcePath);
+  inline Resource &getResourceReference(const Identifier &resourcePath);
 
  private:
   std::map<Identifier, std::unique_ptr<Resource>> resourceMap;
@@ -35,7 +35,7 @@ inline Resource *ResourceManager<Resource, Identifier>::getResource(Identifier r
 }*/
 
 template<typename Resource, typename Identifier>
-inline Resource &ResourceManager<Resource, Identifier>::getResourceReference(Identifier resourcePath) {
+inline Resource &ResourceManager<Resource, Identifier>::getResourceReference(const Identifier &resourcePath) {
   auto found_texture = resourceMap.find(resourcePath);
   if (found_texture == resourceMap.cend()) {
 	std::unique_ptr<Resource> resource = std::make_unique<Resource>();

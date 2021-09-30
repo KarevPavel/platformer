@@ -4,25 +4,40 @@
 
 #include "game_state.hpp"
 
-GameState::GameState(StateStack &state_list, sf::RenderWindow &window) :
-	State(state_list),
-	_window(window) {
+GameState::GameState(StateStack &stack, sf::RenderWindow &window) :
+	State(stack),
+	_window(window),
+	_gameWorld(window){
   _window.setView(_window.getDefaultView());
 }
 
 std::string GameState::getId() {
-  return "PauseState";
+  return "GameState";
 }
 
 
 void GameState::draw(sf::RenderTarget &target, sf::RenderStates state) const {
-
+	//_gameWorld.draw();
 }
 
 bool GameState::update(sf::Time deltaTime) {
-  return false;
+  // d = st (distance = speed * time)
+  //_gameWorld.update(deltaTime);
+
+  /*if(_gameWorld.isGameFinished())
+  {
+	_gameWorld.setView(_gameWorld.getDefaultView());
+	requestPop();
+	requestPush(State_ID::MenuState);
+  }*/
+  return true;
 }
 
 bool GameState::handleEvent(const sf::Event &event) {
-  return false;
+  if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
+	requestPush(State_ID::PauseState);
+
+  //_gameWorld.processEvents(event);
+
+  return true;
 }

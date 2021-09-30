@@ -1,6 +1,8 @@
 #include "menu_state.hpp"
 #include <button.hpp>
 #include <textures.hpp>
+#include <fonts.hpp>
+#include <sound.hpp>
 
 MenuState::MenuState(StateStack &state_list,
 					 sf::RenderWindow &window,
@@ -12,13 +14,20 @@ MenuState::MenuState(StateStack &state_list,
 	_fonts(fonts),
 	_textures(textures),
 	_music(music),
-	_buttons(window){
+	_buttons(window),
+	_gameName("Epic Game Ever", fonts.getResourceReference(constants::LIBERATIONMONO_BOLD_PATH), 90)
+	{
   _window.setView(_window.getDefaultView());
 
   _backgroundTexture.setTexture(textures.getResourceReference(constants::BLACK_PATH));
   _backgroundTexture.setTextureRect(sf::IntRect(0, 0, window.getSize().x, window.getSize().y));
 
-  createButtons(_window, {window.getSize().x / 4.f, window.getSize().y / 6.f});
+  _music.play(constants::MAIN_MENU_PATH);
+
+  const sf::Vector2f titlePosition(window.getSize().x / 2.f, window.getSize().y / 3.f);
+  Utils::centerOrigin(_gameName);
+  _gameName.setPosition(titlePosition.x, titlePosition.y);
+  createButtons(_window, Utils::getPositionBelow(_gameName));
 }
 
 std::string MenuState::getId() {
@@ -26,7 +35,9 @@ std::string MenuState::getId() {
 }
 
 void MenuState::draw(sf::RenderTarget &target, sf::RenderStates states) const {
-  target.draw(_backgroundTexture, states);
+  target.draw(_backgroundTexture);
+
+  target.draw(_gameName, states);
 
   _buttons.draw(target, states);
 }
@@ -58,4 +69,3 @@ void MenuState::createButtons(sf::RenderWindow &window, sf::Vector2f position) {
 
   _buttons.store(std::move(play_button));
 }
-

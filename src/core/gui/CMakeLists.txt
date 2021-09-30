@@ -16,4 +16,5 @@ target_link_libraries(
 
 target_include_directories(${PROJECT_NAME}
 						   PUBLIC ${GUI_INCLUDE_DIR}
-						   PUBLIC ${MANAGER_INCLUDE_DIR})
+						   PUBLIC ${MANAGER_INCLUDE_DIR}
+						   PUBLIC ${UTILS_INCLUDE_DIR})

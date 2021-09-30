@@ -6,11 +6,12 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "state_stack.hpp"
+#include "world.hpp"
 
 class GameState : public State {
 
  public:
-  GameState(StateStack &state_list, sf::RenderWindow &window);
+  GameState(StateStack &stack, sf::RenderWindow &window);
   std::string getId() override;
   void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
   bool update(sf::Time deltaTime) override;
@@ -18,6 +19,7 @@ class GameState : public State {
 
  private:
   sf::RenderWindow &_window;
+  World _gameWorld;
 };
 
 
