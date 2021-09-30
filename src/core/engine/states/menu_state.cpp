@@ -15,7 +15,7 @@ MenuState::MenuState(StateStack &state_list,
 	_textures(textures),
 	_music(music),
 	_buttons(window),
-	_gameName("Epic Game Ever", fonts.getResourceReference(constants::LIBERATIONMONO_BOLD_PATH), 90)
+	_gameName("Epic Game Ever", fonts.getResourceReference(constants::ANOTHER_DANGER_SLANTED___DEMO_PATH), 90)
 	{
   _window.setView(_window.getDefaultView());
 
@@ -27,6 +27,9 @@ MenuState::MenuState(StateStack &state_list,
   const sf::Vector2f titlePosition(window.getSize().x / 2.f, window.getSize().y / 3.f);
   Utils::centerOrigin(_gameName);
   _gameName.setPosition(titlePosition.x, titlePosition.y);
+  _gameName.setOutlineThickness(2.f);
+  _gameName.setOutlineColor(sf::Color::Red);
+  _gameName.setFillColor(sf::Color::Black);
   createButtons(_window, Utils::getPositionBelow(_gameName));
 }
 
@@ -67,5 +70,28 @@ void MenuState::createButtons(sf::RenderWindow &window, sf::Vector2f position) {
 	requestPush(State_ID::GameState);
   });
 
+/*
+  auto fullScreenButton = std::make_unique<Button>(_textures, _fonts);
+  fullScreenButton->setText("Fullscreen: " + (false ? std::string("yes") : std::string("no")));
+  fullScreenButton->matchSizeToText(20.f);
+  fullScreenButton->setPositionBelow(*play_button, 10.f);
+  fullScreenButton->setActiveFunction([this, &window](Button &self)
+									  {
+										//fullScreen = (fullScreen) ? 0 : sf::Style::Fullscreen;
+										//self.setText("Fullscreen: " + (fullScreen ? std::string("yes") : std::string("no")));
+										window.create(sf::VideoMode(window.getSize().x, window.getSize().y), "Worms Clone",
+													  sf::Style::Titlebar | sf::Style::Close | sf::Style::Fullscreen);
+									  });
+
+*/
+
+  auto exit_button = std::make_unique<Button>(_textures, _fonts);
+  exit_button->setText("Exit");
+  exit_button->setSize(play_button->getGlobalBounds().width, play_button->getGlobalBounds().height);
+  exit_button->setPositionBelow(*play_button, 10.f);
+  exit_button->setActiveFunction([&window](Button &self)
+								 { window.close(); });
+
+  _buttons.store(std::move(exit_button));
   _buttons.store(std::move(play_button));
 }

@@ -1,6 +1,6 @@
 #include <SFML/Graphics/ConvexShape.hpp>
 #include <SFML/Graphics/CircleShape.hpp>
-#include "box2d/debug_box_2_d.hpp"
+#include <debug_box_2_d.hpp>
 
 DebugBox2D::DebugBox2D(sf::RenderWindow &window) : window(&window) {
 }

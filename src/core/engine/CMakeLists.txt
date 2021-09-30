@@ -7,15 +7,14 @@ add_library(
 		SHARED
 		application.cpp
 		game_engine.cpp
-		player_engine.cpp
-		settings_manager.cpp
-		world.cpp)
+		player_engine.cpp)
 
 add_subdirectory(box2d)
 add_subdirectory(menu)
 add_subdirectory(states)
 add_subdirectory(sound)
 add_subdirectory(manager)
+add_subdirectory(world)
 
 target_include_directories(${PROJECT_NAME}
 						   PUBLIC ${MANAGER_INCLUDE_DIR}
@@ -23,10 +22,12 @@ target_include_directories(${PROJECT_NAME}
 						   PUBLIC ${MODELS_INCLUDE_DIR}
 						   PUBLIC ${SOUND_INCLUDE_DIR}
 						   PUBLIC ${STATE_INCLUDE_DIR}
-						   PUBLIC ${BOX2D_EXT_INCLUDE_DIR})
+						   PUBLIC ${BOX2D_EXT_INCLUDE_DIR}
+						   PUBLIC ${WORLD_INCLUDE_DIR})
 
 
 target_link_libraries(
+		world
 		box2d
 		menu
 		states

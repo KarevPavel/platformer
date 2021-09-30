@@ -10,7 +10,4 @@ add_library(
 
 target_include_directories(${PROJECT_NAME}
 						   PUBLIC ${SOUND_INCLUDE_DIR}
-						   PUBLIC ${MANAGER_INCLUDE_DIR}
-						   )
-
-target_link_libraries(${PROJECT_NAME} constants)
+						   PUBLIC ${MANAGER_INCLUDE_DIR})

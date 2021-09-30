@@ -5,8 +5,7 @@ project(box2d)
 add_library(
 		${PROJECT_NAME}
 		SHARED
-		debug_box_2_d.cpp
-		world_listener.cpp)
+		debug_box_2_d.cpp)
 
 target_include_directories(${PROJECT_NAME}
 						   PUBLIC ${BOX2D_EXT_INCLUDE_DIR})

@@ -49,9 +49,9 @@ def generate_header(fileName, constants: []):
 
 def maskFileName(dirtyFileName):
     if dirtyFileName.find(os.sep) != -1:
-        return dirtyFileName[dirtyFileName.rindex(os.sep) + 1:dirtyFileName.rindex('.')].replace('.','_').replace('-','_')
+        return dirtyFileName[dirtyFileName.rindex(os.sep) + 1:dirtyFileName.rindex('.')].replace('.','_').replace('-','_').replace(' ', '_')
 
-    return dirtyFileName[0:dirtyFileName.rindex('.')].replace('.','_').replace('-','_')
+    return dirtyFileName[0:dirtyFileName.rindex('.')].replace('.','_').replace('-','_').replace(' ', '_')
 
 
 if __name__ == '__main__':

@@ -1,15 +1,12 @@
 cmake_minimum_required(VERSION 3.17)
 
-project(states)
+project(world)
 
 add_library(
 		${PROJECT_NAME}
 		SHARED
-		menu_state.cpp
-		pause_state.cpp
-		game_state.cpp
-		state_stack.cpp
-		state.cpp)
+		world_listener.cpp
+		world.cpp)
 
 target_include_directories(${PROJECT_NAME}
 						   PUBLIC ${SOUND_INCLUDE_DIR}
@@ -18,6 +15,7 @@ target_include_directories(${PROJECT_NAME}
 						   PUBLIC ${SOUND_INCLUDE_DIR}
 						   PUBLIC ${GUI_INCLUDE_DIR}
 						   PUBLIC ${ENGINE_INCLUDE_DIR}
+						   PUBLIC ${BOX2D_INCLUDE_DIR}
 						   PUBLIC ${WORLD_INCLUDE_DIR})
 
 target_link_libraries(${PROJECT_NAME} constants)

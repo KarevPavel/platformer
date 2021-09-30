@@ -14,7 +14,7 @@ Button::Button(TextureManager &textures, FontManager &fonts) :
 	Component(),
 	normalTexture(textures.getResourceReference(constants::PAPER_TEXTURE_PATH)),
 	selectedTexture(textures.getResourceReference(constants::PAPER_TEXTURE_PATH)),
-	text("", fonts.getResourceReference(constants::LIBERATIONMONO_BOLD_PATH),
+	text("", fonts.getResourceReference(constants::SHLOP_RG_PATH),
 		 20) {
   text.setFillColor(sf::Color::White);
   text.setOutlineColor(sf::Color(47, 60, 76, 255));

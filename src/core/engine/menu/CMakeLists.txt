@@ -19,5 +19,3 @@ target_include_directories(${PROJECT_NAME}
 						   PUBLIC ${BOX2D_EXT_INCLUDE_DIR}
 						   PUBLIC ${GUI_INCLUDE_DIR}
 						   )
-
-target_link_libraries(${PROJECT_NAME} constants)
