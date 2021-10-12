@@ -16,6 +16,7 @@
 #include <sound_player.hpp>
 #include "world_listener.hpp"
 #include "resource_manager.hpp"
+#include "level.hpp"
 
 class World : sf::NonCopyable {
 
@@ -24,7 +25,7 @@ class World : sf::NonCopyable {
 
   void update(sf::Time deltaTime);
 
-  void draw() const;
+  void draw(sf::RenderTarget &target, sf::RenderStates state) const;
 
   void box2DdrawDebug();
 
@@ -59,6 +60,7 @@ class World : sf::NonCopyable {
   b2World b2_World; //!< Physical simulation of the game world
   DebugBox2D debugDraw; //!< Object for displaying hitboxes
   //NodeScene rootScene; //!< Main stage of the game
+  Level _level;
   WorldListener worldListener; //!< It carries all collisions inside the world
   SoundPlayer worldSounds; //!< A player that allows to play sounds in the game world
 };

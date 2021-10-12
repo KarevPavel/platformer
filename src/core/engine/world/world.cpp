@@ -2,6 +2,9 @@
 // Created by yacopsae on 16/09/2021.
 //
 
+#include <tmxlite/Map.hpp>
+#include <SFMLOrthogonalLayer.h>
+#include <levels.hpp>
 #include "world.hpp"
 #include "textures.hpp"
 
@@ -14,6 +17,8 @@ World::World(sf::RenderWindow &window) :
   // Tells the physical world what to draw
   b2_World.SetDebugDraw(&debugDraw);
   loadResources();
+
+  createWorld();
 
   backgroundSprite.setTexture(texture_manager.getResourceReference(constants::BLACK_PATH));
   backgroundSprite.setTextureRect(sf::IntRect(0, 0, _worldView.getSize().x, _worldView.getSize().y));
@@ -40,12 +45,19 @@ void World::update(sf::Time deltaTime) {
   b2_World.Step(1 / 60.f, 8, 3);
 }
 
-void World::draw() const {
+
+void World::createWorld() {
+  tmx::Map map;
+  map.load(constants::LEVEL1_PATH);
+  _level.loadMap(map);
+}
+
+void World::draw(sf::RenderTarget &target, sf::RenderStates state) const {
   // Draw Background
   _window.draw(backgroundSprite);
 
-  // Draw World
-  //_window.draw(rootScene);
+  // Draw level
+  _window.draw(_level);
 
   // Some hack as Box2D drawDebug is non-const
   const_cast<World *>(this)->box2DdrawDebug();
@@ -68,7 +80,6 @@ void World::processEvents(const sf::Event &event) {
 	const auto currentZoom = _worldView.getSize().x;
 	const auto maximumZoom = _window.getDefaultView().getSize().x * maxZoomFactor;
 	const auto minimumZoom = _window.getDefaultView().getSize().x / maxZoomFactor;
-
 
 	// Zooming in
 	if (event.mouseWheelScroll.delta > 0) {
@@ -128,15 +139,53 @@ void World::loadResources() {
 
 }
 
-void World::createWorld() {
+void World::updateWorldBoundaries(sf::Vector2f position, sf::Vector2f dimensions = {0, 0}) {
+  // Calculate the maximum position of any object
+  mostPositionedX = (position.x + dimensions.x > mostPositionedX) ? position.x + dimensions.x : mostPositionedX;
+  mostPositionedY = (position.y + dimensions.y > mostPositionedY) ? position.y + dimensions.y : mostPositionedY;
 
-}
-
-void World::updateWorldBoundaries(sf::Vector2f position, sf::Vector2f dimensions) {
-
+  // Calculate the minimum position of any object
+  lessPositionedX = (position.x - dimensions.x < lessPositionedX) ? position.x - dimensions.x : lessPositionedX;
+  lessPositionedY = (position.y - dimensions.y < lessPositionedY) ? position.y - dimensions.y : lessPositionedY;
 }
 
 void World::moveScreenWithMouse() {
+  static auto oldMouseCoordinates = sf::Mouse::getPosition();
+  if (sf::Mouse::isButtonPressed(sf::Mouse::Middle)) {
+	const auto newMouseCoordinates = sf::Mouse::getPosition();
+	_worldView.move(
+		_window.mapPixelToCoords(oldMouseCoordinates) - _window.mapPixelToCoords(newMouseCoordinates));
 
+	_window.setView(_worldView);
+
+
+	// Check if player do not scroll outside the world boundaries
+
+	// I create a boundary of the sceen
+	const auto viewTopLeft = _window.mapPixelToCoords({0, 0});
+	sf::RectangleShape viewBorder(sf::Vector2f(_worldView.getSize()));
+	viewBorder.setPosition(viewTopLeft);
+
+	// And a proper points
+	const auto viewBottomRight = sf::Vector2f(viewBorder.getPosition().x + viewBorder.getGlobalBounds().width,
+											  viewBorder.getPosition().y + viewBorder.getGlobalBounds().height);
+
+	// Now I check for boundaries and correct them
+	if (viewBottomRight.x > mostPositionedX)
+	  _worldView.move(-sf::Vector2f{viewBottomRight.x - mostPositionedX, 0});
+	if (viewBottomRight.y > mostPositionedY)
+	  _worldView.move(-sf::Vector2f{0, viewBottomRight.y - mostPositionedY});
+
+	if (viewTopLeft.x < lessPositionedX)
+	  _worldView.move(-sf::Vector2f{viewTopLeft.x - lessPositionedX, 0});
+	if (viewTopLeft.y < lessPositionedY)
+	  _worldView.move(-sf::Vector2f{0, viewTopLeft.y - lessPositionedY});
+
+	_window.setView(_worldView);
+
+	// Fixes the background
+	backgroundSprite.setPosition(_window.mapPixelToCoords({0, 0}));
+  }
+  oldMouseCoordinates = sf::Mouse::getPosition();
 }
 

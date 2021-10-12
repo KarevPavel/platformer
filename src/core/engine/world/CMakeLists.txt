@@ -6,7 +6,8 @@ add_library(
 		${PROJECT_NAME}
 		SHARED
 		world_listener.cpp
-		world.cpp)
+		world.cpp
+		level.cpp)
 
 target_include_directories(${PROJECT_NAME}
 						   PUBLIC ${SOUND_INCLUDE_DIR}

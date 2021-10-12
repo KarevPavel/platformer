@@ -1,0 +1,17 @@
+cmake_minimum_required(VERSION 3.17)
+
+project(systems)
+
+add_library(
+		${PROJECT_NAME}
+		SHARED
+		base_system.cpp
+		sound_system.cpp)
+
+
+target_include_directories(${PROJECT_NAME}
+						   PUBLIC ${SYSTEMS_INCLUDE_DIR})
+
+target_link_libraries(${PROJECT_NAME}
+					  PUBLIC constants
+					  PUBLIC EnTT)

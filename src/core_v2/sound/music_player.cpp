@@ -5,41 +5,41 @@
 #include "music_player.hpp"
 
 MusicPlayer::MusicPlayer() :
-	_music(),
-	_volume(4) {
+	music(),
+	volume(4) {
 
 }
 
 void MusicPlayer::play(const std::string& musicPath) {
-	if (_music.openFromFile(musicPath)) {
-	  _music.setVolume(_volume);
-	  _music.setLoop(true);
-	  _current_music = musicPath;
-	  _music.play();
+	if (music.openFromFile(musicPath)) {
+	  music.setVolume(volume);
+	  music.setLoop(true);
+	  current_music = musicPath;
+	  music.play();
 	}
 }
 
 void MusicPlayer::setPaused(bool paused) {
   if (paused)
-	_music.pause();
+	music.pause();
   else
-	_music.play();
+	music.play();
 }
 
 void MusicPlayer::stop() {
-  _music.stop();
+  music.stop();
 }
 
 void MusicPlayer::setVolume(float volume) {
-  _music.setVolume(volume);
+  music.setVolume(volume);
 }
 
 std::string MusicPlayer::getCurrentMusic() const noexcept {
-  return _current_music;
+  return current_music;
 }
 
 void MusicPlayer::reset() {
-  if (!_current_music.empty()) {
-	_music.setPlayingOffset(sf::Time::Zero);
+  if (!current_music.empty()) {
+	music.setPlayingOffset(sf::Time::Zero);
   }
 }

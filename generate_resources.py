@@ -33,7 +33,6 @@ def generate_header(fileName, constants: []):
     fields = []
     for constant in constants:
         dirtyFileName = str(constant)
-        print('dirtyFileName ' + dirtyFileName)
         pureConstantName = maskFileName(dirtyFileName)
         fields.append('\tstatic const std::string ' + pureConstantName.upper() + '="' + pureConstantName + '";')
         fields.append('\tstatic const std::string ' + pureConstantName.upper() + '_PATH = "' +

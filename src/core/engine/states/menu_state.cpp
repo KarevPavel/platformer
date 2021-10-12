@@ -15,7 +15,7 @@ MenuState::MenuState(StateStack &state_list,
 	_textures(textures),
 	_music(music),
 	_buttons(window),
-	_gameName("Epic Game Ever", fonts.getResourceReference(constants::ANOTHER_DANGER_SLANTED___DEMO_PATH), 90)
+	_gameName("AWERSOMESHOOTEREVER", fonts.getResourceReference(constants::ANOTHER_DANGER_SLANTED___DEMO_PATH), 90)
 	{
   _window.setView(_window.getDefaultView());
 

@@ -7,6 +7,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "state_stack.hpp"
 #include "world.hpp"
+#include "tmx_level.hpp"
 
 class GameState : public State {
 
@@ -20,6 +21,7 @@ class GameState : public State {
  private:
   sf::RenderWindow &_window;
   World _gameWorld;
+  TmxLevel _level;
 };
 
 

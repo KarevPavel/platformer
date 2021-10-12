@@ -60,8 +60,15 @@ class MapLayer final : public sf::Drawable {
 
   MapLayer(const tmx::Map &map, std::size_t idx) {
 	const auto &layers = map.getLayers();
+
+	std::cout << "map.getOrientation() " << (map.getOrientation() == tmx::Orientation::Orthogonal) << std::endl;
+	std::cout << "idx < layers.size() " << (idx < layers.size()) << std::endl;
+	std::cout << "layers[idx]->getType() == tmx::Layer::Type::Tile "
+			  << (layers[idx]->getType() == tmx::Layer::Type::Tile) << std::endl;
+
 	if (map.getOrientation() == tmx::Orientation::Orthogonal &&
 		idx < layers.size() && layers[idx]->getType() == tmx::Layer::Type::Tile) {
+
 	  //round the chunk size to the nearest tile
 	  const auto tileSize = map.getTileSize();
 	  m_chunkSize.x = std::floor(m_chunkSize.x / tileSize.x) * tileSize.x;
@@ -79,11 +86,11 @@ class MapLayer final : public sf::Drawable {
 	}
   }
 
-  ~MapLayer() = default;
+  ~MapLayer() override = default;
 
   MapLayer(const MapLayer &) = delete;
 
-  /*MapLayer& operator = (const MapLayer&) = delete;*/
+  MapLayer &operator=(const MapLayer &) = delete;
 
   const sf::FloatRect &getGlobalBounds() const { return m_globalBounds; }
 
@@ -138,8 +145,7 @@ class MapLayer final : public sf::Drawable {
 
  private:
   //increasing m_chunkSize by 4; fixes render problems when mapsize != chunksize
-  sf::Vector2f m_chunkSize = sf::Vector2f(1024.f, 1024.f);
-  //sf::Vector2f m_chunkSize = sf::Vector2f(256.f, 256.f);
+  sf::Vector2f m_chunkSize = sf::Vector2f(256.f, 256.f);
   sf::Vector2u m_chunkCount;
   sf::Vector2u m_MapTileSize;   // general Tilesize of Map
   sf::FloatRect m_globalBounds;
@@ -236,18 +242,9 @@ class MapLayer final : public sf::Drawable {
 				  {
 #ifndef __ANDROID__
 					  sf::Vertex(tileOffset - getPosition(), m_chunkColors[idx], tileIndex),
-					  sf::Vertex(
-						  tileOffset - getPosition() + sf::Vector2f(ca->tileSetSize.x, 0.f),
-						  m_chunkColors[idx],
-						  tileIndex + sf::Vector2f(ca->tileSetSize.x, 0.f)),
-					  sf::Vertex(tileOffset - getPosition() +
-									 sf::Vector2f(ca->tileSetSize.x, ca->tileSetSize.y),
-								 m_chunkColors[idx],
-								 tileIndex + sf::Vector2f(ca->tileSetSize.x, ca->tileSetSize.y)),
-					  sf::Vertex(
-						  tileOffset - getPosition() + sf::Vector2f(0.f, ca->tileSetSize.y),
-						  m_chunkColors[idx],
-						  tileIndex + sf::Vector2f(0.f, ca->tileSetSize.y))
+					  sf::Vertex(tileOffset - getPosition() + sf::Vector2f(ca->tileSetSize.x, 0.f),m_chunkColors[idx], tileIndex + sf::Vector2f(ca->tileSetSize.x, 0.f)),
+					  sf::Vertex(tileOffset - getPosition() + sf::Vector2f(ca->tileSetSize.x, ca->tileSetSize.y), m_chunkColors[idx],tileIndex + sf::Vector2f(ca->tileSetSize.x, ca->tileSetSize.y)),
+					  sf::Vertex(tileOffset - getPosition() + sf::Vector2f(0.f, ca->tileSetSize.y),m_chunkColors[idx], tileIndex + sf::Vector2f(0.f, ca->tileSetSize.y))
 #endif
 #ifdef __ANDROID__
 					  sf::Vertex(tileOffset - getPosition(), m_chunkColors[idx], tileIndex),
@@ -480,6 +477,7 @@ class MapLayer final : public sf::Drawable {
 	std::uint32_t maxID = std::numeric_limits<std::uint32_t>::max();
 	std::vector<const tmx::Tileset *> usedTileSets;
 
+	//Just save all tilesets
 	for (auto i = tileSets.rbegin(); i != tileSets.rend(); ++i) {
 	  for (const auto &tile : layerIDs) {
 		if (tile.ID >= i->getFirstGID() && tile.ID < maxID) {
@@ -490,6 +488,8 @@ class MapLayer final : public sf::Drawable {
 	  maxID = i->getFirstGID();
 	}
 
+
+	//Load all images of tiles
 	sf::Image fallback;
 	fallback.create(2, 2, sf::Color::Magenta);
 	for (const auto &ts : usedTileSets) {
@@ -517,14 +517,16 @@ class MapLayer final : public sf::Drawable {
 
 	sf::Vector2u tileSize(map.getTileSize().x, map.getTileSize().y);
 
+
+
 	for (auto y = 0u; y < m_chunkCount.y; ++y) {
 	  sf::Vector2f tileCount(m_chunkSize.x / tileSize.x, m_chunkSize.y / tileSize.y);
 	  for (auto x = 0u; x < m_chunkCount.x; ++x) {
 		// calculate size of each Chunk (clip against map)
-		if ((x + 1) * m_chunkSize.x > bounds.width) {
+		if ((x + 1.f) * m_chunkSize.x > bounds.width) {
 		  tileCount.x = (bounds.width - x * m_chunkSize.x) / map.getTileSize().x;
 		}
-		if ((y + 1) * m_chunkSize.y > bounds.height) {
+		if ((y + 1.f) * m_chunkSize.y > bounds.height) {
 		  tileCount.y = (bounds.height - y * m_chunkSize.y) / map.getTileSize().y;
 		}
 		//m_chunks.emplace_back(std::make_unique<Chunk>(layer, usedTileSets,
