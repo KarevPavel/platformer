@@ -2,11 +2,13 @@
 // Created by yacopsae on 12/10/2021.
 //
 
+#include <textures.hpp>
 #include "menu_scene.hpp"
 #include "engine.hpp"
 
 MenuScene::MenuScene() : Scene("menu") {
-
+  background_texture.setTexture(textureMng->get(constants::BLACK_PATH));
+  background_texture.setTextureRect(sf::IntRect(0, 0, engine->getWindow().getSize().x, engine->getWindow().getSize().y));
 }
 
 MenuScene::~MenuScene() {
