@@ -4,36 +4,38 @@
 
 #pragma once
 
-#include <string>
 #include <map>
-#include <memory>
+#include <string>
+
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Audio/Sound.hpp>
+#include <SFML/Audio/SoundBuffer.hpp>
 
 template<typename Resource, typename Identifier>
 class ResourceManager {
 
  public:
-  inline Resource &get(const Identifier &identifier);
+  inline Resource &getResource(const Identifier &identifier);
 
  private:
   std::map<Identifier, std::unique_ptr<Resource>> resourceMap;
 };
 
 template<typename Resource, typename Identifier>
-inline Resource &ResourceManager<Resource, Identifier>::get(const Identifier &identifier) {
-
-  auto found_texture = resourceMap.find(identifier);
-
+inline Resource &ResourceManager<Resource, Identifier>::getResource(const Identifier &resourcePath) {
+  auto found_texture = resourceMap.find(resourcePath);
   if (found_texture == resourceMap.cend()) {
-	auto resource = std::make_unique<Resource>();
-	if (!resource->loadFromFile(identifier))
-	  throw std::runtime_error("RESOURCE: " + identifier + " NOT FOUND!");
+	std::unique_ptr<Resource> resource = std::make_unique<Resource>();
+	if (!resource->loadFromFile(resourcePath))
+	  throw std::runtime_error("This file does not exist: " + resourcePath);
 
-	resourceMap[identifier] = std::move(resource);
+	auto insertedResource = resourceMap.insert(std::make_pair(resourcePath, std::move(resource)));
+	//TODO: явно глупость, зачем ещё раз выоплнять поиск?
+	//Но у меня иначе не получилось
+	return *resourceMap.find(resourcePath) -> second;
   }
-  return *resourceMap.at(identifier);
+  return *found_texture->second;
 }
 
 using FontManager = ResourceManager<sf::Font, std::string>;

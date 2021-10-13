@@ -16,10 +16,10 @@
 class Scene {
   std::string name;
  protected:
-  class Engine *engine;
+  TextureManager *textureMng;
 
+  class Engine *engine;
   class SceneManager *sceneMng;
-  class ResourceManager<sf::Texture, std::string> *textureMng;
   class sf::RenderWindow *window;
 
   void handleDefaultEvents(class sf::Event *);

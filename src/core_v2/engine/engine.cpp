@@ -5,9 +5,9 @@
 #include "engine.hpp"
 #include "menu_scene.hpp"
 
-Engine::Engine() : sceneMng(this)
+Engine::Engine() : scene_manager(this)
 {
-  window.create(sf::VideoMode(800, 600), "randballs");
+  window.create(sf::VideoMode(800, 600), "Platformer");
 }
 
 
@@ -21,7 +21,7 @@ void Engine::stop() { isRunning = false; }
 void Engine::start()
 {
   //поменял на MenuScene
-  sceneMng.addScene(std::make_unique<MenuScene>());
+  scene_manager.addScene(std::make_unique<MenuScene>());
 
   sf::Clock clock;
 
@@ -29,7 +29,7 @@ void Engine::start()
   auto TIME_PER_FRAME = sf::seconds(1.f / 20.f);
 
   while (isRunning) {
-	auto scene = sceneMng.getCurrent();
+	auto scene = scene_manager.getCurrent();
 
 	scene->update();
 	frameTimeElapsed += clock.restart();

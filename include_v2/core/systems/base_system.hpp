@@ -7,9 +7,11 @@
 #include <entt/entity/registry.hpp>
 #include <entt/signal/dispatcher.hpp>
 
+class Engine;
+
 class BaseSystem {
  protected:
-  class Engine *engine;
+  Engine *engine;
   entt::registry *registry;
   entt::dispatcher *eventDispatcher;
 

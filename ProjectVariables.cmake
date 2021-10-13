@@ -11,3 +11,6 @@ set(SYSTEMS_INCLUDE_DIR ${INCLUDE_DIR}/core/systems)
 set(SOUND_INCLUDE_DIR ${INCLUDE_DIR}/core/sound)
 
 add_definitions(-ftemplate-backtrace-limit=0)
+
+set (CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=undefined")
+set (CMAKE_LINKER_FLAGS_DEBUG "${CMAKE_LINKER_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=undefined")

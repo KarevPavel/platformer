@@ -50,6 +50,7 @@ add_subdirectory(src/core_v2)
 # Start point
 add_executable(${PROJECT_NAME} src/main.cpp)
 
+
 target_link_libraries(${PROJECT_NAME}
 					  PUBLIC sfml-system
 					  PUBLIC sfml-graphics

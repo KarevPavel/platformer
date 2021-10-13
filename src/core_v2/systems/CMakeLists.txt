@@ -8,9 +8,13 @@ add_library(
 		base_system.cpp
 		sound_system.cpp)
 
-
 target_include_directories(${PROJECT_NAME}
-						   PUBLIC ${SYSTEMS_INCLUDE_DIR})
+						   PUBLIC ${SYSTEMS_INCLUDE_DIR}
+						   PUBLIC ${EVENTS_INCLUDE_DIR}
+						   PUBLIC ${ENGINE_INCLUDE_DIR}
+						   PUBLIC ${GRAPHICS_INCLUDE_DIR}
+						   PUBLIC ${SOUND_INCLUDE_DIR}
+						   )
 
 target_link_libraries(${PROJECT_NAME}
 					  PUBLIC constants
