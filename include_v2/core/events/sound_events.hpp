@@ -7,7 +7,12 @@
 #include <string>
 #include <utility>
 
-namespace GameEvent {
+namespace SoundEvent {
+
+struct MusicStop {
+  MusicStop() = default;
+};
+
 struct MusicStart {
 
   explicit MusicStart(std::string musicPath) : musicPath(std::move(musicPath)) {
@@ -17,7 +22,4 @@ struct MusicStart {
 
 };
 
-struct MusicStop {
-  MusicStop() = default;
-};
 }

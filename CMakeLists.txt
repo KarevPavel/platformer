@@ -38,7 +38,7 @@ add_subdirectory(lib/box2d)
 add_subdirectory(lib/tmxlite/tmxlite)
 
 ###################################################################
-# Сборка ecs движка Tiled карт
+# Сборка ecs движка
 # URL: https://github.com/skypjack/entt.git
 add_subdirectory(lib/entt)
 
@@ -48,7 +48,7 @@ add_subdirectory(src/core_v2)
 
 ###################################################################
 # Start point
-add_executable(${PROJECT_NAME} src/main.cpp)
+add_executable(${PROJECT_NAME} src/main.cpp include_v2/core/events/sound_events.hpp include_v2/core/components/game_components.hpp)
 
 
 target_link_libraries(${PROJECT_NAME}
@@ -57,6 +57,7 @@ target_link_libraries(${PROJECT_NAME}
 					  PUBLIC sfml-window
 					  PUBLIC sfml-audio
 					  PUBLIC sfml-network
+					  PUBLIC tmxlite
 					  PUBLIC EnTT
 					  PUBLIC systems
 					  PUBLIC engine

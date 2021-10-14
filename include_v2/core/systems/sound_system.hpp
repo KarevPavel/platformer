@@ -4,8 +4,9 @@
 
 #pragma once
 
+#include <sound_events.hpp>
 #include "base_system.hpp"
-#include "main_menu_music_start_event.hpp"
+#include "game_events.hpp"
 
 class SoundSystem : public BaseSystem {
   void onInit() override;
@@ -13,8 +14,8 @@ class SoundSystem : public BaseSystem {
  public:
   SoundSystem();
 
-  void receiveMusicStart(const GameEvent::MusicStart &event);
-  void receiveMusicStop(const GameEvent::MusicStop &event);
+  void receiveMusicStart(const SoundEvent::MusicStart &event);
+  void receiveMusicStop(const SoundEvent::MusicStop &event);
 };
 
 

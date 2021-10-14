@@ -7,7 +7,7 @@
 
 Engine::Engine() : scene_manager(this)
 {
-  window.create(sf::VideoMode(800, 600), "Platformer");
+  window.create(sf::VideoMode(1600, 900), "Platformer");
 }
 
 
@@ -26,7 +26,7 @@ void Engine::start()
   sf::Clock clock;
 
   auto frameTimeElapsed = sf::Time::Zero;
-  auto TIME_PER_FRAME = sf::seconds(1.f / 20.f);
+  auto TIME_PER_FRAME = sf::seconds(1.f / 60.f);
 
   while (isRunning) {
 	auto scene = scene_manager.getCurrent();

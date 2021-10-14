@@ -6,7 +6,8 @@ add_library(${PROJECT_NAME}
 			SHARED
 			scene_manager.cpp
 			scene.cpp
-			menu_scene.cpp)
+			menu_scene.cpp
+			game_scene.cpp)
 
 target_include_directories(${PROJECT_NAME}
 						   PUBLIC ${GRAPHICS_INCLUDE_DIR}
