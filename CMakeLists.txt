@@ -63,6 +63,7 @@ target_link_libraries(${PROJECT_NAME}
 					  PUBLIC engine
 					  PUBLIC graphics
 					  PUBLIC sound
+					  PUBLIC maplayer
 					  )
 
 #[[ TODO: For removal

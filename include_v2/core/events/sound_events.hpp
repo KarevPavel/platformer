@@ -22,4 +22,12 @@ struct MusicStart {
 
 };
 
+struct PlaySound {
+  explicit PlaySound(std::string soundPath) : soundPath(std::move(soundPath)) {
+  }
+  PlaySound() = default;
+  std::string soundPath;
+
+};
+
 }

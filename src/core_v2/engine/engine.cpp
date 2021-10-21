@@ -5,21 +5,17 @@
 #include "engine.hpp"
 #include "menu_scene.hpp"
 
-Engine::Engine() : scene_manager(this)
-{
+Engine::Engine() : scene_manager(this) {
   window.create(sf::VideoMode(1600, 900), "Platformer");
 }
 
-
-Engine::~Engine()
-{
+Engine::~Engine() {
 
 }
 
 void Engine::stop() { isRunning = false; }
 
-void Engine::start()
-{
+void Engine::start() {
   //поменял на MenuScene
   scene_manager.addScene(std::make_unique<MenuScene>());
 

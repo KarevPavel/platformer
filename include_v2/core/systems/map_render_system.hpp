@@ -15,11 +15,11 @@
 #include "game_events.hpp"
 
 
-class LevelSystem : public BaseSystem {
+class MapRenderSystem : public BaseSystem {
   void onInit() override;
 
  public:
-  LevelSystem();
+  MapRenderSystem();
 
   //void receiveGameStart(const GameEvent::GameStart &event);
 

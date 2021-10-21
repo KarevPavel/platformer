@@ -1,5 +1,5 @@
 //
-// Created by yacopsae on 12/10/2021.
+// Created by yacopsae on 20/10/2021.
 //
 
 #pragma once
@@ -14,8 +14,9 @@ class SoundSystem : public BaseSystem {
  public:
   SoundSystem();
 
-  void receiveMusicStart(const SoundEvent::MusicStart &event);
-  void receiveMusicStop(const SoundEvent::MusicStop &event);
+  void playSound(const SoundEvent::MusicStart &event);
 };
+
+
 
 

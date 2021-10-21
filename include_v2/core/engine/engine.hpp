@@ -6,6 +6,8 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
+#include <box2d/box2d.h>
+
 #include "sound_player.hpp"
 #include "scene_manager.hpp"
 #include "resource_manager.hpp"
@@ -15,11 +17,13 @@ class Engine {
   bool isRunning = true;
 
   sf::RenderWindow window;
+  sf::View view;
   SceneManager scene_manager;
   TextureManager texture_manager;
   SoundManager sound_manager;
   MusicPlayer music_player;
   SoundPlayer sound_player;
+  b2World box2DWorld;
 
  public:
   Engine();
@@ -34,6 +38,7 @@ class Engine {
   inline SoundManager &getSoundManager() { return sound_manager; }
   inline MusicPlayer &getMusicPlayer() { return music_player; }
   inline SoundPlayer &getSoundPlayer() { return sound_player; }
+  inline b2World &getBox2DWorld() { return box2DWorld; }
 };
 
 

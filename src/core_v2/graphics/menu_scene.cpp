@@ -4,8 +4,7 @@
 
 #include <textures.hpp>
 #include <sound.hpp>
-#include <sound_system.hpp>
-#include <game_system.hpp>
+#include <music_system.hpp>
 #include <game_scene.hpp>
 #include "menu_scene.hpp"
 #include "engine.hpp"
@@ -19,7 +18,7 @@ MenuScene::~MenuScene() {
 void MenuScene::init() {
   em.init(engine);
 
-  em.addSystem(std::make_unique<SoundSystem>());
+  em.addSystem(std::make_unique<MusicSystem>());
 
   background_texture.setTexture(textureMng->getResource(constants::BLACK_PATH));
   background_texture

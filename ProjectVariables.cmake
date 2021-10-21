@@ -9,6 +9,7 @@ set(EVENTS_INCLUDE_DIR ${INCLUDE_DIR}/core/events)
 set(GRAPHICS_INCLUDE_DIR ${INCLUDE_DIR}/core/graphics)
 set(SYSTEMS_INCLUDE_DIR ${INCLUDE_DIR}/core/systems)
 set(SOUND_INCLUDE_DIR ${INCLUDE_DIR}/core/sound)
+set(SYSTEMS_MAP_INCLUDE_DIR ${INCLUDE_DIR}/core/systems/map)
 
 add_definitions(-ftemplate-backtrace-limit=0)
 

@@ -10,6 +10,7 @@ add_library(${PROJECT_NAME}
 			game_scene.cpp)
 
 target_include_directories(${PROJECT_NAME}
+						   PUBLIC ${COMPONENTS_INCLUDE_DIR}
 						   PUBLIC ${GRAPHICS_INCLUDE_DIR}
 						   PUBLIC ${ENGINE_INCLUDE_DIR}
 						   PUBLIC ${SOUND_INCLUDE_DIR}
