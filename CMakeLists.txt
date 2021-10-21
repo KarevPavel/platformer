@@ -43,6 +43,11 @@ add_subdirectory(lib/tmxlite/tmxlite)
 add_subdirectory(lib/entt)
 
 ###################################################################
+# Парсер ini файлов
+# URL: https://github.com/benhoyt/inih
+add_subdirectory(lib/inih)
+
+###################################################################
 # Главная сборка
 add_subdirectory(src/core_v2)
 
