@@ -3,6 +3,8 @@ import argparse
 import os
 import sys
 import pathlib
+import platform
+from typing import List
 
 def write_lines(filename, lines):
     with open(filename, 'w') as f:
@@ -13,12 +15,16 @@ def read_interface_names(path):
     dictionary = dict()
     for subdir, dirs, files in os.walk(path):
         for file in files:
-            headerName = ''.join(name for idx, name in enumerate(subdir[subdir.rindex(os.sep) + 1:len(subdir)]))
+            headerName = ''.join(name for idx, name in enumerate(subdir[subdir.rindex('/') + 1:len(subdir)]))
             if headerName != "" and headerName != "/resources":
-                filepath = subdir + os.sep + file
+                filepath = subdir + '/' + file
                 if os.path.isfile(filepath):
-                    resPath = 'resources/'
-                    filepath = filepath[filepath.rindex(resPath) + len(resPath):len(filepath)]
+                    resPath = 'resources'
+                    ## + 1 это сепаратор / или \
+                    filepath = filepath[filepath.rindex(resPath) + 1 + len(resPath):len(filepath)]
+                    if platform.system() == 'Windows':
+                        headerName = headerName.replace('\\', '/')
+                    
                     if dictionary.__contains__(headerName):
                         dictionary[headerName].append(filepath)
                     else:
@@ -29,7 +35,7 @@ def generate_implementation(name):
     lines = ['#include "{}.hpp"'.format(name)]
     write_lines(name + '.cpp', lines)
 
-def generate_header(fileName, constants: []):
+def generate_header(fileName, constants: List[str]):
     fields = []
     for constant in constants:
         dirtyFileName = str(constant)
@@ -47,8 +53,8 @@ def generate_header(fileName, constants: []):
     write_lines(fileName + '.hpp', code)
 
 def maskFileName(dirtyFileName):
-    if dirtyFileName.find(os.sep) != -1:
-        return dirtyFileName[dirtyFileName.rindex(os.sep) + 1:dirtyFileName.rindex('.')].replace('.','_').replace('-','_').replace(' ', '_')
+    if dirtyFileName.find("/") != -1:
+        return dirtyFileName[dirtyFileName.rindex("/") + 1:dirtyFileName.rindex('.')].replace('.','_').replace('-','_').replace(' ', '_')
 
     return dirtyFileName[0:dirtyFileName.rindex('.')].replace('.','_').replace('-','_').replace(' ', '_')
 
