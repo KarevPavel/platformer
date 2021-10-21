@@ -5,7 +5,8 @@ project(engine)
 add_library(${PROJECT_NAME}
 			SHARED
 			engine.cpp
-			entity_manager.cpp)
+			entity_manager.cpp
+			debug_box_2_d.cpp)
 
 target_include_directories(${PROJECT_NAME}
 						   PUBLIC ${ENGINE_INCLUDE_DIR}
@@ -16,4 +17,5 @@ target_include_directories(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME}
 					  PUBLIC constants
-					  PUBLIC EnTT)
+					  PUBLIC EnTT
+					  PUBLIC box2d)

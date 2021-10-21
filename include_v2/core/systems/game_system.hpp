@@ -35,8 +35,6 @@ class GameSystem : public BaseSystem {
   GameComponents::LevelEnd levelEnd;
   GameComponents::PlayerSpawn playerSpawn;
   std::vector<std::unique_ptr<GameComponents::EnemySpawn>> enemySpawns;
-
-  void update(float dt) override;
 };
 
 

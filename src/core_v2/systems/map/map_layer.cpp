@@ -4,7 +4,8 @@
 
 #include "map_layer.hpp"
 
-MapLayer::MapLayer(const tmx::Map &map, const std::unique_ptr<tmx::Layer> &layer, b2World &box2DWorld): box2DWorld(box2DWorld) {
+MapLayer::MapLayer(const tmx::Map &map, const std::unique_ptr<tmx::Layer> &layer, b2World &box2DWorld) :
+	box2DWorld(box2DWorld) {
   const auto tileSize = map.getTileSize();
   m_chunkSize.x = std::floor(m_chunkSize.x / tileSize.x) * tileSize.x;
   m_chunkSize.y = std::floor(m_chunkSize.y / tileSize.y) * tileSize.y;
@@ -12,12 +13,11 @@ MapLayer::MapLayer(const tmx::Map &map, const std::unique_ptr<tmx::Layer> &layer
   m_MapTileSize.y = tileSize.y;
 
   const auto tileLayer = layer->getLayerAs<tmx::TileLayer>();
-  createChunks(map, tileLayer);
+  createChunks(map, tileLayer, box2DWorld);
 
   auto mapSize = map.getBounds();
   m_globalBounds.width = mapSize.width;
   m_globalBounds.height = mapSize.height;
-
 }
 
 const sf::FloatRect &MapLayer::getGlobalBounds() { return m_globalBounds; }
@@ -46,8 +46,12 @@ sf::Color MapLayer::getColor(int tileX, int tileY) {
   return selectedChunk->getColor(chunkLocale.x, chunkLocale.y);
 }
 
-void MapLayer::update(sf::Time elapsed) {
-  /*for (auto &c : m_visibleChunks) {
+void MapLayer::update(const float dt) {
+  for (auto &c : m_chunks) {
+	c->updatePhysics();
+  }
+/*
+  for (auto &c : m_visibleChunks) {
 	for (AnimationState &as : c->getActiveAnimations()) {
 	  as.currentTime += elapsed;
 
@@ -79,7 +83,7 @@ Chunk::Ptr &MapLayer::getChunkAndTransform(int x, int y, sf::Vector2u &chunkRela
   return m_chunks[chunkX + chunkY * m_chunkCount.x];
 }
 
-void MapLayer::createChunks(const tmx::Map &map, const tmx::TileLayer &layer) {
+void MapLayer::createChunks(const tmx::Map &map, const tmx::TileLayer &layer, b2World &box2DWorld) {
   //look up all the tile sets and load the textures
   const auto &tileSets = map.getTilesets();
   const auto &layerIDs = layer.getTiles();
@@ -136,12 +140,10 @@ void MapLayer::createChunks(const tmx::Map &map, const tmx::TileLayer &layer) {
 	  if ((y + 1.f) * m_chunkSize.y > bounds.height) {
 		tileCount.y = (bounds.height - y * m_chunkSize.y) / map.getTileSize().y;
 	  }
-	  //m_chunks.emplace_back(std::make_unique<Chunk>(layer, usedTileSets,
-	  //    sf::Vector2f(x * m_chunkSize.x, y * m_chunkSize.y), tileCount, map.getTileCount().x, m_textureResource));
 	  m_chunks.emplace_back(std::make_unique<Chunk>(layer, usedTileSets,
 													sf::Vector2f(x * m_chunkSize.x, y * m_chunkSize.y),
 													tileCount, tileSize, map.getTileCount().x,
-													m_textureResource));
+													m_textureResource, box2DWorld));
 	}
   }
 }

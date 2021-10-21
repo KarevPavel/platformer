@@ -4,10 +4,9 @@
 
 #include "chunk.hpp"
 
-
 Chunk::Chunk(const tmx::TileLayer &layer, std::vector<const tmx::Tileset *> tilesets,
-	  const sf::Vector2f &position, const sf::Vector2f &tileCount, const sf::Vector2u &tileSize,
-	  std::size_t rowSize, TextureResource &tr) {
+			 const sf::Vector2f &position, const sf::Vector2f &tileCount, const sf::Vector2u &tileSize,
+			 std::size_t rowSize, TextureResource &tr, b2World &box2DWorld) : box2DWorld(box2DWorld) {
   setPosition(position);
   layerOpacity = static_cast<sf::Uint8>(layer.getOpacity() / 1.f * 255.f);
   sf::Color vertColour = sf::Color(200, 200, 200, layerOpacity);
@@ -107,6 +106,15 @@ void Chunk::maybeRegenerate(bool refresh) {
 	}
 	generateTiles();
   }
+}
+
+void Chunk::updatePhysics() {
+  //this->setPosition(B2_SCALAR * bodyDef.position.x, B2_SCALAR * bodyDef.position.y);
+  //this->setRotation(radiansToAngle(bodyDef.angle));
+}
+
+b2BodyDef Chunk::getBodyDef() const {
+  return bodyDef;
 }
 
 int Chunk::calcIndexFrom(int x, int y) const {

@@ -26,7 +26,6 @@ void GameScene::init() {
   //triggers level tmx file parsing
   em.getEventDispatcher()->trigger<GameEvent::GameStart>(constants::LEVEL1_PATH);
 
-
   em.addRenderSystem(std::make_unique<MapRenderSystem>());
 
   em.getEventDispatcher()->trigger<SoundEvent::MusicStop>();
@@ -35,6 +34,7 @@ void GameScene::init() {
 void GameScene::update() {
   sf::Event event;
   while (window->pollEvent(event)) {
+
 	handleDefaultEvents(&event);
   }
 }

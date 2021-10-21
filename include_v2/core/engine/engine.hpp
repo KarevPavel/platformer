@@ -12,6 +12,7 @@
 #include "scene_manager.hpp"
 #include "resource_manager.hpp"
 #include "music_player.hpp"
+#include "debug_box_2_d.hpp"
 
 class Engine {
   bool isRunning = true;
@@ -24,6 +25,7 @@ class Engine {
   MusicPlayer music_player;
   SoundPlayer sound_player;
   b2World box2DWorld;
+  DebugBox2D debugDraw;
 
  public:
   Engine();
@@ -39,6 +41,7 @@ class Engine {
   inline MusicPlayer &getMusicPlayer() { return music_player; }
   inline SoundPlayer &getSoundPlayer() { return sound_player; }
   inline b2World &getBox2DWorld() { return box2DWorld; }
+  inline DebugBox2D &getDebugBox2D() { return debugDraw; }
 };
 
 

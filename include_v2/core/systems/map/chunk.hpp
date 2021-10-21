@@ -14,6 +14,7 @@
 #include <tmxlite/Tileset.hpp>
 #include <tmxlite/TileLayer.hpp>
 #include <tmxlite/detail/Log.hpp>
+#include <box2d/box2d.h>
 
 #include "chunk_array.hpp"
 
@@ -25,7 +26,7 @@ class Chunk final : public sf::Transformable, public sf::Drawable {
 
   Chunk(const tmx::TileLayer &layer, std::vector<const tmx::Tileset *> tilesets,
 		const sf::Vector2f &position, const sf::Vector2f &tileCount, const sf::Vector2u &tileSize,
-		std::size_t rowSize, TextureResource &tr);
+		std::size_t rowSize, TextureResource &tr, b2World &box2DWorld);
 
   Chunk(const Chunk &) = delete;
   Chunk &operator=(const Chunk &) = delete;
@@ -37,13 +38,18 @@ class Chunk final : public sf::Transformable, public sf::Drawable {
   void setColor(int x, int y, sf::Color color, bool refresh);
   void maybeRegenerate(bool refresh);
   int calcIndexFrom(int x, int y) const;
+  b2BodyDef getBodyDef() const;
+
   bool empty() const;
   void flipY(sf::Vector2f *v0, sf::Vector2f *v1, sf::Vector2f *v2, sf::Vector2f *v3);
   void flipX(sf::Vector2f *v0, sf::Vector2f *v1, sf::Vector2f *v2, sf::Vector2f *v3);
   void flipD(sf::Vector2f *v0, sf::Vector2f *v1, sf::Vector2f *v2, sf::Vector2f *v3);
   void doFlips(std::uint8_t bits, sf::Vector2f *v0, sf::Vector2f *v1, sf::Vector2f *v2, sf::Vector2f *v3);
 
+  void updatePhysics();
  private:
+  constexpr const static float B2_SCALAR = 30.f;
+
   sf::Uint8 layerOpacity;     // opacity of the layer
   sf::Vector2f layerOffset;   // Layer offset
   sf::Vector2u mapTileSize;   // general Tilesize of Map
@@ -51,7 +57,18 @@ class Chunk final : public sf::Transformable, public sf::Drawable {
   std::vector<tmx::TileLayer::Tile> m_chunkTileIDs; // stores all tiles in this chunk for later manipulation
   std::vector<sf::Color> m_chunkColors; // stores colors for extended color effects
   std::vector<ChunkArray::Ptr> m_chunkArrays;
+  b2BodyDef bodyDef;
+  b2World &box2DWorld;
 
   void draw(sf::RenderTarget &rt, sf::RenderStates states) const override;
+
+  template<typename Vector2>
+  static b2Vec2 sfVectorToB2Vec(const Vector2 &vec) {
+	return b2Vec2(vec.x / B2_SCALAR, vec.y / B2_SCALAR);
+  }
+
+  static float radiansToAngle(const float& radians) {
+	return radians * 180 / b2_pi;
+  }
 };
 

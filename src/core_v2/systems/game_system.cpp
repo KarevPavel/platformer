@@ -30,6 +30,7 @@ bool GameSystem::LoadFromFile(const std::string &filepath) {
 	} else if (layer->getType() == tmx::Layer::Type::Object) {
 
 	  const auto objectGroup = layer->getLayerAs<tmx::ObjectGroup>();
+
 	  for (const auto &obj : objectGroup.getObjects()) {
 		std::cout << obj.getName() << " [" << obj.getPosition().x << ":" << obj.getPosition().y << "]" << std::endl;
 		if (obj.getName() == "LEVEL_START") {
@@ -39,9 +40,7 @@ bool GameSystem::LoadFromFile(const std::string &filepath) {
 		  levelEnd.position.x = obj.getPosition().x;
 		  levelEnd.position.y = obj.getPosition().y;
 		} else if (obj.getName() == "ENEMY_SPAWN") {
-		  enemySpawns.push_back(
-			  std::make_unique<GameComponents::EnemySpawn>(obj.getPosition())
-		  );
+		  enemySpawns.push_back(std::make_unique<GameComponents::EnemySpawn>(obj.getPosition()));
 		} else if (obj.getName() == "PLAYER_SPAWN") {
 		  playerSpawn.position.x = obj.getPosition().x;
 		  playerSpawn.position.y = obj.getPosition().y;
@@ -62,13 +61,8 @@ bool GameSystem::LoadFromFile(const std::string &filepath) {
   auto defView = this->engine->getWindow().getDefaultView();
   this->engine->getWindow().setView(sf::View{
 	  levelStart.position,
-	  {100, 100 },
+	  {200, 200 },
 
   });
   return true;
-}
-
-void GameSystem::update(const float dt) {
-
-
 }

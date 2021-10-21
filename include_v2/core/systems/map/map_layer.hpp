@@ -33,12 +33,12 @@ class MapLayer final : public sf::Drawable {
   tmx::TileLayer::Tile getTile(int tileX, int tileY);
   void setColor(int tileX, int tileY, sf::Color color, bool refresh);
   sf::Color getColor(int tileX, int tileY);
-  void update(sf::Time elapsed);
+  void update(const float dt);
   void draw(sf::RenderTarget &rt, sf::RenderStates states) const override;
 
  private:
   Chunk::Ptr &getChunkAndTransform(int x, int y, sf::Vector2u &chunkRelative);
-  void createChunks(const tmx::Map &map, const tmx::TileLayer &layer);
+  void createChunks(const tmx::Map &map, const tmx::TileLayer &layer, b2World &box2DWorld);
   void updateVisibility(const sf::View &view) const;
 
 
