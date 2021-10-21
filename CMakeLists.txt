@@ -44,7 +44,7 @@ add_subdirectory(lib/entt)
 ###################################################################
 # Парсер ini файлов
 # URL: https://github.com/benhoyt/inih
-add_subdirectory(lib/inih)
+#add_subdirectory(lib/inih)
 
 ###################################################################
 # Главная сборка
