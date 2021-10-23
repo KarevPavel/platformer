@@ -48,11 +48,11 @@ add_subdirectory(lib/entt)
 
 ###################################################################
 # Главная сборка
-add_subdirectory(src/core_v2)
+add_subdirectory(src/core)
 
 ###################################################################
 # Start point
-add_executable(${PROJECT_NAME} src/main.cpp include_v2/core/events/sound_events.hpp include_v2/core/components/game_components.hpp)
+add_executable(${PROJECT_NAME} src/main.cpp include/core/events/sound_events.hpp include/core/components/game_components.hpp include/core/utils/utils.hpp)
 
 
 target_link_libraries(${PROJECT_NAME}

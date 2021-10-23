@@ -1,8 +1,9 @@
-cmake_minimum_required(VERSION 3.17)
+cmake_minimum_required(VERSION 3.0)
 
-project(core)
+project(core_v2)
 
+add_subdirectory(components)
 add_subdirectory(engine)
-add_subdirectory(gui)
-add_subdirectory(models)
-add_subdirectory(utils)
+add_subdirectory(graphics)
+add_subdirectory(sound)
+add_subdirectory(systems)

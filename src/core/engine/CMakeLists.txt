@@ -2,35 +2,20 @@ cmake_minimum_required(VERSION 3.17)
 
 project(engine)
 
-add_library(
-		${PROJECT_NAME}
-		SHARED
-		application.cpp
-		game_engine.cpp
-		player_engine.cpp)
-
-add_subdirectory(box2d)
-add_subdirectory(menu)
-add_subdirectory(states)
-add_subdirectory(sound)
-add_subdirectory(manager)
-add_subdirectory(world)
+add_library(${PROJECT_NAME}
+			SHARED
+			engine.cpp
+			entity_manager.cpp
+			debug_box_2_d.cpp)
 
 target_include_directories(${PROJECT_NAME}
-						   PUBLIC ${MANAGER_INCLUDE_DIR}
 						   PUBLIC ${ENGINE_INCLUDE_DIR}
-						   PUBLIC ${MODELS_INCLUDE_DIR}
+						   PUBLIC ${GRAPHICS_INCLUDE_DIR}
+						   PUBLIC ${SYSTEMS_INCLUDE_DIR}
 						   PUBLIC ${SOUND_INCLUDE_DIR}
-						   PUBLIC ${STATE_INCLUDE_DIR}
-						   PUBLIC ${BOX2D_EXT_INCLUDE_DIR}
-						   PUBLIC ${WORLD_INCLUDE_DIR})
+						   )
 
-
-target_link_libraries(
-		world
-		box2d
-		menu
-		states
-		sound
-		manager
-)
+target_link_libraries(${PROJECT_NAME}
+					  PUBLIC constants
+					  PUBLIC EnTT
+					  PUBLIC box2d)

@@ -2,10 +2,10 @@
 <map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="30" height="9" tilewidth="16" tileheight="16" infinite="0" backgroundcolor="#b30000" nextlayerid="13" nextobjectid="18">
  <tileset firstgid="1" source="lvl1.tsx"/>
  <objectgroup id="12" name="Object Layer 1">
-  <object id="5" name="LEVEL_START" x="429" y="62.5">
+  <object id="5" name="LEVEL_START" x="432.5" y="39.75">
    <point/>
   </object>
-  <object id="16" name="LEVEL_FINISH" x="429" y="111">
+  <object id="16" name="LEVEL_FINISH" x="432" y="95">
    <point/>
   </object>
   <object id="17" name="ENEMY_SPAWN" x="43" y="106.333">
