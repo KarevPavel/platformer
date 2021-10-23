@@ -10,13 +10,13 @@ MusicPlayer::MusicPlayer() :
 
 }
 
-void MusicPlayer::play(const std::string& musicPath) {
-	if (music.openFromFile(musicPath)) {
-	  music.setVolume(volume);
-	  music.setLoop(true);
-	  current_music = musicPath;
-	  music.play();
-	}
+void MusicPlayer::play(const std::string &musicPath) {
+  if (music.openFromFile(musicPath)) {
+	music.setVolume(volume);
+	music.setLoop(true);
+	current_music = musicPath;
+	music.play();
+  }
 }
 
 void MusicPlayer::setPaused(bool paused) {

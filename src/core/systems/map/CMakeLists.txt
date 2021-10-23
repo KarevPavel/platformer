@@ -11,6 +11,7 @@ add_library(
 
 target_include_directories(${PROJECT_NAME}
 						   PUBLIC ${SYSTEMS_MAP_INCLUDE_DIR}
+						   PUBLIC ${UTILS_INCLUDE_DIR}
 						   )
 
 target_link_libraries(${PROJECT_NAME}

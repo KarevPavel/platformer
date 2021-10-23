@@ -15,9 +15,8 @@ void MapRenderSystem::update(const float dt) {
   auto view = registry->view<GameComponents::Map, GameComponents::LevelEnd>();
   view.each([this, dt](const GameComponents::Map &map,
 					   GameComponents::LevelEnd &levelEnd) {
-	//Draw map
 	for (const auto &entry: map.mapLayers) {
-	  entry.second->update(dt);
+	  //entry.second->update(dt);
 	  engine->getWindow().draw(*entry.second);
 	}
   });

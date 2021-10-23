@@ -3,6 +3,7 @@
 //
 
 #include "base_system.hpp"
+#include "engine.hpp"
 
 BaseSystem::BaseSystem() {
 }
@@ -19,5 +20,4 @@ void BaseSystem::init(Engine *e, entt::registry &r, entt::dispatcher &d) {
 }
 
 void BaseSystem::update(const float dt) {
-
 }

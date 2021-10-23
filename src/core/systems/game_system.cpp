@@ -7,6 +7,7 @@
 #include "engine.hpp"
 #include "tmxlite/Map.hpp"
 #include "levels.hpp"
+#include "utils.hpp"
 
 GameSystem::GameSystem() = default;
 
@@ -52,23 +53,30 @@ bool GameSystem::LoadFromFile(const std::string &filepath) {
 
   auto playerEntity = this->registry->create();
   this->registry->emplace<GameComponents::RenderableSprite>(playerEntity, constants::PAPER_TEXTURE_PATH,
-															sf::IntRect{0, 0, 21, 21});
-  auto emplaced = this->registry->emplace<GameComponents::PlayerPosition>(playerEntity, levelStart.position);
+															sf::IntRect{0, 0, 21, 21}); //TODO: REMOVE MAGIC!!!!
+  this->registry->emplace<GameComponents::PlayerPosition>(playerEntity, levelStart.position);
   auto bodyDef = std::make_unique<b2BodyDef>();
   //b2BodyDef b2BodyDef {};
-  bodyDef->position.x = levelStart.position.x;
-  bodyDef->position.y = levelStart.position.y;
+
+  bodyDef->position =
+	  Utils::sfVectorToB2Vec(levelStart.position + sf::Vector2f{21.f / 2, 21.f / 2}); //TODO: REMOVE MAGIC!!!!
+
   bodyDef->type = b2BodyType::b2_dynamicBody;
   b2Body *body = engine->getBox2DWorld().CreateBody(bodyDef.get());
-  auto fixture = std::make_unique<b2FixtureDef>();
+  auto fixtureDef = std::make_unique<b2FixtureDef>();
+
+  auto shapeSize = Utils::sfVectorToB2Vec(sf::Vector2{21, 21});
   const auto &shape = std::make_unique<b2PolygonShape>();
-  shape->SetAsBox(21, 21);
-  fixture->shape = shape.get();
-  body->CreateFixture(fixture.get());
+
+  shape->SetAsBox(shapeSize.x / 2, shapeSize.y / 2);
+  fixtureDef->shape = shape.get();
+  fixtureDef->density = 1.0f;
+  fixtureDef->friction = 0.3f;
+  body->CreateFixture(fixtureDef.get());
 
   //GameComponents::Body{body, emplaced};
 
-  this->registry->emplace<GameComponents::Body>(playerEntity, body, emplaced);
+  this->registry->emplace<GameComponents::Body>(playerEntity, body);
 
   auto entity = this->registry->create();
   this->registry->emplace<GameComponents::Map>(entity, mapLayers, enemySpawns);

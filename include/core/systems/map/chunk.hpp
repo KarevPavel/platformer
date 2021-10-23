@@ -38,7 +38,7 @@ class Chunk final : public sf::Transformable, public sf::Drawable {
   void setColor(int x, int y, sf::Color color, bool refresh);
   void maybeRegenerate(bool refresh);
   int calcIndexFrom(int x, int y) const;
-  b2BodyDef getBodyDef() const;
+
 
   bool empty() const;
   void flipY(sf::Vector2f *v0, sf::Vector2f *v1, sf::Vector2f *v2, sf::Vector2f *v3);
@@ -56,7 +56,6 @@ class Chunk final : public sf::Transformable, public sf::Drawable {
   std::vector<tmx::TileLayer::Tile> m_chunkTileIDs; // stores all tiles in this chunk for later manipulation
   std::vector<sf::Color> m_chunkColors; // stores colors for extended color effects
   std::vector<ChunkArray::Ptr> m_chunkArrays;
-  b2BodyDef bodyDef;
   b2World &box2DWorld;
 
   void draw(sf::RenderTarget &rt, sf::RenderStates states) const override;

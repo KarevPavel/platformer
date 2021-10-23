@@ -10,7 +10,8 @@ add_library(
 		map_render_system.cpp
 		game_system.cpp
 		sound_system.cpp
-		physics_system.cpp)
+		physics_system.cpp
+		movement_system.cpp)
 
 add_subdirectory(map)
 
@@ -22,6 +23,7 @@ target_include_directories(${PROJECT_NAME}
 						   PUBLIC ${GRAPHICS_INCLUDE_DIR}
 						   PUBLIC ${SOUND_INCLUDE_DIR}
 						   PUBLIC ${SYSTEMS_MAP_INCLUDE_DIR}
+						   PUBLIC ${UTILS_INCLUDE_DIR}
 						   )
 
 target_link_libraries(${PROJECT_NAME}

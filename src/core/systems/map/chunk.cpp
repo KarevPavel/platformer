@@ -26,7 +26,7 @@ Chunk::Chunk(const tmx::TileLayer &layer, std::vector<const tmx::Tileset *> tile
 	  tmx::Logger::log("Chunks using " + ts->getName() + " will not be created", tmx::Logger::Type::Info);
 	  continue;
 	}
-	m_chunkArrays.emplace_back(std::make_unique<ChunkArray>(*tr.find(ts->getImagePath())->second, *ts));
+	m_chunkArrays.emplace_back(std::make_unique<ChunkArray>(*tr.find(ts->getImagePath())->second, *ts, layer.getName()));
   }
   std::size_t xPos = static_cast<std::size_t>(position.x / tileSize.x);
   std::size_t yPos = static_cast<std::size_t>(position.y / tileSize.y);
@@ -73,7 +73,7 @@ void Chunk::generateTiles() {
 			  };
 		  doFlips(m_chunkTileIDs[idx].flipFlags, &tile[0].texCoords, &tile[1].texCoords,
 				  &tile[2].texCoords, &tile[3].texCoords);
-		  ca->addTile(tile);
+		  ca->addTile(tile, box2DWorld);
 		}
 		idx++;
 	  }
@@ -110,10 +110,6 @@ void Chunk::maybeRegenerate(bool refresh) {
 
 void Chunk::updatePhysics() {
 
-}
-
-b2BodyDef Chunk::getBodyDef() const {
-  return bodyDef;
 }
 
 int Chunk::calcIndexFrom(int x, int y) const {

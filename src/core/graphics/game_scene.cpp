@@ -20,21 +20,21 @@ GameScene::~GameScene() = default;
 
 void GameScene::init() {
   em.init(engine);
+
   em.addSystem(std::make_unique<GameSystem>());
   em.addSystem(std::make_unique<MusicSystem>());
   em.addSystem(std::make_unique<SoundSystem>());
-
-  //triggers level tmx file parsing
-  em.getEventDispatcher()->trigger<GameEvent::GameStart>(constants::LEVEL1_PATH);
-  em.addRenderSystem(std::make_unique<MapRenderSystem>());
-  em.getEventDispatcher()->trigger<SoundEvent::MusicStop>();
   em.addSystem(std::make_unique<PhysicsSystem>());
+
+  em.getEventDispatcher()->trigger<SoundEvent::MusicStop>();
+  em.getEventDispatcher()->trigger<GameEvent::GameStart>(constants::LEVEL1_PATH);
+
+  em.addRenderSystem(std::make_unique<MapRenderSystem>());
 }
 
 void GameScene::update() {
   sf::Event event;
   while (window->pollEvent(event)) {
-
 	handleDefaultEvents(&event);
   }
 }

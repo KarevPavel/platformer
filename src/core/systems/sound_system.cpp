@@ -11,6 +11,6 @@ SoundSystem::SoundSystem() = default;
 void SoundSystem::onInit() {
   eventDispatcher->sink<SoundEvent::MusicStart>().connect<&SoundSystem::playSound>(this);
 }
-void SoundSystem::playSound(const SoundEvent::MusicStart & event) {
+void SoundSystem::playSound(const SoundEvent::MusicStart &event) {
   engine->getMusicPlayer().play(event.musicPath);
 }

@@ -9,10 +9,6 @@
 DebugBox2D::DebugBox2D(sf::RenderWindow &window) : window(&window) {
 }
 
-uint32 DebugBox2D::GetFlags() {
-  return b2Draw::e_shapeBit;
-}
-
 sf::Color DebugBox2D::b2ColorConvert(const b2Color &color, sf::Uint8 alpha) {
   return sf::Color(static_cast<sf::Uint8>(color.r * 255),
 				   static_cast<sf::Uint8>(color.g * 255),

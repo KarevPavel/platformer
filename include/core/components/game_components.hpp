@@ -76,10 +76,9 @@ struct RenderableSprite {
 
 struct Body {
 
-  explicit Body(b2Body *body, const Position &wrappedObjPos): body(body), wrappedObjPos(wrappedObjPos) {}
+  explicit Body(b2Body *body): body(body) {}
 
   b2Body *body;
-  Position wrappedObjPos;
 };
 
 }
