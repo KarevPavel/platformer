@@ -71,12 +71,10 @@ bool GameSystem::LoadFromFile(const std::string &filepath) {
   shape->SetAsBox(shapeSize.x / 2, shapeSize.y / 2);
   fixtureDef->shape = shape.get();
   fixtureDef->density = 1.0f;
-  fixtureDef->friction = 0.3f;
+  fixtureDef->friction = 0.7f;
   body->CreateFixture(fixtureDef.get());
 
-  //GameComponents::Body{body, emplaced};
-
-  this->registry->emplace<GameComponents::Body>(playerEntity, body);
+  this->registry->emplace<GameComponents::PlayerBody>(playerEntity, body);
 
   auto entity = this->registry->create();
   this->registry->emplace<GameComponents::Map>(entity, mapLayers, enemySpawns);
@@ -84,10 +82,8 @@ bool GameSystem::LoadFromFile(const std::string &filepath) {
   this->registry->emplace<GameComponents::LevelEnd>(entity, levelEnd.position);
 
   auto defView = this->engine->getWindow().getDefaultView();
-  this->engine->getWindow().setView(sf::View{
-	  levelStart.position,
-	  {300, 200},
+  this->engine->getView().setCenter(levelStart.position);
+  this->engine->getWindow().setView(this->engine->getView());
 
-  });
   return true;
 }

@@ -44,7 +44,7 @@ class MapLayer final : public sf::Drawable {
 
  private:
   //increasing m_chunkSize by 4; fixes render problems when mapsize != chunksize
-  sf::Vector2f m_chunkSize = sf::Vector2f(256.f, 256.f);
+  sf::Vector2f m_chunkSize = sf::Vector2f(2048.f, 2048.f);
   sf::Vector2u m_chunkCount;
   sf::Vector2u m_MapTileSize;   // general Tilesize of Map
   sf::FloatRect m_globalBounds;

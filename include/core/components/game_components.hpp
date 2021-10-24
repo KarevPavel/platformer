@@ -22,12 +22,10 @@ struct Position {
 };
 
 struct Bullet {
-  Bullet(const sf::Vector2f &position,
-		 const sf::Vector2f &direction) :
-	  position(position), direction(direction) {
+  Bullet(b2Body *body) : body(body) {
   }
 
-  sf::Vector2f position, direction;
+  b2Body *body;
 };
 
 struct LevelStart : Position {
@@ -74,10 +72,11 @@ struct RenderableSprite {
   std::unique_ptr<sf::Sprite> sprite;
 };
 
-struct Body {
+struct PlayerBody {
 
-  explicit Body(b2Body *body): body(body) {}
+  explicit PlayerBody(b2Body *body): body(body), isOnAir(false) {}
 
+  bool isOnAir;
   b2Body *body;
 };
 

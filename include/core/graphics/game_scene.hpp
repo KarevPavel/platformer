@@ -15,7 +15,6 @@ class GameScene : public Scene
   GameScene();
   ~GameScene();
 
-  void test(sf::Event *event);
   void init() override;
   void update() override;
   void fixedUpdate(const float dt) override;

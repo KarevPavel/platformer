@@ -42,6 +42,7 @@ class Engine {
   inline SoundPlayer &getSoundPlayer() { return sound_player; }
   inline b2World &getBox2DWorld() { return box2DWorld; }
   inline DebugBox2D &getDebugBox2D() { return debugDraw; }
+  inline sf::View &getView() { return view; }
 };
 
 

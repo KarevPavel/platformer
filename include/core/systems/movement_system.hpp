@@ -5,6 +5,7 @@
 #pragma once
 
 #include "base_system.hpp"
+#include <box2d/b2_math.h>
 
 class MovementSystem:  public BaseSystem {
   void onInit() override;
@@ -13,6 +14,7 @@ class MovementSystem:  public BaseSystem {
   MovementSystem();
 
   void update(float dt) override;
+  void shoot(const b2Vec2& bulletStartPos, const b2Vec2& bulletDirection);
 };
 
 

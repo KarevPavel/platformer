@@ -26,6 +26,7 @@ void MenuScene::init() {
 
   em.getEventDispatcher()->trigger<SoundEvent::MusicStart>(constants::MAIN_MENU_PATH);
 
+  engine->getView().setSize({800, 600});
 }
 
 sf::Vector2f MenuScene::getMousePosition() {

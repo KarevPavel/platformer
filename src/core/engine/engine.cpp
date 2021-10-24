@@ -10,11 +10,12 @@
 #include "debug_box_2_d.hpp"
 
 Engine::Engine() : scene_manager(this), box2DWorld(b2Vec2(0.f, 9.8f)), debugDraw(window) {
-  window.create(sf::VideoMode(1600, 900), "Platformer");
+  window.create(sf::VideoMode(1920, 1080), "Platformer", sf::Style::Fullscreen);
 
   debugDraw.SetFlags(b2Draw::e_shapeBit | b2Draw::e_centerOfMassBit);
 
   box2DWorld.SetDebugDraw(&debugDraw);
+  window.setView(view);
 }
 
 Engine::~Engine() {

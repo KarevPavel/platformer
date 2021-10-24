@@ -4,6 +4,7 @@
 
 #include <sound_system.hpp>
 #include <physics_system.hpp>
+#include <movement_system.hpp>
 #include "scene.hpp"
 #include "music_system.hpp"
 #include "map_render_system.hpp"
@@ -25,11 +26,14 @@ void GameScene::init() {
   em.addSystem(std::make_unique<MusicSystem>());
   em.addSystem(std::make_unique<SoundSystem>());
   em.addSystem(std::make_unique<PhysicsSystem>());
+  em.addSystem(std::make_unique<MovementSystem>());
 
   em.getEventDispatcher()->trigger<SoundEvent::MusicStop>();
   em.getEventDispatcher()->trigger<GameEvent::GameStart>(constants::LEVEL1_PATH);
 
   em.addRenderSystem(std::make_unique<MapRenderSystem>());
+
+  engine->getView().setSize({300, 200});
 }
 
 void GameScene::update() {
