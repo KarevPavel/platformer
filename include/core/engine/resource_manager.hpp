@@ -33,7 +33,7 @@ inline Resource &ResourceManager<Resource, Identifier>::getResource(const Identi
 	auto insertedResource = resourceMap.insert(std::make_pair(resourcePath, std::move(resource)));
 	//TODO: явно глупость, зачем ещё раз выоплнять поиск?
 	//Но у меня иначе не получилось
-	return *resourceMap.find(resourcePath) -> second;
+	return *resourceMap.find(resourcePath)->second;
   }
   return *found_texture->second;
 }

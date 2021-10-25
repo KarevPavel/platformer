@@ -9,11 +9,17 @@
 #include "menu_scene.hpp"
 #include "debug_box_2_d.hpp"
 
-Engine::Engine() : scene_manager(this), box2DWorld(b2Vec2(0.f, 9.8f)), debugDraw(window) {
-  window.create(sf::VideoMode(1920, 1080), "Platformer", sf::Style::Fullscreen);
+Engine::Engine() : sceneManager(this),
+				   box2DWorld(b2Vec2(0.f, 9.8f)),
+				   debugDraw(window),
+				   contactListener(),
+				   textureManager(),
+				   fontManager() {
+  window.create(sf::VideoMode(1600, 900), "Platformer", sf::Style::Fullscreen);
 
   debugDraw.SetFlags(b2Draw::e_shapeBit | b2Draw::e_centerOfMassBit);
 
+  box2DWorld.SetContactListener(&contactListener);
   box2DWorld.SetDebugDraw(&debugDraw);
   window.setView(view);
 }
@@ -26,7 +32,7 @@ void Engine::stop() { isRunning = false; }
 
 void Engine::start() {
 
-  scene_manager.addScene(std::make_unique<MenuScene>());
+  sceneManager.addScene(std::make_unique<MenuScene>());
 
   sf::Clock clock;
 
@@ -34,7 +40,7 @@ void Engine::start() {
   auto TIME_PER_FRAME = sf::seconds(1.f / 60.f);
 
   while (isRunning) {
-	auto scene = scene_manager.getCurrent();
+	auto scene = sceneManager.getCurrent();
 
 	scene->update();
 	frameTimeElapsed += clock.restart();

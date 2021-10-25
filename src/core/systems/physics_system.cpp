@@ -10,20 +10,26 @@
 PhysicsSystem::PhysicsSystem() = default;
 
 void PhysicsSystem::onInit() {
+
 }
 
 void PhysicsSystem::update(const float dt) {
-  auto view = registry->view<GameComponents::PlayerBody, GameComponents::PlayerPosition>();
-
+  auto view = registry->view<GameComponents::PlayerBody,
+							 GameComponents::RenderableSprite,
+							 GameComponents::PlayerPosition,
+							 GameComponents::Weapon>();
   //Обработка модели игрока
-  view.each([](GameComponents::PlayerBody &body, GameComponents::PlayerPosition &playerPosition) {
+  view.each([](GameComponents::PlayerBody &body,
+			   GameComponents::RenderableSprite &renderableSprite,
+			   GameComponents::PlayerPosition &playerPosition,
+			   GameComponents::Weapon &weapon) {
 	auto pos = body.body->GetPosition();
-	//std::cout << "Prev Position: [" << pos.x << ":" << pos.y << "]"  << std::endl;
-	playerPosition.position = Utils::b2VecToVector2(pos);
-	//body.body->SetLinearVelocity({ 0.f, 0.f }); // this should avoid some incredibly high jumps
-	//body.body->ApplyForceToCenter(Utils::sfVectorToB2Vec(sf::Vector2f{ 300.f, -3 * 300.f }), true);
-	//std::cout << "New Position: [" << body.body->GetPosition().x << ":" << body.body->GetPosition().y << "]"  << std::endl;
+
+	playerPosition.position = Utils::b2VecToVector2(body.body->GetPosition());
+	playerPosition.angle = body.body->GetAngle();
+	//weapon.weapon.setRotation(body.body->GetAngle());
+	weapon.weapon.setPosition(Utils::b2VecToVector2(pos));
   });
 
-  this->engine->getBox2DWorld().Step(1.f/60.f, 6, 2);
+  this->engine->getBox2DWorld().Step(dt, 6, 2);
 }

@@ -16,7 +16,6 @@ void Scene::setEngine(Engine *engine) {
 
   window = &engine->getWindow();
   sceneMng = &engine->getSceneManager();
-  textureMng = &engine->getTextureManager();
 }
 
 void Scene::handleDefaultEvents(sf::Event *event) {

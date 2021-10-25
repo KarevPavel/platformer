@@ -23,11 +23,18 @@ void MapRenderSystem::update(const float dt) {
 	}
   });
 
-  auto playerView = registry->view<GameComponents::RenderableSprite, GameComponents::PlayerPosition>();
+  auto playerView = registry->view<GameComponents::RenderableSprite, GameComponents::PlayerPosition, GameComponents::PlayerBody, GameComponents::Weapon>();
   playerView.each([this](const GameComponents::RenderableSprite &texurable,
-						 const GameComponents::PlayerPosition &playerPosition) {
+						 const GameComponents::PlayerPosition &playerPosition,
+						 const GameComponents::PlayerBody &playerBody,
+						 const GameComponents::Weapon &weapon) {
+
+	texurable.sprite->setRotation(Utils::radiansToAngle(playerPosition.angle));
 	texurable.sprite->setPosition(playerPosition.position);
+
+
 	engine->getWindow().draw(*texurable.sprite);
+
 	auto &view = engine->getView();
 	view.setCenter(playerPosition.position);
 	engine->getWindow().setView(view);
@@ -35,8 +42,10 @@ void MapRenderSystem::update(const float dt) {
 
   auto bulletView = registry->view<GameComponents::Bullet>();
   bulletView.each([this](const GameComponents::Bullet &bullet) {
+
     auto sfPosition = Utils::b2VecToVector2(bullet.body->GetPosition());
-	sf::RectangleShape rectangleShape {{1, 1}};
+
+	sf::RectangleShape rectangleShape{{1, 1}};
 	rectangleShape.setFillColor(sf::Color::Magenta);
 	rectangleShape.setOutlineColor(sf::Color::Black);
 	rectangleShape.setOutlineThickness(0.1f);

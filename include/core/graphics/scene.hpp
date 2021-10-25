@@ -16,7 +16,6 @@
 class Scene {
   std::string name;
  protected:
-  TextureManager *textureMng;
 
   class Engine *engine;
   class SceneManager *sceneMng;

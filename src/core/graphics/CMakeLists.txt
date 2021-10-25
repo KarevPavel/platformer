@@ -7,7 +7,8 @@ add_library(${PROJECT_NAME}
 			scene_manager.cpp
 			scene.cpp
 			menu_scene.cpp
-			game_scene.cpp)
+			game_scene.cpp
+			button.cpp)
 
 target_include_directories(${PROJECT_NAME}
 						   PUBLIC ${COMPONENTS_INCLUDE_DIR}
@@ -15,7 +16,9 @@ target_include_directories(${PROJECT_NAME}
 						   PUBLIC ${ENGINE_INCLUDE_DIR}
 						   PUBLIC ${SOUND_INCLUDE_DIR}
 						   PUBLIC ${SYSTEMS_INCLUDE_DIR}
-						   PUBLIC ${EVENTS_INCLUDE_DIR})
+						   PUBLIC ${EVENTS_INCLUDE_DIR}
+						   PUBLIC ${UTILS_INCLUDE_DIR}
+						   )
 
 target_link_libraries(${PROJECT_NAME}
 					  PUBLIC constants

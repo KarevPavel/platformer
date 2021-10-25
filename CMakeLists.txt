@@ -84,7 +84,7 @@ add_subdirectory(src/core)
 add_executable(${PROJECT_NAME}
 			   src/platformer.cpp
 			   include/engine/keyboard.h
-			   include/engine/SFMLOrthogonalLayer.h src/core_v2/engine/engine.cpp src/core_v2/engine/engine.hpp src/core_v2/graphics/texture_manager.cpp src/core_v2/graphics/texture_manager.hpp src/core_v2/graphics/scene_manager.cpp src/core_v2/graphics/scene_manager.hpp)
+			   include/engine/SFMLOrthogonalLayer.h src/core_v2/engine/engine.cpp src/core_v2/engine/engine.hpp src/core_v2/graphics/textureManager.cpp src/core_v2/graphics/textureManager.hpp src/core_v2/graphics/sceneManager.cpp src/core_v2/graphics/sceneManager.hpp)
 
 message(TMXLITE_LIBRARIES ${TMXLITE_LIBRARIES})
 message(SFML_LIBRARIES ${SFML_LIBRARIES})

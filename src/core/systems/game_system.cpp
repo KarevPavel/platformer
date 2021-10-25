@@ -8,6 +8,7 @@
 #include "tmxlite/Map.hpp"
 #include "levels.hpp"
 #include "utils.hpp"
+#include <SFML/Graphics/RectangleShape.hpp>
 
 GameSystem::GameSystem() = default;
 
@@ -52,29 +53,34 @@ bool GameSystem::LoadFromFile(const std::string &filepath) {
   }
 
   auto playerEntity = this->registry->create();
-  this->registry->emplace<GameComponents::RenderableSprite>(playerEntity, constants::PAPER_TEXTURE_PATH,
-															sf::IntRect{0, 0, 21, 21}); //TODO: REMOVE MAGIC!!!!
-  this->registry->emplace<GameComponents::PlayerPosition>(playerEntity, levelStart.position);
-  auto bodyDef = std::make_unique<b2BodyDef>();
-  //b2BodyDef b2BodyDef {};
 
-  bodyDef->position =
-	  Utils::sfVectorToB2Vec(levelStart.position + sf::Vector2f{21.f / 2, 21.f / 2}); //TODO: REMOVE MAGIC!!!!
+  const sf::Texture &texture = engine->getTextureManager().getResource(constants::PAPER_TEXTURE_PATH);
+  this->registry->emplace<GameComponents::RenderableSprite>(playerEntity, texture);
+  this->registry->emplace<GameComponents::PlayerPosition>(playerEntity, levelStart.position);
+
+  auto bodyDef = std::make_unique<b2BodyDef>();
+  bodyDef->position = Utils::sfVectorToB2Vec(levelStart.position);
 
   bodyDef->type = b2BodyType::b2_dynamicBody;
-  b2Body *body = engine->getBox2DWorld().CreateBody(bodyDef.get());
+  b2Body *playerBody = engine->getBox2DWorld().CreateBody(bodyDef.get());
   auto fixtureDef = std::make_unique<b2FixtureDef>();
 
-  auto shapeSize = Utils::sfVectorToB2Vec(sf::Vector2{21, 21});
+  auto shapeSize = Utils::sfVectorToB2Vec(sf::Vector2{21, 21});  //TODO: REMOVE MAGIC!!!!
   const auto &shape = std::make_unique<b2PolygonShape>();
 
   shape->SetAsBox(shapeSize.x / 2, shapeSize.y / 2);
   fixtureDef->shape = shape.get();
   fixtureDef->density = 1.0f;
   fixtureDef->friction = 0.7f;
-  body->CreateFixture(fixtureDef.get());
+  playerBody->CreateFixture(fixtureDef.get());
 
-  this->registry->emplace<GameComponents::PlayerBody>(playerEntity, body);
+  auto weapon = sf::RectangleShape(sf::Vector2f{2.f, 10.f});
+  weapon.setPosition(levelStart.position);
+  weapon.rotate(90.f);
+  weapon.setFillColor(sf::Color::Black);
+
+  this->registry->emplace<GameComponents::PlayerBody>(playerEntity, playerBody);
+  this->registry->emplace<GameComponents::Weapon>(playerEntity, weapon);
 
   auto entity = this->registry->create();
   this->registry->emplace<GameComponents::Map>(entity, mapLayers, enemySpawns);

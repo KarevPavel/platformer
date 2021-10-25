@@ -12,13 +12,15 @@
 #include <SFML/Graphics/Sprite.hpp>
 
 #include <map/map_layer.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
 
 namespace GameComponents {
 
 struct Position {
   Position() = default;
-  explicit Position(const sf::Vector2<float> &position) : position(position) {}
+  explicit Position(const sf::Vector2<float> &position) : position(position), angle(0) {}
   sf::Vector2<float> position;
+  float angle;
 };
 
 struct Bullet {
@@ -61,6 +63,14 @@ struct Map {
 struct RenderableSprite {
   RenderableSprite() = default;
 
+  explicit RenderableSprite(const sf::Texture &texture_) {
+	texture = std::make_unique<sf::Texture>(texture_);
+	sf::IntRect{
+
+	};
+	sprite = std::make_unique<sf::Sprite>(*texture);
+  }
+
   RenderableSprite(const std::string &texturePath, const sf::IntRect &spritePos) {
 	texture = std::make_unique<sf::Texture>();
 	if (!texture->loadFromFile(texturePath)) {
@@ -74,10 +84,21 @@ struct RenderableSprite {
 
 struct PlayerBody {
 
-  explicit PlayerBody(b2Body *body): body(body), isOnAir(false) {}
+  explicit PlayerBody(b2Body *body) : body(body), isOnAir(false) {}
 
   bool isOnAir;
   b2Body *body;
+};
+
+struct Weapon {
+  explicit Weapon(const sf::RectangleShape &weapon) : weapon(weapon), moveVector() {
+	moveVector = sf::RectangleShape({1, 20});
+	moveVector.setFillColor(sf::Color::Black);
+	moveVector.setPosition(weapon.getPosition());
+  }
+
+  sf::RectangleShape moveVector;
+  sf::RectangleShape weapon;
 };
 
 }
