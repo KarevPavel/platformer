@@ -7,7 +7,7 @@
 #include <movement_system.hpp>
 #include "scene.hpp"
 #include "music_system.hpp"
-#include "map_render_system.hpp"
+#include "render_system.hpp"
 #include "levels.hpp"
 #include "game_system.hpp"
 #include "game_scene.hpp"
@@ -31,7 +31,7 @@ void GameScene::init() {
   em.getEventDispatcher()->trigger<SoundEvent::MusicStop>();
   em.getEventDispatcher()->trigger<GameEvent::GameStart>(constants::LEVEL1_PATH);
 
-  em.addRenderSystem(std::make_unique<MapRenderSystem>());
+  em.addRenderSystem(std::make_unique<RenderSystem>());
 
   engine->getView().setSize({300, 200});
 }

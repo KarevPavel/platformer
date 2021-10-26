@@ -7,7 +7,7 @@ add_library(
 		SHARED
 		base_system.cpp
 		music_system.cpp
-		map_render_system.cpp
+		render_system.cpp
 		game_system.cpp
 		sound_system.cpp
 		physics_system.cpp

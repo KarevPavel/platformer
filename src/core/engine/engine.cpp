@@ -15,7 +15,7 @@ Engine::Engine() : sceneManager(this),
 				   contactListener(),
 				   textureManager(),
 				   fontManager() {
-  window.create(sf::VideoMode(1600, 900), "Platformer", sf::Style::Fullscreen);
+  window.create(sf::VideoMode(1600, 900), "Platformer", sf::Style::Default);
 
   debugDraw.SetFlags(b2Draw::e_shapeBit | b2Draw::e_centerOfMassBit);
 

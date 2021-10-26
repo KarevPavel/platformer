@@ -11,8 +11,7 @@
 #include "engine.hpp"
 #include "utils.hpp"
 
-MenuScene::MenuScene()
-	: Scene("menu") {
+MenuScene::MenuScene(): Scene("menu") {
 }
 
 MenuScene::~MenuScene() {
@@ -26,6 +25,8 @@ void MenuScene::init() {
   backgroundTexture.setTexture(engine->getTextureManager().getResource(constants::BLACK_PATH));
   backgroundTexture
 	  .setTextureRect(sf::IntRect(0, 0, engine->getWindow().getSize().x, engine->getWindow().getSize().y));
+
+  buttons = new DrawableContainer<Button>(engine->getWindow());
 
   em.getEventDispatcher()->trigger<SoundEvent::MusicStart>(constants::MAIN_MENU_PATH);
 
@@ -50,9 +51,7 @@ void MenuScene::update() {
   while (window->pollEvent(event)) {
 	handleDefaultEvents(&event);
 
-	for (const auto &btn : buttons) {
-	  btn->handleEvents(event);
-	}
+	buttons->handleEvents(event);
 
 	//TODO:REMOVE!!!! ONLY FOR FAST TESTS!!!
 	if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter) {
@@ -62,10 +61,7 @@ void MenuScene::update() {
 }
 
 void MenuScene::fixedUpdate(const float dt) {
-  for (const auto &btn : buttons) {
-	btn->update(window->mapPixelToCoords(sf::Mouse::getPosition()));
-  }
-
+  buttons->update();
   em.onUpdate(dt);
 }
 
@@ -74,9 +70,8 @@ void MenuScene::render(const float alpha_lerp) {
   window->draw(backgroundTexture);
 
   window->draw(gameName);
-  for (const auto &btn : buttons) {
-	window->draw(*btn);
-  }
+  window->draw(*buttons);
+
   em.onRender(alpha_lerp);
 
   window->display();
@@ -92,7 +87,6 @@ void MenuScene::createButtons(sf::RenderWindow &window, sf::Vector2f position) {
 	this->engine->getSceneManager().addScene(std::make_unique<GameScene>());
   });
 
-
   /*
   auto fullScreenButton = std::make_unique<Button>(_textures, _fonts);
   fullScreenButton->setText("Fullscreen: " + (false ? std::string("yes") : std::string("no")));
@@ -104,8 +98,7 @@ void MenuScene::createButtons(sf::RenderWindow &window, sf::Vector2f position) {
 										//self.setText("Fullscreen: " + (fullScreen ? std::string("yes") : std::string("no")));
 										window.create(sf::VideoMode(window.getSize().x, window.getSize().y), "Worms Clone",
 													  sf::Style::Titlebar | sf::Style::Close | sf::Style::Fullscreen);
-									  });
-*/
+									  });*/
 
   auto exitButton = std::make_unique<Button>(engine->getTextureManager(), engine->getFontManager());
   exitButton->setText("Exit");
@@ -116,6 +109,6 @@ void MenuScene::createButtons(sf::RenderWindow &window, sf::Vector2f position) {
   	exit(0);
   });
 
-  buttons.push_back(std::move(exitButton));
-  buttons.push_back(std::move(playButton));
+  buttons->store(std::move(exitButton));
+  buttons->store(std::move(playButton));
 }

@@ -24,5 +24,7 @@ void Scene::handleDefaultEvents(sf::Event *event) {
 	engine->stop();
   else if (event->type == sf::Event::Resized)
     engine->getWindow().setView(engine->getWindow().getView());
+
+
   // todo handle here resizing window and black border bars for resolution
 }

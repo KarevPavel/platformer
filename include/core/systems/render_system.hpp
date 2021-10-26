@@ -8,11 +8,11 @@
 #include "game_events.hpp"
 
 
-class MapRenderSystem : public BaseSystem {
+class RenderSystem : public BaseSystem {
   void onInit() override;
 
  public:
-  MapRenderSystem();
+  RenderSystem();
 
   void update(float dt) override;
 

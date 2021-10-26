@@ -12,14 +12,15 @@
 #include <button.hpp>
 #include "scene.hpp"
 #include "entity_manager.hpp"
-
+#include "drawable_container.hpp"
 
 class MenuScene : public Scene
 {
   EntityManager em;
   sf::Text gameName;
   sf::Sprite backgroundTexture;
-  std::vector<std::unique_ptr<Button>> buttons;
+  //std::vector<std::unique_ptr<Button>> buttons;
+  DrawableContainer<Button>* buttons;
 
  public:
   MenuScene();

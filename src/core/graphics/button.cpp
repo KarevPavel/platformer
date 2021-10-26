@@ -116,11 +116,9 @@ void Button::handleEvents(const sf::Event &event) {
 }
 
 void Button::update(sf::Vector2f mousePosition) {
-  // If mouse has left the button
   if (isSelected && !getGlobalBounds().contains(mousePosition))
 	onLeave();
 
-  // If mouse has entered the button
   if (!isSelected && getGlobalBounds().contains(mousePosition))
 	onEnter();
 }

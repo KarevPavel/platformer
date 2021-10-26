@@ -74,9 +74,8 @@ bool GameSystem::LoadFromFile(const std::string &filepath) {
   fixtureDef->friction = 0.7f;
   playerBody->CreateFixture(fixtureDef.get());
 
-  auto weapon = sf::RectangleShape(sf::Vector2f{2.f, 10.f});
+  auto weapon = sf::RectangleShape(sf::Vector2f{2.f, 20.f});
   weapon.setPosition(levelStart.position);
-  weapon.rotate(90.f);
   weapon.setFillColor(sf::Color::Black);
 
   this->registry->emplace<GameComponents::PlayerBody>(playerEntity, playerBody);

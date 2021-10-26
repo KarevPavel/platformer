@@ -13,6 +13,7 @@
 
 #include <map/map_layer.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Graphics/CircleShape.hpp>
 
 namespace GameComponents {
 
@@ -24,10 +25,15 @@ struct Position {
 };
 
 struct Bullet {
-  Bullet(b2Body *body) : body(body) {
+  Bullet(b2Body *body, sf::Vector2f startPosition) : body(body), rectangleShape({1, 1}) {
+	rectangleShape.setFillColor(sf::Color::Magenta);
+	rectangleShape.setOutlineColor(sf::Color::Black);
+	rectangleShape.setOutlineThickness(0.1f);
+	rectangleShape.setPosition(startPosition);
   }
 
   b2Body *body;
+  sf::RectangleShape rectangleShape;
 };
 
 struct LevelStart : Position {
@@ -65,10 +71,9 @@ struct RenderableSprite {
 
   explicit RenderableSprite(const sf::Texture &texture_) {
 	texture = std::make_unique<sf::Texture>(texture_);
-	sf::IntRect{
-
-	};
+	auto size = texture->getSize();
 	sprite = std::make_unique<sf::Sprite>(*texture);
+	sprite->setOrigin(size.x / 2.f, size.y / 2.f);
   }
 
   RenderableSprite(const std::string &texturePath, const sf::IntRect &spritePos) {
@@ -77,6 +82,7 @@ struct RenderableSprite {
 	  std::cout << "Something going wrong!" << std::endl;
 	}
 	sprite = std::make_unique<sf::Sprite>(*texture, spritePos);
+	sprite->setOrigin(spritePos.width / 2, spritePos.width / 2);
   }
   std::unique_ptr<sf::Texture> texture;
   std::unique_ptr<sf::Sprite> sprite;
@@ -91,12 +97,19 @@ struct PlayerBody {
 };
 
 struct Weapon {
-  explicit Weapon(const sf::RectangleShape &weapon) : weapon(weapon), moveVector() {
-	moveVector = sf::RectangleShape({1, 20});
+  explicit Weapon(const sf::RectangleShape &weapon) : weapon(weapon), moveVector(), circleShape(20) {
+	moveVector = sf::RectangleShape({1, 900});
 	moveVector.setFillColor(sf::Color::Black);
 	moveVector.setPosition(weapon.getPosition());
+
+	circleShape.setOutlineColor(sf::Color::Black);
+	circleShape.setFillColor(sf::Color::Transparent);
+	circleShape.setOutlineThickness(1.f);
+	circleShape.setOrigin(20,20);
+	circleShape.setPosition(weapon.getPosition());
   }
 
+  sf::CircleShape circleShape;
   sf::RectangleShape moveVector;
   sf::RectangleShape weapon;
 };

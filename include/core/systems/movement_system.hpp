@@ -14,7 +14,25 @@ class MovementSystem:  public BaseSystem {
   MovementSystem();
 
   void update(float dt) override;
+
+ private:
+  /**
+   * Обработка нажатий клавиатуры/мыши
+   */
+  void inputProcessing();
+
+  /**
+   * Обработка положения пуль
+   */
+  void bulletsMovement();
+
+  /**
+   * Обработка положения игрока (текстуры игрока, оружия)
+   */
+  void playerMovement();
+
   void shoot(const b2Vec2& bulletStartPos, const b2Vec2& bulletDirection);
+
 };
 
 
