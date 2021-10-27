@@ -32,6 +32,7 @@ void MovementSystem::inputProcessing() {
 		sf::Vector2f pos = engine->getWindow().mapPixelToCoords(pixelPos);
 		float dX = pos.x - weapon.moveVector.getPosition().x;
 		float dY = pos.y - weapon.moveVector.getPosition().y;
+
 		//TODO: Пока не разобрался почнму приходится писать -90 =(
 		float rotation = ((atan2(dY, dX)) * 180 / M_PI) - 90;
 		weapon.moveVector.setRotation(rotation);
@@ -51,24 +52,24 @@ void MovementSystem::inputProcessing() {
 
 		  if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 
+
+			//TODO: Пока не разобрался почнму приходится писать +90 =(
+			rotation = weapon.moveVector.getRotation() + 90;
 			float r = weapon.circleShape.getRadius();
+			auto Opos = weapon.circleShape.getPosition();
+			float x = Opos.x + (r * cos(rotation/(180/M_PI)));
+			float y = Opos.y + (r * sin(rotation/(180/M_PI)));
 
-			//rotation -= 90;
-			//rotation = rotation < 0 ? 360 + rotation : rotation;
-			//rotation-=90;
-			rotation = weapon.weapon.getRotation();
-			float x = r * sin(M_PI * 2 * rotation / 360);
-			float y = r * cos(M_PI * 2 * rotation / 360);
 
-			std::cout << "Rotation: " << rotation << std::endl;
-			auto coords = weapon.circleShape.getPosition() + sf::Vector2f { x, y };
 
-			sf::RectangleShape rect ({ 5, 5 });
-			rect.setFillColor(sf::Color::Cyan);
-			rect.setPosition(coords);
-			engine->getWindow().draw(rect);
+			float weaponPower = 200;
+			float x_2 = Opos.x + (weaponPower * cos(rotation - 90/(180/M_PI)));
+			float y_2 = Opos.y + (weaponPower * sin(rotation - 90/(180/M_PI)));
 
-			shoot(Utils::sfVectorToB2Vec(coords), Utils::sfVectorToB2Vec(pos));
+			auto coords = sf::Vector2f { x, y };
+			auto bulletDirection = sf::Vector2f{ x_2, y_2 };
+
+			shoot(Utils::sfVectorToB2Vec(coords), Utils::sfVectorToB2Vec(bulletDirection));
 		  }
 		}
 	  });

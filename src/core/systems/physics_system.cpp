@@ -14,5 +14,5 @@ void PhysicsSystem::onInit() {
 }
 
 void PhysicsSystem::update(const float dt) {
-  this->engine->getBox2DWorld().Step(dt * 0.1f, 1, 1);
+  this->engine->getBox2DWorld().Step(dt, 1, 1);
 }
