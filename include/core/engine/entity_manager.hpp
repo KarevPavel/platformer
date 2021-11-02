@@ -5,6 +5,7 @@
 #pragma once
 
 #include "base_system.hpp"
+#include <SFML/Window/Event.hpp>
 
 class EntityManager
 {
@@ -13,7 +14,8 @@ class EntityManager
   entt::dispatcher eventDispatcher;
 
   std::vector<std::unique_ptr<BaseSystem>> systems;
-  std::vector<std::unique_ptr<BaseSystem>> render_systems;
+  std::vector<std::unique_ptr<BaseSystem>> renderSystems;
+  std::vector<std::unique_ptr<BaseSystem>> cleanUpSystems;
  public:
   EntityManager();
   ~EntityManager();
@@ -25,7 +27,9 @@ class EntityManager
 
   void addSystem(std::unique_ptr<BaseSystem>);
   void addRenderSystem(std::unique_ptr<BaseSystem>);
+  void addCleanUpSystem(std::unique_ptr<BaseSystem>);
 
   inline entt::registry *getDefaultRegistry() { return &registry; }
   inline entt::dispatcher *getEventDispatcher() { return &eventDispatcher; }
+  void onEvent(sf::Event);
 };

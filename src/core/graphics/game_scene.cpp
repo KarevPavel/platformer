@@ -5,6 +5,7 @@
 #include <sound_system.hpp>
 #include <physics_system.hpp>
 #include <movement_system.hpp>
+#include <destroy_system.hpp>
 #include "scene.hpp"
 #include "music_system.hpp"
 #include "render_system.hpp"
@@ -32,7 +33,10 @@ void GameScene::init() {
   em.getEventDispatcher()->trigger<GameEvent::GameStart>(constants::LEVEL1_PATH);
 
   em.addRenderSystem(std::make_unique<RenderSystem>());
+  em.addCleanUpSystem(std::unique_ptr<DestroySystem>(&engine->getDestroySystem()));
 
+  //engine->getWindow().setMouseCursorVisible(false);
+  //engine->getWindow().setMouseCursorGrabbed(true);
   engine->getView().setSize({300, 200});
 }
 
@@ -40,7 +44,9 @@ void GameScene::update() {
   sf::Event event;
   while (window->pollEvent(event)) {
 	handleDefaultEvents(&event);
+	em.onEvent(event);
   }
+
 }
 
 /*
@@ -118,4 +124,3 @@ void GameScene::render(const float alpha_lerp) {
 
   window->display();
 }
-

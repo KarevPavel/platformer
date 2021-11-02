@@ -6,8 +6,9 @@
 
 #include "base_system.hpp"
 #include <box2d/b2_math.h>
+#include <SFML/Window/Event.hpp>
 
-class MovementSystem:  public BaseSystem {
+ class MovementSystem:  public BaseSystem {
   void onInit() override;
 
  public:
@@ -19,7 +20,7 @@ class MovementSystem:  public BaseSystem {
   /**
    * Обработка нажатий клавиатуры/мыши
    */
-  void inputProcessing();
+  void inputProcessing(sf::Event event);
 
   /**
    * Обработка положения пуль
@@ -33,6 +34,7 @@ class MovementSystem:  public BaseSystem {
 
   void shoot(const b2Vec2& bulletStartPos, const b2Vec2& bulletDirection);
 
+  void onEvent(sf::Event event);
 };
 
 

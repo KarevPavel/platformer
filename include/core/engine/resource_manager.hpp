@@ -41,3 +41,4 @@ inline Resource &ResourceManager<Resource, Identifier>::getResource(const Identi
 using FontManager = ResourceManager<sf::Font, std::string>;
 using TextureManager = ResourceManager<sf::Texture, std::string>;
 using SoundManager = ResourceManager<sf::SoundBuffer, std::string>;
+using ImageManager = ResourceManager<sf::Image, std::string>;

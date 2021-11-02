@@ -2,9 +2,7 @@
 // Created by yacopsae on 22/10/2021.
 //
 
-#include <utils.hpp>
 #include "physics_system.hpp"
-#include "game_components.hpp"
 #include "engine.hpp"
 
 PhysicsSystem::PhysicsSystem() = default;

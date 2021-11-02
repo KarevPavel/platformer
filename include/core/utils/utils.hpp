@@ -33,7 +33,7 @@ static float radiansToAngle(const float &radians) {
 
 static sf::Vector2f centerOfTile(const std::array<sf::Vertex, 4u> &tile) {
   auto pos = tile[2].position - tile[0].position;
-  return tile[2].position - sf::Vector2f{ pos.x / 2, pos.y / 2};
+  return tile[2].position - sf::Vector2f{pos.x / 2, pos.y / 2};
 }
 
 static b2Vec2 toBox2DPos(const std::array<sf::Vertex, 4u> &tile) {
@@ -41,7 +41,7 @@ static b2Vec2 toBox2DPos(const std::array<sf::Vertex, 4u> &tile) {
 }
 
 static sf::Vector2f b2VecToVector2(const b2Vec2 &vector) {
-  return sf::Vector2f { vector.x * B2_SCALAR, vector.y * B2_SCALAR };
+  return sf::Vector2f{vector.x * B2_SCALAR, vector.y * B2_SCALAR};
 }
 
 static void centerOrigin(sf::Text &text) {
@@ -61,9 +61,8 @@ static sf::Vector2f getPositionBelow(const sf::Text &text) {
   return sf::Vector2f(position + heightFromPosition);
 }
 
-
 //Not working!!!!
-static b2Body* createBody(
+static b2Body *createBody(
 	b2World &b2World_,
 	sf::Vector2f position,
 	b2BodyType bodyType,

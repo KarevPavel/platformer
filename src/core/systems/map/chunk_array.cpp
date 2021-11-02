@@ -11,6 +11,7 @@
 #include <iostream>
 
 #include "utils.hpp"
+#include "game_components.hpp"
 
 ChunkArray::ChunkArray(const sf::Texture &t, const tmx::Tileset &ts, const std::string &layerName)
 	: m_texture(t), layerName(layerName) {
@@ -47,13 +48,20 @@ void ChunkArray::createBody(b2World& world, const b2Vec2 &pos) {
   auto bodyDef = std::make_unique<b2BodyDef>();
   bodyDef->type = b2BodyType::b2_staticBody;
   bodyDef->position = pos;
+  bodyDef->enabled = true;
   body = world.CreateBody(bodyDef.get());
-  auto fixture = std::make_unique<b2FixtureDef>();
+  auto fixtureDef = std::make_unique<b2FixtureDef>();
+  //auto type = std::make_unique<GameComponents::ObjectType>(GameComponents::ObjectType::STATIC);
+  //fixtureDef->userData.pointer = reinterpret_cast<uintptr_t>(type.get());
+  fixtureDef->userData.pointer =
+	  reinterpret_cast<uintptr_t>(new GameComponents::Collision(GameComponents::ObjectType::STATIC));
 
+  fixtureDef->density = 1.f;
+  fixtureDef->friction = 0.7f;
+  fixtureDef->restitution = 0.2f;
   auto shapeSize = Utils::sfVectorToB2Vec(sf::Vector2{16, 16}); //TODO: REMOVE MAGIC!!!!
   const auto &shape = std::make_unique<b2PolygonShape>();
-
   shape->SetAsBox(shapeSize.x / 2, shapeSize.y / 2);
-  fixture->shape = shape.get();
-  body->CreateFixture(fixture.get());
+  fixtureDef->shape = shape.get();
+  body->CreateFixture(fixtureDef.get());
 }

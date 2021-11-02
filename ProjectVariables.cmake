@@ -1,6 +1,7 @@
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(GL_ALPHA_BITS, 8)
 set(MAIN_PROJECT_SOURCE ${CMAKE_SOURCE_DIR})
 set(INCLUDE_DIR ${MAIN_PROJECT_SOURCE}/include)
 set(ENGINE_INCLUDE_DIR ${INCLUDE_DIR}/core/engine)
@@ -11,6 +12,7 @@ set(SYSTEMS_INCLUDE_DIR ${INCLUDE_DIR}/core/systems)
 set(SOUND_INCLUDE_DIR ${INCLUDE_DIR}/core/sound)
 set(SYSTEMS_MAP_INCLUDE_DIR ${INCLUDE_DIR}/core/systems/map)
 set(UTILS_INCLUDE_DIR ${INCLUDE_DIR}/core/utils)
+set(ABSTRACT_INCLUDE_DIR ${INCLUDE_DIR}/core/abstract)
 
 add_definitions(-ftemplate-backtrace-limit=0)
 

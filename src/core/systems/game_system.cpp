@@ -17,9 +17,7 @@ void GameSystem::onInit() {
 }
 
 void GameSystem::receiveGameStart(const GameEvent::GameStart &event) {
-
   LoadFromFile(constants::LEVEL1_PATH);
-
 }
 
 bool GameSystem::LoadFromFile(const std::string &filepath) {
@@ -52,6 +50,23 @@ bool GameSystem::LoadFromFile(const std::string &filepath) {
 	}
   }
 
+
+  createPlayer();
+  createEnemies();
+
+  auto entity = this->registry->create();
+  this->registry->emplace<GameComponents::Map>(entity, mapLayers, enemySpawns);
+  this->registry->emplace<GameComponents::LevelStart>(entity, levelStart.position);
+  this->registry->emplace<GameComponents::LevelEnd>(entity, levelEnd.position);
+
+  auto defView = this->engine->getWindow().getDefaultView();
+  this->engine->getView().setCenter(levelStart.position);
+  this->engine->getWindow().setView(this->engine->getView());
+
+  return true;
+}
+
+void GameSystem::createPlayer() {
   auto playerEntity = this->registry->create();
 
   const sf::Texture &texture = engine->getTextureManager().getResource(constants::PAPER_TEXTURE_PATH);
@@ -72,23 +87,47 @@ bool GameSystem::LoadFromFile(const std::string &filepath) {
   fixtureDef->shape = shape.get();
   fixtureDef->density = 1.0f;
   fixtureDef->friction = 0.7f;
+  fixtureDef->userData.pointer =
+	  reinterpret_cast<uintptr_t>(new GameComponents::Collision(std::make_unique<entt::entity>(playerEntity), GameComponents::ObjectType::PLAYER));
   playerBody->CreateFixture(fixtureDef.get());
 
   auto weapon = sf::RectangleShape(sf::Vector2f{2.f, 20.f});
   weapon.setPosition(levelStart.position);
   weapon.setFillColor(sf::Color::Black);
 
+  const sf::Texture &crosshairTexture = engine->getTextureManager().getResource(constants::CROSSHAIR_PATH);
+
   this->registry->emplace<GameComponents::PlayerBody>(playerEntity, playerBody);
-  this->registry->emplace<GameComponents::Weapon>(playerEntity, weapon);
+  this->registry->emplace<GameComponents::Weapon>(playerEntity, weapon, crosshairTexture);
+}
 
-  auto entity = this->registry->create();
-  this->registry->emplace<GameComponents::Map>(entity, mapLayers, enemySpawns);
-  this->registry->emplace<GameComponents::LevelStart>(entity, levelStart.position);
-  this->registry->emplace<GameComponents::LevelEnd>(entity, levelEnd.position);
+void GameSystem::createEnemies() {
+	for(const auto &enemy: enemySpawns) {
+	  auto enemiesEntity = this->registry->create();
 
-  auto defView = this->engine->getWindow().getDefaultView();
-  this->engine->getView().setCenter(levelStart.position);
-  this->engine->getWindow().setView(this->engine->getView());
+	  const sf::Texture &texture = engine->getTextureManager().getResource(constants::ZOMBIE_IDLE_0_PATH);
 
-  return true;
+	  this->registry->emplace<GameComponents::RenderableSprite>(enemiesEntity, texture);
+	  this->registry->emplace<GameComponents::EnemyPosition>(enemiesEntity, *enemy);
+
+	  auto bodyDef = std::make_unique<b2BodyDef>();
+	  bodyDef->position = Utils::sfVectorToB2Vec(sf::Vector2f { enemy->position.x, enemy->position.y });
+
+	  bodyDef->type = b2BodyType::b2_dynamicBody;
+	  b2Body *enemyBody = engine->getBox2DWorld().CreateBody(bodyDef.get());
+	  auto fixtureDef = std::make_unique<b2FixtureDef>();
+
+	  auto shapeSize = Utils::sfVectorToB2Vec(sf::Vector2{16, 16});  //TODO: REMOVE MAGIC!!!!
+	  const auto &shape = std::make_unique<b2PolygonShape>();
+
+	  shape->SetAsBox(shapeSize.x / 2, shapeSize.y / 2);
+	  fixtureDef->shape = shape.get();
+	  fixtureDef->density = 1.0f;
+	  fixtureDef->friction = 0.7f;
+	  fixtureDef->userData.pointer =
+		  reinterpret_cast<uintptr_t>(new GameComponents::Collision(std::make_unique<entt::entity>(enemiesEntity), GameComponents::ObjectType::ENEMY));
+	  enemyBody->CreateFixture(fixtureDef.get());
+
+	  this->registry->emplace<GameComponents::PlayerBody>(enemiesEntity, enemyBody);
+	}
 }

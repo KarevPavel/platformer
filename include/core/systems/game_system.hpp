@@ -30,6 +30,10 @@ class GameSystem : public BaseSystem {
   bool LoadFromFile(const std::string &filepath);
 
  private:
+  void createPlayer();
+  void createEnemies();
+
+
   std::map<std::string, MapLayer::Ptr> mapLayers;
   GameComponents::LevelStart levelStart;
   GameComponents::LevelEnd levelEnd;

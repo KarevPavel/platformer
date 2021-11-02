@@ -17,7 +17,9 @@ target_include_directories(${PROJECT_NAME}
 						   PUBLIC ${SOUND_INCLUDE_DIR}
 						   PUBLIC ${SYSTEMS_INCLUDE_DIR}
 						   PUBLIC ${EVENTS_INCLUDE_DIR}
-						   PUBLIC ${UTILS_INCLUDE_DIR})
+						   PUBLIC ${UTILS_INCLUDE_DIR}
+						   PUBLIC ${ABSTRACT_INCLUDE_DIR}
+						   )
 
 target_link_libraries(${PROJECT_NAME}
 					  PUBLIC constants

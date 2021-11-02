@@ -21,3 +21,6 @@ void BaseSystem::init(Engine *e, entt::registry &r, entt::dispatcher &d) {
 
 void BaseSystem::update(const float dt) {
 }
+
+void BaseSystem::onEvent(sf::Event event) {
+}

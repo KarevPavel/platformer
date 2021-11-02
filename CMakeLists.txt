@@ -52,10 +52,12 @@ add_subdirectory(src/core)
 
 ###################################################################
 # Start point
-add_executable(${PROJECT_NAME} src/main.cpp include/core/events/sound_events.hpp include/core/components/game_components.hpp include/core/utils/utils.hpp)
+add_executable(${PROJECT_NAME}
+			   src/main.cpp include/core/engine/contact_filter.hpp include/core/systems/destroy_system.hpp)
 
 
 target_link_libraries(${PROJECT_NAME}
+					  PUBLIC GL
 					  PUBLIC sfml-system
 					  PUBLIC sfml-graphics
 					  PUBLIC sfml-window

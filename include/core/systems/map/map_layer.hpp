@@ -16,11 +16,10 @@
 #include "tmxlite/TileLayer.hpp"
 
 #include "chunk.hpp"
+#include "updatable_map.hpp"
 
-
-class MapLayer final : public sf::Drawable {
+class MapLayer final : public UpdatableMap {
  public:
-  using Ptr = std::unique_ptr<MapLayer>;
 
   //MapLayer(const tmx::Map &map, std::size_t idx);
   MapLayer(const tmx::Map &map, const std::unique_ptr<tmx::Layer> &layer, b2World &box2DWorld);
@@ -33,7 +32,9 @@ class MapLayer final : public sf::Drawable {
   tmx::TileLayer::Tile getTile(int tileX, int tileY);
   void setColor(int tileX, int tileY, sf::Color color, bool refresh);
   sf::Color getColor(int tileX, int tileY);
+
   void update(const float dt);
+
   void draw(sf::RenderTarget &rt, sf::RenderStates states) const override;
 
  private:

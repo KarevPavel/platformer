@@ -5,7 +5,6 @@
 #pragma once
 
 #include "base_system.hpp"
-#include "game_events.hpp"
 
 class PhysicsSystem : public BaseSystem {
   void onInit() override;

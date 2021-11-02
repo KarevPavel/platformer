@@ -7,7 +7,8 @@ add_library(${PROJECT_NAME}
 			engine.cpp
 			entity_manager.cpp
 			debug_box_2_d.cpp
-			contact_listener.cpp)
+			contact_listener.cpp
+			contact_filter.cpp)
 
 target_include_directories(${PROJECT_NAME}
 						   PUBLIC ${ENGINE_INCLUDE_DIR}
@@ -15,6 +16,8 @@ target_include_directories(${PROJECT_NAME}
 						   PUBLIC ${SYSTEMS_INCLUDE_DIR}
 						   PUBLIC ${SOUND_INCLUDE_DIR}
 						   PUBLIC ${UTILS_INCLUDE_DIR}
+						   PUBLIC ${COMPONENTS_INCLUDE_DIR}
+						   PUBLIC ${ABSTRACT_INCLUDE_DIR}
 						   )
 
 target_link_libraries(${PROJECT_NAME}

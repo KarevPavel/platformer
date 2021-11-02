@@ -8,6 +8,7 @@
 #include "render_system.hpp"
 #include "engine.hpp"
 #include "utils.hpp"
+#include "map_layer.hpp"
 
 RenderSystem::RenderSystem() = default;
 
@@ -34,6 +35,7 @@ void RenderSystem::update(const float dt) {
 
 		engine->getWindow().draw(*texurable.sprite);
 		engine->getWindow().draw(weapon.weapon);
+		engine->getWindow().draw(*weapon.crosshair);
 		engine->getWindow().draw(weapon.moveVector);
 		engine->getWindow().draw(weapon.circleShape);
 

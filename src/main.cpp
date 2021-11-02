@@ -6,6 +6,7 @@
 #include <ctime>
 #include "engine.hpp"
 
+
 int main(int argc, char *argv[]) {
   std::srand(std::time(nullptr));
   Engine engine;

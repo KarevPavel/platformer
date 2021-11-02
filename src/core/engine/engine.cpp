@@ -12,14 +12,15 @@
 Engine::Engine() : sceneManager(this),
 				   box2DWorld(b2Vec2(0.f, 9.8f)),
 				   debugDraw(window),
-				   contactListener(),
+				   destroySystem(),
 				   textureManager(),
+				   imageManager(),
 				   fontManager() {
   window.create(sf::VideoMode(1600, 900), "Platformer", sf::Style::Default);
 
   debugDraw.SetFlags(b2Draw::e_shapeBit | b2Draw::e_centerOfMassBit);
 
-  box2DWorld.SetContactListener(&contactListener);
+  box2DWorld.SetContactListener(&destroySystem);
   box2DWorld.SetDebugDraw(&debugDraw);
   window.setView(view);
 }

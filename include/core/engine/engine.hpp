@@ -7,6 +7,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include <box2d/box2d.h>
+#include <destroy_system.hpp>
 
 #include "sound_player.hpp"
 #include "scene_manager.hpp"
@@ -14,6 +15,7 @@
 #include "music_player.hpp"
 #include "debug_box_2_d.hpp"
 #include "contact_listener.hpp"
+#include "contact_filter.hpp"
 
 class Engine {
   bool isRunning = true;
@@ -22,12 +24,14 @@ class Engine {
   sf::View view;
   SceneManager sceneManager;
   TextureManager textureManager;
+  ImageManager imageManager;
   FontManager fontManager;
   SoundManager soundManager;
   MusicPlayer musicPlayer;
   SoundPlayer soundPlayer;
   b2World box2DWorld;
-  ContactListener contactListener;
+  DestroySystem destroySystem;
+  //ContactFilter contactFilter;
   DebugBox2D debugDraw;
 
  public:
@@ -47,6 +51,8 @@ class Engine {
   inline DebugBox2D &getDebugBox2D() { return debugDraw; }
   inline sf::View &getView() { return view; }
   inline FontManager &getFontManager() { return fontManager; }
+  inline DestroySystem &getDestroySystem() { return destroySystem; }
+  inline ImageManager &getImageManager() { return imageManager; }
 };
 
 
