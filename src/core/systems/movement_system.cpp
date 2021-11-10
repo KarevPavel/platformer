@@ -15,36 +15,32 @@ MovementSystem::MovementSystem() = default;
 void MovementSystem::onInit() {}
 
 void MovementSystem::update(const float dt) {
-  registry->view<GameComponents::PlayerPosition,
-				 GameComponents::PlayerBody,
-				 GameComponents::Weapon>()
-	  .each([this](GameComponents::PlayerPosition &playerPosition,
-				   GameComponents::PlayerBody &playerBody,
-				   GameComponents::Weapon &weapon) {
+  registry->view<GameComponents::Player>()
+	  .each([this](GameComponents::Player &player) {
 
 		sf::Vector2i pixelPos = sf::Mouse::getPosition(engine->getWindow());
 		sf::Vector2f pos = engine->getWindow().mapPixelToCoords(pixelPos);
 
-		weapon.crosshair->setPosition(pos);
+		player.crosshair->setPosition(pos);
 
-		float dX = pos.x - weapon.moveVector.getPosition().x;
-		float dY = pos.y - weapon.moveVector.getPosition().y;
+		float dX = pos.x - player.moveVector.getPosition().x;
+		float dY = pos.y - player.moveVector.getPosition().y;
 
 		//TODO: Пока не разобрался почнму приходится писать -90 =(
 		float rotation = ((atan2(dY, dX)) * 180 / M_PI) - 90;
-		weapon.moveVector.setRotation(rotation);
-		weapon.weapon.setRotation(rotation);
+		player.moveVector.setRotation(rotation);
+		player.weapon.setRotation(rotation);
 
-		if (!playerBody.isOnAir) {
+		if (!player.isOnAir) {
 		  if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-			playerBody.body->ApplyLinearImpulseToCenter(Utils::sfVectorToB2Vec(sf::Vector2f{5, 0}), true);
+			player.body->ApplyLinearImpulseToCenter(Utils::sfVectorToB2Vec(sf::Vector2f{5, 0}), true);
 		  }
 		  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-			playerBody.body->ApplyLinearImpulseToCenter(Utils::sfVectorToB2Vec(sf::Vector2f{0, -20}), true);
+			player.body->ApplyLinearImpulseToCenter(Utils::sfVectorToB2Vec(sf::Vector2f{0, -20}), true);
 		  }
 
 		  if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-			playerBody.body->ApplyLinearImpulseToCenter(Utils::sfVectorToB2Vec(sf::Vector2f{-5, 0}), true);
+			player.body->ApplyLinearImpulseToCenter(Utils::sfVectorToB2Vec(sf::Vector2f{-5, 0}), true);
 		  }
 		}
 	  });
@@ -94,24 +90,18 @@ void MovementSystem::inputProcessing(sf::Event event) {
 }
 
 void MovementSystem::playerMovement() {
-  registry->view<GameComponents::PlayerBody,
-				 GameComponents::RenderableSprite,
-				 GameComponents::PlayerPosition,
-				 GameComponents::Weapon>().each([](GameComponents::PlayerBody &body,
-												   GameComponents::RenderableSprite &playerSprite,
-												   GameComponents::PlayerPosition &playerPosition,
-												   GameComponents::Weapon &weapon) {
-	auto pos = body.body->GetPosition();
+  registry->view<GameComponents::Player>().each([](GameComponents::Player &player) {
+	auto pos = player.body->GetPosition();
 
-	playerPosition.position = Utils::b2VecToVector2(pos);
-	playerPosition.angle = Utils::radiansToAngle(body.body->GetAngle());
+	player.position = Utils::b2VecToVector2(pos);
+	player.angle = Utils::radiansToAngle(player.body->GetAngle());
 
-	playerSprite.sprite->setRotation(playerPosition.angle);
-	playerSprite.sprite->setPosition(playerPosition.position);
+	player.sprite->setRotation(player.angle);
+	player.sprite->setPosition(player.position);
 
-	weapon.weapon.setPosition(playerPosition.position);
-	weapon.moveVector.setPosition(playerPosition.position);
-	weapon.circleShape.setPosition(playerPosition.position);
+	player.weapon.setPosition(player.position);
+	player.moveVector.setPosition(player.position);
+	player.circleShape.setPosition(player.position);
   });
 }
 

@@ -25,6 +25,11 @@
 
 namespace GameComponents {
 
+struct Collision;
+struct Angle;
+struct Position;
+struct Bullet;
+
 enum ObjectType {
   BULLET,
   STATIC,
@@ -37,15 +42,24 @@ struct Collision {
   std::unique_ptr<entt::entity> entity;
   ObjectType objectType;
 
-  Collision(ObjectType objectType) : objectType(objectType) {}
-  Collision(std::unique_ptr<entt::entity> entity, ObjectType objectType) : entity(std::move(entity)), objectType(objectType) {}
+  explicit Collision(ObjectType objectType) : objectType(objectType) {}
+  Collision(std::unique_ptr<entt::entity> entity, ObjectType objectType)
+	  : entity(std::move(entity)), objectType(objectType) {}
+};
+
+struct Angle {
+  Angle() : angle(0) {}
+  explicit Angle(float angle) : angle(angle) {}
+  float angle;
 };
 
 struct Position {
   Position() = default;
-  explicit Position(const sf::Vector2<float> &position) : position(position), angle(0) {}
+
+  explicit Position(const sf::Vector2<float> &position) : position(position) {}
+
   sf::Vector2<float> position;
-  float angle;
+
 };
 
 struct Bullet {
@@ -70,32 +84,46 @@ struct LevelEnd : Position {
   explicit LevelEnd(const sf::Vector2f &position) : Position(position) {}
 };
 
-struct PlayerPosition : Position {
-  PlayerPosition() = default;
-  explicit PlayerPosition(const sf::Vector2f &position) : Position(position) {}
-};
-
-struct EnemyPosition : Position {
-  EnemyPosition() = default;
-  explicit EnemyPosition(const sf::Vector2f &position) : Position(position) {}
-  explicit EnemyPosition(const tmx::Vector2f &position) : Position({position.x, position.y}) {}
-
-  long health = 100;
-};
-
 struct Map {
   explicit Map(std::map<std::string, UpdatableMap::Ptr> &mapLayers,
-			   std::vector<std::unique_ptr<EnemyPosition>> &enemySpawns) :
+			   std::vector<sf::Vector2f> &enemySpawns) :
 	  mapLayers(std::move(mapLayers)),
 	  enemySpawns(std::move(enemySpawns)) {}
 
   std::map<std::string, UpdatableMap::Ptr> mapLayers;
-  std::vector<std::unique_ptr<EnemyPosition>> enemySpawns;
+  std::vector<sf::Vector2f> enemySpawns;
+};
 
+struct Health {
+  Health() = default;
+  explicit Health(long health) : health(health) {}
+  long health;
+};
+
+struct Experience {
+  Experience() = default;
+  explicit Experience(long experience) : experience(experience) {}
+  long experience;
 };
 
 struct RenderableSprite {
   RenderableSprite() = default;
+
+  RenderableSprite &operator=(RenderableSprite lhs) {
+	this->texture.swap(lhs.texture);
+	this->sprite.swap(lhs.sprite);
+	return *this;
+  }
+
+  RenderableSprite(RenderableSprite &sprite) {
+	this->texture.swap(sprite.texture);
+	this->sprite.swap(sprite.sprite);
+  }
+
+  explicit RenderableSprite(const std::unique_ptr<sf::Texture> &texture) {
+	this->texture->update(*texture);
+	this->sprite = std::make_unique<sf::Sprite>(*this->texture);
+  }
 
   explicit RenderableSprite(const sf::Texture &texture_) {
 	texture = std::make_unique<sf::Texture>(texture_);
@@ -104,28 +132,51 @@ struct RenderableSprite {
 	sprite->setOrigin(size.x / 2.f, size.y / 2.f);
   }
 
-  RenderableSprite(const std::string &texturePath, const sf::IntRect &spritePos) {
-	texture = std::make_unique<sf::Texture>();
-	if (!texture->loadFromFile(texturePath)) {
-	  std::cout << "Something going wrong!" << std::endl;
-	}
-	sprite = std::make_unique<sf::Sprite>(*texture, spritePos);
-	sprite->setOrigin(spritePos.width / 2.f, spritePos.width / 2.f);
-  }
   std::unique_ptr<sf::Texture> texture;
   std::unique_ptr<sf::Sprite> sprite;
 };
 
-struct PlayerBody {
-
-  explicit PlayerBody(b2Body *body) : body(body), isOnAir(false) {}
-
-  bool isOnAir;
-  b2Body *body;
-};
-
 struct Weapon {
-  explicit Weapon(const sf::RectangleShape &weapon, const sf::Texture &crosshairTexture_) :
+
+  Weapon &operator=(Weapon &&lhs) noexcept {
+	this->weapon = lhs.weapon;
+	this->crosshair.swap(lhs.crosshair);
+	this->crosshairTexture.swap(lhs.crosshairTexture);
+	this->moveVector = lhs.moveVector;
+	this->circleShape = lhs.circleShape;
+	return *this;
+  }
+
+  Weapon(Weapon &lhs) {
+	this->weapon = lhs.weapon;
+	this->crosshair.swap(lhs.crosshair);
+	this->crosshairTexture.swap(lhs.crosshairTexture);
+	this->moveVector = lhs.moveVector;
+	this->circleShape = lhs.circleShape;
+  }
+
+  Weapon(sf::RectangleShape &weapon, std::unique_ptr<sf::Texture> &crosshairTexture_) :
+	  weapon(weapon),
+	  moveVector(),
+	  circleShape(20) {
+	moveVector = sf::RectangleShape({1, 900});
+	moveVector.setFillColor(sf::Color::Black);
+	moveVector.setPosition(weapon.getPosition());
+
+	circleShape.setOutlineColor(sf::Color::Black);
+	circleShape.setFillColor(sf::Color::Transparent);
+	circleShape.setOutlineThickness(1.f);
+	circleShape.setOrigin(20, 20);
+	circleShape.setPosition(weapon.getPosition());
+
+	std::swap(crosshairTexture, crosshairTexture_);
+	auto size = crosshairTexture->getSize();
+	crosshair = std::make_unique<sf::Sprite>(*crosshairTexture);
+	crosshair->setOrigin(size.x / 2.f, size.y / 2.f);
+	crosshair->setScale(0.3, 0.3);
+  }
+
+  Weapon(sf::RectangleShape &weapon, sf::Texture &crosshairTexture_) :
 	  weapon(weapon),
 	  moveVector(),
 	  circleShape(20) {
@@ -153,4 +204,102 @@ struct Weapon {
   std::unique_ptr<sf::Texture> crosshairTexture;
   std::unique_ptr<sf::Sprite> crosshair;
 };
+
+//TODO: ??? Действительно расширяем Weapon ???
+struct Player : Position, Weapon, RenderableSprite, Angle, Health, Experience {
+
+  Player &operator=(Player &&lhs) noexcept {
+	this->body = lhs.body;
+	this->position = lhs.position;
+	this->angle = lhs.angle;
+	this->health = lhs.health;
+	this->texture.swap(lhs.texture);
+	this->sprite.swap(lhs.sprite);
+	this->isOnAir = lhs.isOnAir;
+	this->experience = lhs.experience;
+	return *this;
+  }
+
+  Player(Player &lhs) :
+	  Position(lhs.position),
+	  Weapon(lhs.weapon, lhs.crosshairTexture),
+	  RenderableSprite(lhs.texture),
+	  Angle(lhs.angle),
+	  Health(lhs.health),
+	  Experience(lhs.experience),
+	  isOnAir(lhs.isOnAir),
+	  body(lhs.body) {}
+
+  Player(sf::Vector2<float> &position,
+		 sf::RectangleShape &weapon,
+		 sf::Texture &crosshairTexture,
+		 sf::Texture &texture,
+		 float angle,
+		 long health,
+		 long experience,
+		 bool isOnAir,
+		 b2Body *body) :
+	  Position(position),
+	  Weapon(weapon, crosshairTexture),
+	  RenderableSprite(texture),
+	  Angle(angle),
+	  Health(health),
+	  Experience(experience),
+	  isOnAir(isOnAir),
+	  body(body) {}
+
+  bool isOnAir;
+  b2Body *body;
+};
+
+struct Enemy : Position, RenderableSprite, Angle, Health {
+
+  Enemy &operator=(Enemy &&lhs) noexcept {
+	this->body = lhs.body;
+	this->position = lhs.position;
+	this->angle = lhs.angle;
+	this->health = lhs.health;
+	this->texture.swap(lhs.texture);
+	this->sprite.swap(lhs.sprite);
+	return *this;
+  }
+
+  Enemy(Enemy &lhs) noexcept {
+	this->body = lhs.body;
+	this->position = lhs.position;
+	this->angle = lhs.angle;
+	this->health = lhs.health;
+	this->texture.swap(lhs.texture);
+	this->sprite.swap(lhs.sprite);
+  }
+
+  Enemy(const sf::Vector2<float> &position,
+		const sf::Texture &texture,
+		float angle,
+		b2Body *body,
+		long health) :
+	  Position(position),
+	  RenderableSprite(texture),
+	  Angle(angle),
+	  body(body),
+	  Health(health) {}
+
+  b2Body *body;
+};
+
 }
+/*
+
+namespace std {
+
+void swap(GameComponents::Enemy &a, GameComponents::Enemy &b) {
+  //TODO: implement!
+  ::std::cout << "swap(Enemy&, Enemy&)" << ::std::endl;
+}
+
+void swap(GameComponents::Player &lhs, GameComponents::Player &rhs) {
+  //TODO: implement!
+  ::std::cout << "swap(Player&, Player&)" << ::std::endl;
+}
+
+}*/

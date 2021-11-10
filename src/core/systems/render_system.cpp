@@ -2,8 +2,6 @@
 // Created by yacopsae on 13/10/2021.
 //
 
-#include <SFML/Graphics/RectangleShape.hpp>
-
 #include "game_components.hpp"
 #include "render_system.hpp"
 #include "engine.hpp"
@@ -24,23 +22,17 @@ void RenderSystem::update(const float dt) {
 		}
 	  });
 
-  registry->view<GameComponents::RenderableSprite,
-				 GameComponents::PlayerPosition,
-				 GameComponents::PlayerBody,
-				 GameComponents::Weapon>()
-	  .each([this](const GameComponents::RenderableSprite &texurable,
-				   const GameComponents::PlayerPosition &playerPosition,
-				   const GameComponents::PlayerBody &playerBody,
-				   const GameComponents::Weapon &weapon) {
+  registry->view<GameComponents::Player>()
+	  .each([this](GameComponents::Player& player) {
 
-		engine->getWindow().draw(*texurable.sprite);
-		engine->getWindow().draw(weapon.weapon);
-		engine->getWindow().draw(*weapon.crosshair);
-		engine->getWindow().draw(weapon.moveVector);
-		engine->getWindow().draw(weapon.circleShape);
+		engine->getWindow().draw(*player.sprite);
+		engine->getWindow().draw(player.weapon);
+		engine->getWindow().draw(*player.crosshair);
+		engine->getWindow().draw(player.moveVector);
+		engine->getWindow().draw(player.circleShape);
 
 		auto &view = engine->getView();
-		view.setCenter(playerPosition.position);
+		view.setCenter(player.position);
 		engine->getWindow().setView(view);
 	  });
 

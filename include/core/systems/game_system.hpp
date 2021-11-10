@@ -37,8 +37,8 @@ class GameSystem : public BaseSystem {
   std::map<std::string, MapLayer::Ptr> mapLayers;
   GameComponents::LevelStart levelStart;
   GameComponents::LevelEnd levelEnd;
-  GameComponents::PlayerPosition playerSpawn;
-  std::vector<std::unique_ptr<GameComponents::EnemyPosition>> enemySpawns;
+  std::vector<sf::Vector2f> enemySpawns;
+  sf::Vector2f playerSpawn;
 };
 
 

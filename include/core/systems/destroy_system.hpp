@@ -9,6 +9,8 @@
 #include <box2d/box2d.h>
 #include <SFML/Window/Event.hpp>
 #include <game_components.hpp>
+#include "set"
+
 
 class DestroySystem:  public BaseSystem, public b2ContactListener {
   void onInit() override;
@@ -21,15 +23,24 @@ class DestroySystem:  public BaseSystem, public b2ContactListener {
   void BeginContact(b2Contact *contact) override;
   void EndContact(b2Contact *contact) override;
 
+  struct DeletionEntry {
+	b2Body * body;
+	entt::entity entityId;
+	DeletionEntry(b2Body *body, entt::entity entity_id);
+
+	bool operator<(const DeletionEntry& other) const {
+		return this->entityId < other.entityId;
+	}
+  };
+
  private:
   template<typename Functor>
   void doIfAny(GameComponents::Collision * collision1, GameComponents::Collision * collision2,
 			   GameComponents::ObjectType expectedType1, GameComponents::ObjectType expectedType2,
 			   Functor functor);
 
-  std::vector<b2Body *> deletions;
+  std::set<DeletionEntry> deletions;
 };
-
 
 template<typename Functor>
 inline void DestroySystem::doIfAny(GameComponents::Collision *collision1,

@@ -6,6 +6,7 @@
 
 #include <array>
 #include <memory>
+#include <iostream>
 
 #include <box2d/b2_fixture.h>
 #include <box2d/b2_polygon_shape.h>
@@ -82,5 +83,4 @@ static b2Body *createBody(
   playerBody->CreateFixture(fixtureDef.get());
   return playerBody;
 }
-
 }

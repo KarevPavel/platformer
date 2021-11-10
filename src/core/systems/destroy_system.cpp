@@ -12,8 +12,10 @@ DestroySystem::DestroySystem() = default;
 void DestroySystem::onInit() {}
 
 void DestroySystem::update(const float dt) {
-  for (auto &d : deletions)
-	engine->getBox2DWorld().DestroyBody(d);
+  for (auto &deletion : deletions) {
+	registry->destroy(deletion.entityId);
+	engine->getBox2DWorld().DestroyBody(deletion.body);
+  }
   deletions.clear();
 }
 
@@ -29,12 +31,13 @@ void DestroySystem::BeginContact(b2Contact *contact) {
 	  ObjType2,
 	  GameComponents::ObjectType::BULLET,
 	  GameComponents::ObjectType::STATIC,
-	  [this, ObjType1, fixture1, fixture2]() {
+	  [this, ObjType1, ObjType2, fixture1, fixture2]() {
+		if (ObjType1->objectType == GameComponents::ObjectType::BULLET) {
+		  deletions.emplace(fixture1->GetBody(), *ObjType1->entity);
+		} else {
+		  deletions.emplace(fixture2->GetBody(), *ObjType2->entity);
 
-		if (ObjType1->objectType == GameComponents::ObjectType::BULLET)
-		  deletions.push_back(fixture1->GetBody());
-		else
-		  deletions.push_back(fixture2->GetBody());
+		}
 	  }
   );
 
@@ -46,24 +49,24 @@ void DestroySystem::BeginContact(b2Contact *contact) {
 	  [this, ObjType1, ObjType2, fixture1, fixture2]() {
 
 		if (ObjType1->objectType == GameComponents::ObjectType::BULLET)
-		  deletions.push_back(fixture1->GetBody());
+		  deletions.emplace(fixture1->GetBody(), *ObjType1->entity);
 		else
-		  deletions.push_back(fixture2->GetBody());
+		  deletions.emplace(fixture2->GetBody(), *ObjType2->entity);
 
 		if (ObjType1->objectType == GameComponents::ObjectType::ENEMY) {
-		  auto enemy = registry->get<GameComponents::EnemyPosition>(*ObjType1->entity);
+		  auto enemy = registry->get<GameComponents::Enemy>(*ObjType1->entity);
 		  enemy.health -= 50;
 		  if (enemy.health <= 0) {
-			deletions.push_back(fixture1->GetBody());
+			deletions.emplace(fixture1->GetBody(), *ObjType1->entity);
 		  }
-		  registry->emplace_or_replace<GameComponents::EnemyPosition>(*ObjType1->entity, enemy);
+		  //registry->emplace_or_replace<GameComponents::Enemy>(*ObjType1->entity, enemy);
 		} else {
-		  auto enemy = registry->get<GameComponents::EnemyPosition>(*ObjType2->entity);
+		  auto enemy = registry->get<GameComponents::Enemy>(*ObjType2->entity);
 		  enemy.health -= 50;
 		  if (enemy.health <= 0) {
-			deletions.push_back(fixture2->GetBody());
+			deletions.emplace(fixture2->GetBody(), *ObjType2->entity);
 		  }
-		  registry->emplace_or_replace<GameComponents::EnemyPosition>(*ObjType2->entity, enemy);
+		  registry->emplace_or_replace<GameComponents::Enemy>(*ObjType2->entity, enemy);
 		}
 	  }
   );
@@ -72,3 +75,4 @@ void DestroySystem::BeginContact(b2Contact *contact) {
 void DestroySystem::EndContact(b2Contact *contact) {
 
 }
+DestroySystem::DeletionEntry::DeletionEntry(b2Body *body, entt::entity entity_id) : body(body), entityId(entity_id) {}
