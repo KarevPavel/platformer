@@ -23,7 +23,7 @@ class SoundPlayer {
   sf::Vector2f getListenerPosition() const;
 
  private:
-  //SoundManager soundPaths; //!< A manager that maps sound IDs to their file paths
+  //SoundManager soundPaths; //!< A manager that maps sounds IDs to their file paths
 
   // List is used instead of vector, as vector may reallocate
   // and this way invalidate them when they're playing
@@ -31,9 +31,9 @@ class SoundPlayer {
   std::list<sf::Sound> soundList; //!< List of currently playing sounds
 
   const float listenerZ = 300.f; //!< The distance of the listener (virtual ear) from the two-dimensional game plane.
-  const float attenuation = 8.f; //!< The ratio of how fast a sound fades away as a function of distance
+  const float attenuation = 8.f; //!< The ratio of how fast a sounds fades away as a function of distance
   const float minDistance =
-	  300.f; //!< The minimum distance from the virtual ear at which sound begins to fade (to become more silent).
+	  300.f; //!< The minimum distance from the virtual ear at which sounds begins to fade (to become more silent).
 
 };
 

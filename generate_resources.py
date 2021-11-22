@@ -37,17 +37,30 @@ def generate_implementation(name):
 
 def generate_header(fileName, constants: List[str]):
     fields = []
+    clause = []
+
     for constant in constants:
         dirtyFileName = str(constant)
         pureConstantName = maskFileName(dirtyFileName)
         fields.append('\tstatic const std::string ' + pureConstantName.upper() + '="' + pureConstantName + '";')
         fields.append('\tstatic const std::string ' + pureConstantName.upper() + '_PATH = "' +
                       str(pathlib.Path().resolve().absolute()) + "/resources/" + dirtyFileName + '";')
+        clause.append("\t\tif (inputField == \"" +  pureConstantName.upper()  +"\") {"
+                      "\t\t\nreturn " + pureConstantName.upper() + ";"
+                      "\t\t\n}")
+    function = [
+        "static std::string " + fileName[0:len(fileName) - 1] + "ByFieldName(std::string &inputField) {",
+        "std::transform(inputField.begin(), inputField.end(), inputField.begin(), ::toupper);",
+        ''.join(clause),
+        "}"
+    ]
 
     code = ['#pragma once\n',
-            '#include <string>\n'
+            '#include <string>\n',
+            '#include <algorithm>\n',
             'namespace constants {\n',
             '\n'.join(fields),
+            '\n'.join(function),
             '}']
 
     write_lines(fileName + '.hpp', code)

@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.17)
+cmake_minimum_required(VERSION 3.12)
 
 project(platformer)
 
@@ -53,7 +53,7 @@ add_subdirectory(src/core)
 ###################################################################
 # Start point
 add_executable(${PROJECT_NAME}
-			   src/main.cpp include/core/engine/contact_filter.hpp include/core/systems/destroy_system.hpp)
+			   src/main.cpp include/core/engine/contact_filter.hpp include/core/systems/contact_system.hpp)
 
 
 target_link_libraries(${PROJECT_NAME}
@@ -111,7 +111,7 @@ target_link_libraries(
 		menu
 		manager
 		box2d
-		sound
+		sounds
 		models
 )
 ]]

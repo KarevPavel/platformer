@@ -1,8 +1,10 @@
 
 find_program(PYTHON_EXECUTABLE python)
+
 if(NOT PYTHON_EXECUTABLE)
 	message(FATAL_ERROR "python not found. Required by generator.")
 endif()
+
 set(GENERATOR generate_resources.py)
 
 function(add_generated_stuff MAIN_DIR TARGET INFILE)

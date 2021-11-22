@@ -37,32 +37,32 @@ class DrawableContainer : public sf::Transformable, public sf::Drawable {
 };
 
 template <typename Component>
-inline DrawableContainer<Component>::DrawableContainer(const sf::RenderWindow &window) :
+DrawableContainer<Component>::DrawableContainer(const sf::RenderWindow &window) :
 	window(window) {
 }
 
 template <typename Component>
-inline void DrawableContainer<Component>::store(std::unique_ptr<Component> component) {
+void DrawableContainer<Component>::store(std::unique_ptr<Component> component) {
   pinnedComponents.push_back(std::move(component));
 }
 
 template <typename Component>
-inline bool DrawableContainer<Component>::isEmpty() const noexcept {
+bool DrawableContainer<Component>::isEmpty() const noexcept {
   return pinnedComponents.empty();
 }
 
 template <typename Component>
-inline Component &DrawableContainer<Component>::front() {
+Component &DrawableContainer<Component>::front() {
   return *pinnedComponents.front();
 }
 
 template <typename Component>
-inline Component &DrawableContainer<Component>::back() {
+Component &DrawableContainer<Component>::back() {
   return *pinnedComponents.back();
 }
 
 template <typename Component>
-inline void DrawableContainer<Component>::handleEvents(const sf::Event &event) {
+void DrawableContainer<Component>::handleEvents(const sf::Event &event) {
   if (clearRequest) {
 	pinnedComponents.clear();
 	clearRequest = false;
@@ -73,7 +73,7 @@ inline void DrawableContainer<Component>::handleEvents(const sf::Event &event) {
 }
 
 template <typename Component>
-inline void DrawableContainer<Component>::update() {
+void DrawableContainer<Component>::update() {
   const auto mousePosition = window.mapPixelToCoords(sf::Mouse::getPosition(window));
 
   for (auto &pinnedComponent : pinnedComponents)
@@ -81,7 +81,7 @@ inline void DrawableContainer<Component>::update() {
 }
 
 template <typename Component>
-inline void DrawableContainer<Component>::draw(sf::RenderTarget &target, sf::RenderStates states) const {
+void DrawableContainer<Component>::draw(sf::RenderTarget &target, sf::RenderStates states) const {
   states.transform *= getTransform();
 
   for (const auto &pinnedComponent : pinnedComponents)
@@ -89,7 +89,7 @@ inline void DrawableContainer<Component>::draw(sf::RenderTarget &target, sf::Ren
 }
 
 template <typename Component>
-inline void DrawableContainer<Component>::requestClear() noexcept {
+void DrawableContainer<Component>::requestClear() noexcept {
   clearRequest = true;
 }
 

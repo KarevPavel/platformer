@@ -14,22 +14,27 @@ void RenderSystem::onInit() {
 }
 
 void RenderSystem::update(const float dt) {
-  registry->view<GameComponents::Map, GameComponents::LevelEnd>()
-	  .each([this](const GameComponents::Map &map,
-				   GameComponents::LevelEnd &levelEnd) {
+
+  registry->view<GameComponents::LevelEnd>()
+	  .each([this](const GameComponents::LevelEnd &levelEnd) {
+		engine->getWindow().draw(levelEnd.rectangleShape);
+	  });
+
+  registry->view<GameComponents::Map>()
+	  .each([this](const GameComponents::Map &map) {
 		for (const auto &entry: map.mapLayers) {
 		  engine->getWindow().draw(*entry.second);
 		}
 	  });
 
   registry->view<GameComponents::Player>()
-	  .each([this](GameComponents::Player& player) {
+	  .each([this](GameComponents::Player &player) {
 
 		engine->getWindow().draw(*player.sprite);
 		engine->getWindow().draw(player.weapon);
-		engine->getWindow().draw(*player.crosshair);
-		engine->getWindow().draw(player.moveVector);
-		engine->getWindow().draw(player.circleShape);
+		engine->getWindow().draw(*player.crosshairSprite);
+		//engine->getWindow().draw(player.moveVector);
+		//engine->getWindow().draw(player.circleShape);
 
 		auto &view = engine->getView();
 		view.setCenter(player.position);

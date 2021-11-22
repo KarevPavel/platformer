@@ -26,13 +26,13 @@ class GameSystem : public BaseSystem {
  public:
   explicit GameSystem();
 
-  void receiveGameStart(const GameEvent::GameStart &event);
+  void receiveGameStart(const GameEvent::LoadLevelEvent &event);
   bool LoadFromFile(const std::string &filepath);
 
  private:
   void createPlayer();
   void createEnemies();
-
+  void createLevelEnd();
 
   std::map<std::string, MapLayer::Ptr> mapLayers;
   GameComponents::LevelStart levelStart;

@@ -21,7 +21,7 @@ void MovementSystem::update(const float dt) {
 		sf::Vector2i pixelPos = sf::Mouse::getPosition(engine->getWindow());
 		sf::Vector2f pos = engine->getWindow().mapPixelToCoords(pixelPos);
 
-		player.crosshair->setPosition(pos);
+		player.crosshairSprite->setPosition(pos);
 
 		float dX = pos.x - player.moveVector.getPosition().x;
 		float dY = pos.y - player.moveVector.getPosition().y;
@@ -56,26 +56,26 @@ void MovementSystem::onEvent(sf::Event event) {
 void MovementSystem::inputProcessing(sf::Event event) {
 
   if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
-	registry->view<GameComponents::Weapon>()
-		.each([this](GameComponents::Weapon &weapon) {
+	registry->view<GameComponents::Player>()
+		.each([this](GameComponents::Player &player) {
 
 		  sf::Vector2i pixelPos = sf::Mouse::getPosition(engine->getWindow());
 		  sf::Vector2f pos = engine->getWindow().mapPixelToCoords(pixelPos);
-		  float dX = pos.x - weapon.moveVector.getPosition().x;
-		  float dY = pos.y - weapon.moveVector.getPosition().y;
+		  float dX = pos.x - player.moveVector.getPosition().x;
+		  float dY = pos.y - player.moveVector.getPosition().y;
 
 		  //TODO: Пока не разобрался почнму приходится писать -90 =(
 		  float rotation = ((atan2(dY, dX)) * 180 / M_PI) - 90;
 
 		  //TODO: Пока не разобрался почнму приходится писать +90 =(
-		  rotation = weapon.moveVector.getRotation() + 90;
-		  float r = weapon.circleShape.getRadius();
-		  auto Opos = weapon.circleShape.getPosition();
+		  rotation = player.moveVector.getRotation() + 90;
+		  float r = player.circleShape.getRadius();
+		  auto Opos = player.circleShape.getPosition();
 		  float x = Opos.x + (r * cos(rotation / (180 / M_PI)));
 		  float y = Opos.y + (r * sin(rotation / (180 / M_PI)));
 
 		  float weaponPower = 10000;
-		  float rotation_2 = weapon.moveVector.getRotation() + 90;
+		  float rotation_2 = player.moveVector.getRotation() + 90;
 		  float x_2 = Opos.x + (weaponPower * cos(rotation_2 / (180 / M_PI)));
 		  float y_2 = Opos.y + (weaponPower * sin(rotation_2 / (180 / M_PI)));
 

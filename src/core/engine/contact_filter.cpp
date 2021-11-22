@@ -5,6 +5,7 @@
 #include <game_components.hpp>
 #include "contact_filter.hpp"
 
+[[deprecated]]
 ContactFilter::ContactFilter(b2World *box2DWorld): box2DWorld(box2DWorld) {}
 
 bool ContactFilter::ShouldCollide(b2Fixture *fixture1, b2Fixture *fixture2) {

@@ -12,11 +12,11 @@
 #include "set"
 
 
-class DestroySystem:  public BaseSystem, public b2ContactListener {
+class ContactSystem:  public BaseSystem, public b2ContactListener {
   void onInit() override;
 
  public:
-  DestroySystem();
+  ContactSystem();
 
   void update(float dt) override;
 
@@ -40,10 +40,12 @@ class DestroySystem:  public BaseSystem, public b2ContactListener {
 			   Functor functor);
 
   std::set<DeletionEntry> deletions;
+  bool cleanUpAll = false;
+  std::string nextLevel;
 };
 
 template<typename Functor>
-inline void DestroySystem::doIfAny(GameComponents::Collision *collision1,
+void ContactSystem::doIfAny(GameComponents::Collision *collision1,
 							GameComponents::Collision *collision2,
 							GameComponents::ObjectType expectedType1,
 							GameComponents::ObjectType expectedType2,

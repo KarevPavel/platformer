@@ -5,7 +5,7 @@
 #include <sound_system.hpp>
 #include <physics_system.hpp>
 #include <movement_system.hpp>
-#include <destroy_system.hpp>
+#include <contact_system.hpp>
 #include "scene.hpp"
 #include "music_system.hpp"
 #include "render_system.hpp"
@@ -30,11 +30,13 @@ void GameScene::init() {
   em.addSystem(std::make_unique<MovementSystem>());
 
   em.getEventDispatcher()->trigger<SoundEvent::MusicStop>();
-  em.getEventDispatcher()->trigger<GameEvent::GameStart>(constants::LEVEL1_PATH);
+  em.getEventDispatcher()->trigger<GameEvent::LoadLevelEvent>(constants::LEVEL1_PATH);
 
   em.addRenderSystem(std::make_unique<RenderSystem>());
-  em.addCleanUpSystem(std::unique_ptr<DestroySystem>(&engine->getDestroySystem()));
+  em.addCleanUpSystem(std::unique_ptr<ContactSystem>(&engine->getContactSystem()));
 
+
+  //TODO: uncomment later
   //engine->getWindow().setMouseCursorVisible(false);
   //engine->getWindow().setMouseCursorGrabbed(true);
   engine->getView().setSize({300, 200});

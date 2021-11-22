@@ -12,7 +12,7 @@ add_library(
 		sound_system.cpp
 		physics_system.cpp
 		movement_system.cpp
-		destroy_system.cpp)
+		contact_system.cpp)
 
 add_subdirectory(map)
 

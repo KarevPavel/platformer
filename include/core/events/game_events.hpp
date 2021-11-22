@@ -10,12 +10,12 @@
 namespace GameEvent {
 
 
-struct GameStart {
-  explicit GameStart(std::string level) : level(std::move(level)) {
+struct LoadLevelEvent {
+  explicit LoadLevelEvent(std::string level) : level(std::move(level)) {
 
   }
 
-  GameStart() = default;
+  LoadLevelEvent() = default;
 
   std::string level;
 };

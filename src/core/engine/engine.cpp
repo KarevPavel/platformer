@@ -12,7 +12,7 @@
 Engine::Engine() : sceneManager(this),
 				   box2DWorld(b2Vec2(0.f, 9.8f)),
 				   debugDraw(window),
-				   destroySystem(),
+				   contactSystem(),
 				   textureManager(),
 				   imageManager(),
 				   fontManager() {
@@ -20,7 +20,7 @@ Engine::Engine() : sceneManager(this),
 
   debugDraw.SetFlags(b2Draw::e_shapeBit | b2Draw::e_centerOfMassBit);
 
-  box2DWorld.SetContactListener(&destroySystem);
+  box2DWorld.SetContactListener(&contactSystem);
   box2DWorld.SetDebugDraw(&debugDraw);
   window.setView(view);
 }

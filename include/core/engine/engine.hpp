@@ -7,7 +7,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include <box2d/box2d.h>
-#include <destroy_system.hpp>
+#include <contact_system.hpp>
 
 #include "sound_player.hpp"
 #include "scene_manager.hpp"
@@ -30,7 +30,7 @@ class Engine {
   MusicPlayer musicPlayer;
   SoundPlayer soundPlayer;
   b2World box2DWorld;
-  DestroySystem destroySystem;
+  ContactSystem contactSystem;
   //ContactFilter contactFilter;
   DebugBox2D debugDraw;
 
@@ -51,7 +51,7 @@ class Engine {
   inline DebugBox2D &getDebugBox2D() { return debugDraw; }
   inline sf::View &getView() { return view; }
   inline FontManager &getFontManager() { return fontManager; }
-  inline DestroySystem &getDestroySystem() { return destroySystem; }
+  inline ContactSystem &getContactSystem() { return contactSystem; }
   inline ImageManager &getImageManager() { return imageManager; }
 };
 
