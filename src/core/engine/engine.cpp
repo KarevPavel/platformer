@@ -21,7 +21,7 @@ Engine::Engine() : sceneManager(this),
   debugDraw.SetFlags(b2Draw::e_shapeBit | b2Draw::e_centerOfMassBit);
 
   box2DWorld.SetContactListener(&contactSystem);
-  box2DWorld.SetDebugDraw(&debugDraw);
+  //box2DWorld.SetDebugDraw(&debugDraw);
   window.setView(view);
 }
 
