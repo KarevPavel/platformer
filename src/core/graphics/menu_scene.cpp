@@ -24,7 +24,9 @@ void MenuScene::init() {
 
   backgroundTexture.setTexture(engine->getTextureManager().getResource(constants::BLACK_PATH));
   backgroundTexture
-	  .setTextureRect(sf::IntRect(0, 0, engine->getWindow().getSize().x, engine->getWindow().getSize().y));
+	  .setTextureRect(sf::IntRect(0, 0,
+							   engine->getWindow().getSize().x,
+							   engine->getWindow().getSize().y));
 
   buttons = new DrawableContainer<Button>(engine->getWindow());
 
